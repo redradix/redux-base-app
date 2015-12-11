@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-//import Component from '../components/component'
-//import * as Actions from '../actions/action'
+import Component from '../components/component'
+import * as Actions from '../actions/action'
 
 // The component will subscribe to Redux store updates
 function mapStateToProps(state) {

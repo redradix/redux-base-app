@@ -18,7 +18,7 @@ class Comp extends Component {
   }
 }
 
-Counter.propTypes = {
+Comp.propTypes = {
   action: PropTypes.func.isRequired,
   asyncAction: PropTypes.func.isRequired,
   conditionalAction: PropTypes.func.isRequired,
