@@ -6,7 +6,8 @@ import * as Actions from '../actions/action'
 // The component will subscribe to Redux store updates
 function mapStateToProps(state) {
   return {
-    prop: state.prop
+    isFetching: state.ingredients.isFetching,
+    list: state.ingredients.list
   }
 }
 // The component will have available the ActionCreators that you return

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import prop from './reducer'
+import ingredients from './ingredients'
 
 const rootReducer = combineReducers({
   // Here add your reducers
-  prop 
+  ingredients
 })
 
 export default rootReducer

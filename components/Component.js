@@ -1,28 +1,37 @@
 import React, { Component, PropTypes } from 'react'
 
 class Comp extends Component {
+  componentWillReceiveProps() {
+    
+  }
+  componentDidMount() {
+    const {dispatch} = this.props
+    this.props.fetchIngredients()
+  }
   render() {
-    const { prop, action, conditionalAction, asyncAction } = this.props
+    console.log("props: ", this.props)
+    const { isFetching, list} = this.props
     return (
-      <p>
-        Prop: {prop} 
-        {' '}
-        <button onClick={action}>action</button>
-        {' '}
-        <button onClick={conditionalAction}>conditional action</button>
-        {' '}
-        <button onClick={() => asyncAction()}>conditional action</button>
-        {' '}
-      </p>
+      <div>
+        <span>
+          <h1>Lista de productos</h1>
+
+        </span>
+        <ul>
+          {isFetching && <p>Loading...</p>}
+          {!isFetching && list.length == 0 && <p>Empty</p>}
+          {!isFetching && list.length > 0 && list.map((p, i) =>
+            <li key={i}><a href="#">{p.name}</a></li>)
+          }
+        </ul>
+      </div>
     )
   }
 }
 
 Comp.propTypes = {
-  action: PropTypes.func.isRequired,
-  asyncAction: PropTypes.func.isRequired,
-  conditionalAction: PropTypes.func.isRequired,
-  prop: PropTypes.number.isRequired
+  isFetching: PropTypes.bool.isRequired,
+  list: PropTypes.array.isRequired
 }
 
 export default Comp 
