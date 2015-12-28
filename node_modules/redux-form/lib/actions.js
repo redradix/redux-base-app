@@ -1,0 +1,91 @@
+'use strict';
+
+exports.__esModule = true;
+
+var _actionTypes = require('./actionTypes');
+
+var addArrayValue = function addArrayValue(path, value, index) {
+  return { type: _actionTypes.ADD_ARRAY_VALUE, path: path, value: value, index: index };
+};
+
+exports.addArrayValue = addArrayValue;
+var blur = function blur(field, value) {
+  return { type: _actionTypes.BLUR, field: field, value: value };
+};
+
+exports.blur = blur;
+var change = function change(field, value) {
+  return { type: _actionTypes.CHANGE, field: field, value: value };
+};
+
+exports.change = change;
+var destroy = function destroy() {
+  return { type: _actionTypes.DESTROY };
+};
+
+exports.destroy = destroy;
+var focus = function focus(field) {
+  return { type: _actionTypes.FOCUS, field: field };
+};
+
+exports.focus = focus;
+var initialize = function initialize(data, fields) {
+  if (!Array.isArray(fields)) {
+    throw new Error('must provide fields array to initialize() action creator');
+  }
+  return { type: _actionTypes.INITIALIZE, data: data, fields: fields };
+};
+
+exports.initialize = initialize;
+var removeArrayValue = function removeArrayValue(path, index) {
+  return { type: _actionTypes.REMOVE_ARRAY_VALUE, path: path, index: index };
+};
+
+exports.removeArrayValue = removeArrayValue;
+var reset = function reset() {
+  return { type: _actionTypes.RESET };
+};
+
+exports.reset = reset;
+var startAsyncValidation = function startAsyncValidation() {
+  return { type: _actionTypes.START_ASYNC_VALIDATION };
+};
+
+exports.startAsyncValidation = startAsyncValidation;
+var startSubmit = function startSubmit() {
+  return { type: _actionTypes.START_SUBMIT };
+};
+
+exports.startSubmit = startSubmit;
+var stopAsyncValidation = function stopAsyncValidation(errors) {
+  return { type: _actionTypes.STOP_ASYNC_VALIDATION, errors: errors };
+};
+
+exports.stopAsyncValidation = stopAsyncValidation;
+var stopSubmit = function stopSubmit(errors) {
+  return { type: _actionTypes.STOP_SUBMIT, errors: errors };
+};
+
+exports.stopSubmit = stopSubmit;
+var submitFailed = function submitFailed() {
+  return { type: _actionTypes.SUBMIT_FAILED };
+};
+
+exports.submitFailed = submitFailed;
+var touch = function touch() {
+  for (var _len = arguments.length, fields = Array(_len), _key = 0; _key < _len; _key++) {
+    fields[_key] = arguments[_key];
+  }
+
+  return { type: _actionTypes.TOUCH, fields: fields };
+};
+
+exports.touch = touch;
+var untouch = function untouch() {
+  for (var _len2 = arguments.length, fields = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    fields[_key2] = arguments[_key2];
+  }
+
+  return { type: _actionTypes.UNTOUCH, fields: fields };
+};
+exports.untouch = untouch;

@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Ingredients from '../components/ingredients'
+import Ingredients from '../layouts/ingredients'
 import * as Actions from '../actions/action'
 import { pushPath } from 'redux-simple-router'
 

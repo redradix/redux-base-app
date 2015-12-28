@@ -1,13 +1,19 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { Router, Route } from 'react-router'
+import { Router, Route, IndexRoute } from 'react-router'
 import { createHistory } from 'history'
 import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
 import App from './layouts/app'
-import Ingredients from './containers/Ingredients'
-import Orders from './layouts/Orders'
-import Dishes from './layouts/Dishes'
+import Home from './layouts/home'
+import Ingredients from './containers/ingredients'
+import ListIngredients from './layouts/list-ingredients'
+import CreateIngredient from './layouts/create-ingredient'
+import ShowIngredient from './layouts/show-ingredient'
+import Orders from './layouts/orders'
+import CreateOrder from './layouts/create-order'
+import Dishes from './layouts/dishes'
+import CreateDish from './layouts/create-dish'
 //import {Home, Ingredients, Dishes, Orders } from './components'
 import configureStore from './store/configureStore'
 
@@ -22,10 +28,20 @@ render(
   // Makes the Redux store available to the connect() calls in the component hierarchy below
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={App}>
-        <Route path="ingredients" component={Ingredients}/>
-        <Route path="dishes" component={Dishes}/>
-        <Route path="orders" component={Orders}/>
+      <Route path= "/" component={App}>
+        <IndexRoute component={Home}/>
+        <Route path="ingredients" component={Ingredients}>
+          <IndexRoute component={ListIngredients}/>
+          <Route path="create" component={CreateIngredient}/>
+          <Route path=":id/show" component={ShowIngredient}/>
+          <Route path=":id/edit" component={CreateIngredient}/>
+        </Route>  
+        <Route path="dishes" component={Dishes}>
+          <Route path="create"/>
+        </Route>  
+        <Route path="orders" component={Orders}>
+          <Route path="create"/>
+        </Route>  
       </Route>
     </Router>
   </Provider>,

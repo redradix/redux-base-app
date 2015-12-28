@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux'
 import ingredients from './ingredients'
+import {reducer as formReducer} from 'redux-form';
 import { routeReducer } from 'redux-simple-router';
 
 const rootReducer = combineReducers({
-  // Here add your reducers
   ingredients,
-  routing: routeReducer
+  routing: routeReducer,
+  form: formReducer
 })
 
 export default rootReducer
