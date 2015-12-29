@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, RECEIVE_INGREDIENTS, REQUEST_INGREDIENTS, EDIT_INGREDIENT, REMOVE_INGREDIENT } from '../actions/action'
+import { ADD_INGREDIENT, RECEIVE_INGREDIENTS, REQUEST_INGREDIENTS, EDIT_INGREDIENT, REMOVE_INGREDIENT } from '../actions/ingredients'
 
 function ingredientList(state=[], action) {
   switch (action.type) {

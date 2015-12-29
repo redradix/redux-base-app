@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { removeIngredient } from '../actions/action'
+import { removeIngredient } from '../actions/ingredients'
 import { Link } from 'react-router'
 
 function mapStateToProps(state) {

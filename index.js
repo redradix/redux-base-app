@@ -4,9 +4,13 @@ import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute } from 'react-router'
 import { createHistory } from 'history'
 import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
-import App from './layouts/app'
+import WebStorage from './utils/WebStorage'
+import configureStore from './store/configureStore'
+import { replacePath } from 'redux-simple-router'
+
+import App from './containers/app'
 import Home from './layouts/home'
-import Ingredients from './containers/ingredients'
+import Ingredients from './layouts/ingredients'
 import ListIngredients from './layouts/list-ingredients'
 import CreateIngredient from './layouts/create-ingredient'
 import ShowIngredient from './layouts/show-ingredient'
@@ -14,8 +18,8 @@ import Orders from './layouts/orders'
 import CreateOrder from './layouts/create-order'
 import Dishes from './layouts/dishes'
 import CreateDish from './layouts/create-dish'
-//import {Home, Ingredients, Dishes, Orders } from './components'
-import configureStore from './store/configureStore'
+import Login from './layouts/login'
+import Register from './layouts/register'
 
 
 // Wraps with middleware the createStore function
@@ -24,22 +28,40 @@ const history = createHistory()
 
 syncReduxAndRouter(history, store)
 
+function requireAuth(nextState, transition, callback) {
+  if (store.getState().auth.logged) {
+    callback()
+  } else {
+    store.dispatch(replacePath('/login'));
+  }
+}
+
+function checkLogged(nextState, transition, callback) {
+  if (store.getState().auth.logged) {
+    store.dispatch(replacePath('/'))   
+  } else {
+    callback()  
+  }
+}
+
 render(
   // Makes the Redux store available to the connect() calls in the component hierarchy below
   <Provider store={store}>
     <Router history={history}>
+      <Route path="/login" component={Login} onEnter={checkLogged}/>
+      <Route path="/register" component={Register} onEnter={checkLogged}/>
       <Route path= "/" component={App}>
-        <IndexRoute component={Home}/>
-        <Route path="ingredients" component={Ingredients}>
+        <IndexRoute component={Home} onEnter={requireAuth} />
+        <Route path="ingredients" component={Ingredients} onEnter={requireAuth}>
           <IndexRoute component={ListIngredients}/>
           <Route path="create" component={CreateIngredient}/>
           <Route path=":id/show" component={ShowIngredient}/>
           <Route path=":id/edit" component={CreateIngredient}/>
         </Route>  
-        <Route path="dishes" component={Dishes}>
-          <Route path="create"/>
+        <Route path="dishes" component={Dishes} onEnter={requireAuth}>
+          <Route path="create" component={CreateDish}/>
         </Route>  
-        <Route path="orders" component={Orders}>
+        <Route path="orders" component={Orders} onEnter={requireAuth}>
           <Route path="create"/>
         </Route>  
       </Route>

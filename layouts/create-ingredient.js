@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addIngredient, editIngredient } from '../actions/action'
+import { addIngredient, editIngredient } from '../actions/ingredients'
 import {reduxForm} from 'redux-form'
 import {createValidator, required, maxLength, minLength, integer} from '../utils/validation'
 
