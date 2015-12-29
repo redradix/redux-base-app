@@ -18,6 +18,8 @@ import Orders from './layouts/orders'
 import CreateOrder from './layouts/create-order'
 import Dishes from './layouts/dishes'
 import CreateDish from './layouts/create-dish'
+import ListDishes from './layouts/list-dishes'
+import ShowDish from './layouts/show-dish'
 import Login from './layouts/login'
 import Register from './layouts/register'
 
@@ -59,7 +61,10 @@ render(
           <Route path=":id/edit" component={CreateIngredient}/>
         </Route>  
         <Route path="dishes" component={Dishes} onEnter={requireAuth}>
+          <IndexRoute component={ListDishes}/>
           <Route path="create" component={CreateDish}/>
+          <Route path=":id/edit" component={CreateDish}/>
+          <Route path=":id/show" component={ShowDish}/>
         </Route>  
         <Route path="orders" component={Orders} onEnter={requireAuth}>
           <Route path="create"/>

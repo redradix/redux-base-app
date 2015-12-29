@@ -59,7 +59,6 @@ CreateIngredientForm.propTypes = {
 
 CreateIngredientForm = reduxForm({
   form: 'create-ingredient',
-  validate,
   fields: ['name', 'cost', 'stock', 'id']
 })(CreateIngredientForm)
 

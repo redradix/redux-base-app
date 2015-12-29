@@ -32,7 +32,7 @@ export const REMOVE_INGREDIENT_FAIL = "REMOVE:INGREDIENT_FAIL";
 
 export function fetchIngredients(delay = 1000) {
   return (dispatch, getState) => {
-    if (getState().ingredients.length !== 0) {
+    if (getState().ingredients.list.length === 0) {
       dispatch(requestIngredients())
       /*fetch('https://dah.com/ingredients')
         .then(response => response.json())
@@ -66,7 +66,7 @@ function addIngredientFail(ingredient) {
   }
 }
 
-function editIngredientAttemp(ingredient) {
+function editIngredientAttempt(ingredient) {
   return {
     type: EDIT_INGREDIENT_ATTEMPT,
     payload: ingredient
