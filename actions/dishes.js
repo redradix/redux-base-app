@@ -103,15 +103,15 @@ export function addDish(dish) {
 export function editDish(dish) {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch(editDishAttempt(dish))
+      dispatch(editDishAttempt({id: dish.id, quantity: dish.quantity}))
       const exists = getState().dishes.list.find(e => e.id == dish.id)
       if (exists) {
         //fetch
-        dispatch(editDishSuccess(dish))
+        dispatch(editDishSuccess({id: dish.id, quantity: dish.quantity}))
         dispatch(pushPath('/dishes/'))
         resolve()
       } else {
-        dispatch(editDishFail(dish))
+        dispatch(editDishFail({id: dish.id, quantity: dish.quantity}))
         reject({name: "Dish does not exists", error: 'Edit fail'})
       }
     })

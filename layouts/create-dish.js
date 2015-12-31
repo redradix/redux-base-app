@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { addDish, editDish} from '../actions/dishes'
 import {reduxForm} from 'redux-form'
+import {addArrayValue, removeArrayValue } from 'redux-form/lib/actions'
+import bindActionData from 'redux-form/lib/bindActionData'
 import {createValidator, required, maxLength, minLength, integer} from '../utils/validation'
 import DishIngredients from '../components/dishIngredients'
 import Ingredients from '../components/totalIngredients'
@@ -13,12 +15,21 @@ const validate = createValidator({
 });
 
 class CreateDishForm extends Component {
+  addIngredientToDish(id, quantity, name) {
+    const dishIngredient = {id, quantity, name}
+    const index = this.props.fields.ingredients.indexOf(dishIngredient) 
+    this.props.addIngredient('ingredients', dishIngredient, index == -1 ? undefined : index) 
+  }
+  removeIngredientFromDish(id) {
+    const index = this.props.fields.ingredients.reduce((acc, i, index) => {
+      return i.id == id ? (index - 1) : acc
+    }, undefined) 
+    this.props.removeIngredient('ingredients', index)
+  }
   render() {
     const {
-          fields: {name, cost, pvp, id },
-          ingredients,
+          fields: {name, cost, pvp, id, ingredients  },
           totalIngredients,
-          addIngredientToDish,
           removeIngredientFromDish,
           handleSubmit,
           resetForm,
@@ -37,8 +48,8 @@ class CreateDishForm extends Component {
           <input type="integer" placeholder="PVP" {...pvp}/>
           {pvp.touched && pvp.error && <div>{pvp.error}</div>}
         </div>
-        <Ingredients ingredients={totalIngredients} addIngredientToDish={addIngredientToDish}/>
-        <DishIngredients ingredients= {ingredients} totalIngredients={totalIngredients} removeIngredientFromDish={removeIngredientFromDish}/>
+        <Ingredients ingredients={totalIngredients}  addIngredientToDish={this.addIngredientToDish.bind(this)} />
+        <DishIngredients ingredients= {ingredients} totalIngredients={totalIngredients} removeIngredientFromDish={this.removeIngredientFromDish.bind(this)}/>
         <div>
           <p>Escandallo: 0</p>
         </div>
@@ -67,25 +78,14 @@ CreateDishForm = reduxForm({
   validate,
   fields: ['name',
            'pvp', 
-           'id'
+           'id',
+           'ingredients[].name',
+           'ingredients[].id',
+           'ingredients[].quantity'
   ]
 })(CreateDishForm)
 
 class CreateDish extends Component {
-  addIngredientToDish(id, quantity, name) {
-    let ingredients = this.props.dish.ingredients
-    let dishIngredient = ingredients.find(i => {return i.id == id})
-    if (dishIngredient) {
-      dishIngredient.quantity = parseInt(quantity)
-    } else {
-      ingredients.push({id, name, quantity: parseInt(quantity)})  
-    }
-  }
-  removeIngredientFromDish(id) {
-    this.props.dish.ingredients = this.props.dish.ingredients.filter(i => {
-      return i.id !== id  
-    })  
-  }
   onSubmit(dish) {
     if (this.props.location.pathname.includes("edit")) {
       return this.props.editDish(dish)  
@@ -94,11 +94,11 @@ class CreateDish extends Component {
     }
   }
   render() {
-    const { dish, ingredients } = this.props
+    const { dish, ingredients, addArrayValue, removeArrayValue } = this.props
     return (
       <div>
         <p>Crea el plato indicando su lista de ingredientes, nombre y pvp</p>
-        <CreateDishForm onSubmit={this.onSubmit.bind(this)} initialValues={ dish } ingredients={dish.ingredients} totalIngredients={ingredients} removeIngredientFromDish={this.removeIngredientFromDish.bind(this)} addIngredientToDish={this.addIngredientToDish.bind(this)}/>
+        <CreateDishForm onSubmit={this.onSubmit.bind(this)} initialValues={ dish } totalIngredients={ingredients}  removeIngredient={removeArrayValue} addIngredient={addArrayValue}/>
       </div>
     )
   }
@@ -115,13 +115,14 @@ function findIngredients(ingredients, dishIngredientIds) {
     const dishIngredient = dishIngredientIds.find(di => {
       return i.id == di.id  
     })
-    return dishIngredient ? acc.push(Object.assign({}, i, {quantity: di.quantity})) : acc
+    dishIngredient ? acc.push(Object.assign({}, i, {quantity: dishIngredient.quantity})) : acc
+    return acc
   }, [])  
 }
 
-function omitAlreadyIncluded(ingredients, dishIngredientsIds) {
+function omitAlreadyIncluded(ingredients, dishIngredientIds) {
   return ingredients.reduce((acc, i) =>{
-    const ids = dishIngredientsIds.map(i => i.id)
+    const ids = dishIngredientIds.map(i => i.id)
     ids.includes(i) ? acc : acc.push(i)
     return acc
   }, [])  
@@ -140,11 +141,14 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ addDish, editDish }, dispatch)
+  const data = {form: "create-dish", key: ""}
+  const bindedAddArrayValue = bindActionData(addArrayValue, data)
+  const bindedRemoveArrayValue = bindActionData(removeArrayValue, data)
+  return bindActionCreators({ addDish, editDish, addArrayValue: bindedAddArrayValue, removeArrayValue: bindedRemoveArrayValue }, dispatch)
 }
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(CreateDish)
 

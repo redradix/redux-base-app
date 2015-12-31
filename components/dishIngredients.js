@@ -3,14 +3,14 @@ import React, {PropTypes, Component} from 'react'
 class Ingredient extends Component  {
   onClick(e) {
     e.preventDefault()
-    this.props.removeIngredientFromDish(this.props.id)  
+    this.props.removeIngredientFromDish(this.props.id.value)  
   }
   render() {
     const {name, quantity, removeIngredientFromDish} = this.props  
     return (
       <div>
-        <p>{name}</p>
-        <p>{quantity}</p>
+        <p>{name.value}</p>
+        <p>{quantity.value}</p>
         <button onClick={this.onClick.bind(this)}> Remove ingredient </button>
       </div>
     )  
@@ -29,7 +29,7 @@ class DishIngredients extends Component {
           removeIngredientFromDish = {removeIngredientFromDish}
           quantity= {ingredient.quantity}
           name={ingredient.name}
-          key={ingredient.id}/ >
+          key={ingredient.id.value}/ >
       )
 
     return (
