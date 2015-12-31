@@ -6,8 +6,6 @@ import {reduxForm} from 'redux-form'
 import {addArrayValue, removeArrayValue } from 'redux-form/lib/actions'
 import bindActionData from 'redux-form/lib/bindActionData'
 import {createValidator, required, maxLength, minLength, integer} from '../utils/validation'
-import DishIngredients from '../components/dishIngredients'
-import Ingredients from '../components/totalIngredients'
 
 const validate = createValidator({
   name: [required, minLength(5), maxLength(10)],
