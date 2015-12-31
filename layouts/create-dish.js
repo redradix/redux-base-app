@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { addDish, editDish} from '../actions/dishes'
 import {reduxForm} from 'redux-form'
 import {createValidator, required, maxLength, minLength, integer} from '../utils/validation'
-import DishIngredients from '../components/dishIngredients'
-import Ingredients from '../components/totalIngredients'
+import Autocomplete from '../components/Autocomplete'
+import {matchElementToTerm, sortElements, styles }from '../utils/autocomplete'
 
 const validate = createValidator({
   name: [required, minLength(5), maxLength(10)],
@@ -37,8 +37,20 @@ class CreateDishForm extends Component {
           <input type="integer" placeholder="PVP" {...pvp}/>
           {pvp.touched && pvp.error && <div>{pvp.error}</div>}
         </div>
-        <Ingredients ingredients={totalIngredients} addIngredientToDish={addIngredientToDish}/>
-        <DishIngredients ingredients= {ingredients} totalIngredients={totalIngredients} removeIngredientFromDish={removeIngredientFromDish}/>
+        <Autocomplete
+          initialValue=""
+          items={totalIngredients}
+          getItemValue={(item) => item.name}
+          shouldItemRender={matchElementToTerm}
+          sortItems={sortElements}
+          renderItem={(item, isHighlighted) => (
+            <div
+              style={isHighlighted ? styles.highlightedItem : styles.item}
+              key={item.id}
+            >{item.name}</div>
+          )}
+        />
+
         <div>
           <p>Escandallo: 0</p>
         </div>
