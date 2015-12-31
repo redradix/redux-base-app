@@ -46,7 +46,7 @@ function validateToken(token) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'x-access-token': webStorage.load('token')
+      'Authorization': 'Bearer ' + webStorage.load('token')
     },
   }) 
   .then( response => {
