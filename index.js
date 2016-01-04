@@ -16,12 +16,18 @@ import CreateIngredient from './layouts/create-ingredient'
 import ShowIngredient from './layouts/show-ingredient'
 import Orders from './layouts/orders'
 import CreateOrder from './layouts/create-order'
+import ListOrders from './layouts/list-orders'
+import ShowOrder from './layouts/show-order'
 import Dishes from './layouts/dishes'
 import CreateDish from './layouts/create-dish'
 import ListDishes from './layouts/list-dishes'
 import ShowDish from './layouts/show-dish'
 import Login from './layouts/login'
 import Register from './layouts/register'
+import { fetchIngredients } from './actions/ingredients'
+import { fetchDishes } from './actions/dishes'
+import { fetchOrders } from './actions/orders'
+import { initNotifications } from './actions/notifications'
 
 
 // Wraps with middleware the createStore function
@@ -29,6 +35,12 @@ const store = configureStore()
 const history = createHistory()
 
 syncReduxAndRouter(history, store)
+
+// Load initial data
+store.dispatch(fetchIngredients())
+store.dispatch(fetchDishes())
+store.dispatch(fetchOrders())
+store.dispatch(initNotifications())
 
 function requireAuth(nextState, transition, callback) {
   if (store.getState().auth.logged) {
@@ -67,7 +79,10 @@ render(
           <Route path=":id/show" component={ShowDish}/>
         </Route>  
         <Route path="orders" component={Orders} onEnter={requireAuth}>
-          <Route path="create"/>
+          <IndexRoute component={ListOrders}/>
+          <Route path="create" component={CreateOrder}/>
+          <Route path=":id/edit" component={CreateOrder}/>
+          <Route path=":id/show" component={ShowOrder}/>
         </Route>  
       </Route>
     </Router>

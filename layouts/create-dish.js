@@ -6,8 +6,9 @@ import {reduxForm} from 'redux-form'
 import {addArrayValue, removeArrayValue } from 'redux-form/lib/actions'
 import bindActionData from 'redux-form/lib/bindActionData'
 import {createValidator, required, maxLength, minLength, integer} from '../utils/validation'
-import Ingredients from '../components/totalIngredients'
-import DishIngredients from '../components/dishIngredients'
+import ElementsToAdd from '../components/elements-to-add'
+import ElementsAdded from '../components/elements-added'
+import { totalSelector } from '../selectors/dishSelectors'
 
 const validate = createValidator({
   name: [required, minLength(5), maxLength(10)],
@@ -17,12 +18,15 @@ const validate = createValidator({
 class CreateDishForm extends Component {
   addIngredientToDish(id, quantity, name) {
     const dishIngredient = {id, quantity, name}
-    const index = this.props.fields.ingredients.indexOf(dishIngredient) 
+    const index = this.props.values.ingredients.reduce((acc, i, index) => {
+      return i.id == id ? index : acc
+    }, undefined) 
+    if (index !== undefined) {this.props.removeIngredient('ingredients', index)}
     this.props.addIngredient('ingredients', dishIngredient, index == -1 ? undefined : index) 
   }
   removeIngredientFromDish(id) {
-    const index = this.props.fields.ingredients.reduce((acc, i, index) => {
-      return i.id == id ? (index - 1) : acc
+    const index = this.props.values.ingredients.reduce((acc, i, index) => {
+      return i.id == id ? index : acc
     }, undefined) 
     this.props.removeIngredient('ingredients', index)
   }
@@ -30,6 +34,7 @@ class CreateDishForm extends Component {
     const {
           fields: {name, cost, pvp, id, ingredients  },
           totalIngredients,
+          escandallo,
           removeIngredientFromDish,
           handleSubmit,
           resetForm,
@@ -48,10 +53,10 @@ class CreateDishForm extends Component {
           <input type="integer" placeholder="PVP" {...pvp}/>
           {pvp.touched && pvp.error && <div>{pvp.error}</div>}
         </div>
-        <Ingredients ingredients={totalIngredients}  addIngredientToDish={this.addIngredientToDish.bind(this)} />
-        <DishIngredients ingredients= {ingredients} totalIngredients={totalIngredients} removeIngredientFromDish={this.removeIngredientFromDish.bind(this)}/>
+        <ElementsToAdd subject='ingredient' elements={totalIngredients}  add={this.addIngredientToDish.bind(this)} />
+        <ElementsAdded subject='ingredient' elements= {ingredients} totalElements={totalIngredients} remove={this.removeIngredientFromDish.bind(this)}/>
         <div>
-          <p>Escandallo: 0</p>
+          <p>Escandallo: {escandallo || 0}</p>
         </div>
         {error && <div>{error}</div>}
         <button disabled={submitting }type='submit' onClick={handleSubmit}>
@@ -67,6 +72,8 @@ class CreateDishForm extends Component {
 
 CreateDishForm.propTypes = {
     fields: PropTypes.object.isRequired,
+    ingredients: PropTypes.array,
+    escandallo: PropTypes.number,
     handleSubmit: PropTypes.func.isRequired,
     error: PropTypes.string,
     resetForm: PropTypes.func.isRequired,
@@ -94,11 +101,11 @@ class CreateDish extends Component {
     }
   }
   render() {
-    const { dish, ingredients, addArrayValue, removeArrayValue } = this.props
+    const { dish, ingredients, escandallo,  addArrayValue, removeArrayValue } = this.props
     return (
       <div>
         <p>Crea el plato indicando su lista de ingredientes, nombre y pvp</p>
-        <CreateDishForm onSubmit={this.onSubmit.bind(this)} initialValues={ dish } totalIngredients={ingredients}  removeIngredient={removeArrayValue} addIngredient={addArrayValue}/>
+        <CreateDishForm onSubmit={this.onSubmit.bind(this)} initialValues={ dish } totalIngredients={ingredients}  removeIngredient={removeArrayValue} escandallo={escandallo} addIngredient={addArrayValue}/>
       </div>
     )
   }
@@ -106,38 +113,10 @@ class CreateDish extends Component {
 
 CreateDish.propTypes = {
   dish: PropTypes.object,
+  ingredients: PropTypes.array,
+  escandallo: PropTypes.number,
   addDish: PropTypes.func,
   editDish: PropTypes.func
-}
-
-function findIngredients(ingredients, dishIngredientIds) {
-  return ingredients.reduce( (acc, i) => {
-    const dishIngredient = dishIngredientIds.find(di => {
-      return i.id == di.id  
-    })
-    dishIngredient ? acc.push(Object.assign({}, i, {quantity: dishIngredient.quantity})) : acc
-    return acc
-  }, [])  
-}
-
-function omitAlreadyIncluded(ingredients, dishIngredientIds) {
-  return ingredients.reduce((acc, i) =>{
-    const ids = dishIngredientIds.map(i => i.id)
-    ids.includes(i) ? acc : acc.push(i)
-    return acc
-  }, [])  
-} 
-
-function mapStateToProps(state) {
-  // Find a better way to parse params
-  // How was it call the middleware for routing?
-  const id = parseInt(state.routing.path.split("/")[2])
-  let dish = state.dishes.list.find((e) => {return e.id == id}) || {}
-  dish.ingredients = dish.ingredients ? findIngredients(state.ingredients.list, dish.ingredients) : []
-  return {
-    dish: dish,
-    ingredients: omitAlreadyIncluded(state.ingredients.list, dish.ingredients)
-  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -148,7 +127,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  mapStateToProps,
+  totalSelector,
   mapDispatchToProps
 )(CreateDish)
 

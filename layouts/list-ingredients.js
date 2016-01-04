@@ -20,12 +20,6 @@ class ListIngredients extends Component {
   onRemove(ingredient) {
     this.props.removeIngredient(ingredient)  
   }
-  componentDidMount() {
-    const {list, dispatch} = this.props
-    if (list.length == 0) {
-      this.props.fetchIngredients()
-    }
-  }
   render() {
     const { isFetching, list} = this.props
     return (

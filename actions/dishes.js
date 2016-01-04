@@ -1,14 +1,31 @@
 import { pushPath } from 'redux-simple-router'
 import fetch from 'isomorphic-fetch'
+import applyToken from './helpers';
 
 const dishes = [{
   id: 1,
   name: "Pollo al limon",
-  pvp: 10
+  pvp: 10,
+  ingredients: [{
+    id: 1,
+    quantity: 34
+  },
+  {
+   id: 2,
+   quantity: 21
+  }]
 }, {
   id: 2,
   name: "Osobuco",
-  pvp: 1
+  pvp: 1,
+  ingredients: [{
+    id: 1,
+    quantity: 64
+  },
+  {
+   id: 2,
+   quantity: 2
+  }]
 }
 ]
 
@@ -27,16 +44,15 @@ export const REMOVE_DISH_FAIL = "REMOVE:DISH_FAIL";
 
 export function fetchDishes(delay = 1000) {
   return (dispatch, getState) => {
-    if (getState().dishes.list.length === 0) {
-      dispatch(requestDishes())
-      /*fetch('https://dah.com/dishes')
-        .then(response => response.json())
-        .then(json => dispatch(receiveDishes(json)))
-      */
-      setTimeout(() => {
-        dispatch(receiveDishes(dishes))  
-      }, delay)
-    }
+    const token = getState().auth.token
+    dispatch(requestDishes())
+    /*fetch('https://dah.com/dishes', applyToken({}, token))
+      .then(response => response.json())
+      .then(json => dispatch(receiveDishes(json)))
+    */
+    setTimeout(() => {
+      dispatch(receiveDishes(dishes))  
+    }, delay)
   }
 }
 
@@ -103,15 +119,15 @@ export function addDish(dish) {
 export function editDish(dish) {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      dispatch(editDishAttempt({id: dish.id, quantity: dish.quantity}))
+      dispatch(editDishAttempt(dish))
       const exists = getState().dishes.list.find(e => e.id == dish.id)
       if (exists) {
         //fetch
-        dispatch(editDishSuccess({id: dish.id, quantity: dish.quantity}))
+        dispatch(editDishSuccess(dish))
         dispatch(pushPath('/dishes/'))
         resolve()
       } else {
-        dispatch(editDishFail({id: dish.id, quantity: dish.quantity}))
+        dispatch(editDishFail(dish))
         reject({name: "Dish does not exists", error: 'Edit fail'})
       }
     })

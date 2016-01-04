@@ -20,12 +20,6 @@ class ListDishes extends Component {
   onRemove(dish) {
     this.props.removeDish(dish)  
   }
-  componentDidMount() {
-    const {list, dispatch} = this.props
-    if (list.length == 0) {
-      this.props.fetchDishes()
-    }
-  }
   render() {
     const { isFetching, list} = this.props
     return (

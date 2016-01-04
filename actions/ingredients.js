@@ -3,17 +3,19 @@
 
 import { pushPath } from 'redux-simple-router'
 import fetch from 'isomorphic-fetch'
+import applyToken from './helpers';
+import { findById } from "../utils/utils"
 
 const ingredients = [{
   id: 1,
   name: "Albahaca",
-  cost: 10,
+  cost: 12,
   stock: 250
 }, {
   id: 2,
   name: "Pasta",
-  cost: 1,
-  stock: 1250
+  cost: 13,
+  stock: 1
 }
 ]
 
@@ -29,19 +31,14 @@ export const REMOVE_INGREDIENT = "REMOVE:INGREDIENT";
 export const REMOVE_INGREDIENT_ATTEMPT = "REMOVE:INGREDIENT_ATTEMPT";
 export const REMOVE_INGREDIENT_FAIL = "REMOVE:INGREDIENT_FAIL";
 
-
 export function fetchIngredients(delay = 1000) {
   return (dispatch, getState) => {
-    if (getState().ingredients.list.length === 0) {
-      dispatch(requestIngredients())
-      /*fetch('https://dah.com/ingredients')
-        .then(response => response.json())
-        .then(json => dispatch(receiveIngredients(json)))
-      */
-      setTimeout(() => {
-        dispatch(receiveIngredients(ingredients))  
-      }, delay)
-    }
+    dispatch(requestIngredients())
+    /*fetch('https://dah.com/ingredients', applyToken({}, token))
+      .then(response => response.json())
+      .then(json => dispatch(receiveIngredients(json)))
+    */
+    return Promise.resolve(dispatch(receiveIngredients(ingredients)))
   }
 }
 
@@ -176,4 +173,28 @@ function requestIngredients() {
   return {
     type: REQUEST_INGREDIENTS 
   }  
+}
+
+export function checkAvailability(order) {
+  return (dispatch, getState) => {
+    return dispatch(fetchIngredients())
+    .then(() => {
+      const ingredients = getState().ingredients.list
+      const dishes = getState().dishes.list
+      return order.dishes.reduce((acc, d) => {
+        const dish = findById(d.id, dishes) 
+        const available = dish.ingredients.reduce((acc, ingredient) => {
+          return acc && (ingredient.quantity < findById(ingredient.id, ingredients).stock)
+        }, true)  
+        available ? acc : acc.push(dish)
+        return acc
+      }, [])
+    })
+    .then((dishesNotAvailable) => {
+      if (dishesNotAvailable.length > 0) {
+        return Promise.reject({_error: "There are some dishes not available right now: " + dishesNotAvailable.map( d => {return d.name}).join(", "), name: 'dishes'})
+      }  
+      return Promise.resolve()
+    })
+  }
 }

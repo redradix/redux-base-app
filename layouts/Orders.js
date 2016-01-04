@@ -1,5 +1,14 @@
-const React = require('react');
+import React, { PropTypes, Component } from 'react'
 
-module.exports = function Orders() {
-  return <div>Orders</div>;
-}
+const Orders  = React.createClass({
+  render() {
+    return (
+      <div>
+        <h2>Orders</h2>
+        {this.props.children || "No children"}
+      </div>
+    )
+  }
+})
+
+export default Orders 

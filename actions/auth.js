@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import webStorage from '../utils/WebStorage'
 import { pushPath } from 'redux-simple-router'
+import { applyToken, applyHeaders } from './helpers';
 
 export const LOGIN_ATTEMPT = "AUTH:LOGIN_ATTEMPT"
 export const LOGIN_FAIL = "AUTH:LOGIN_FAIL"
@@ -41,14 +42,7 @@ function loginFail(error) {
 }
 
 function validateToken(token) {
-  return fetch('http://dah.com/session', {
-    method: 'get',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + webStorage.load('token')
-    },
-  }) 
+  return fetch('http://dah.com/session', applyToken({}, webStorage.load('token')))
   .then( response => {
     dispatch(loginSuccess(response.data))  
   })
@@ -67,30 +61,25 @@ export function logout() {
   }
 }
 
-export function login(credentials) {
+export function login({email, password}) {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       if (getState().auth.logged) {
         reject({error: 'Already logged in'})  
       } else {
         dispatch(logginAttempt(credentials))  
-        /*fetch('http://dah.com/login', {
-          method: 'post',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: {
-            email: credentials.email,
-            password: credentials.password
-          }
-        })
+        /*
+        return fetch('http://dah.com/login' + createQueryString({ email, password }),
+          applyHeaders({
+            method: 'post',
+          }, {})
+        )
         .then( response => {
           if (response.status >= 200 && response.status < 300) {
             dispatch(loginSuccess(response.data))  
             resolve()
           } else {
-            dispatch(loginFail(response)
+            dispatch(loginFail(response))
             reject({error: response.statusText})
           } 
         })
