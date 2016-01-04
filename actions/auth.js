@@ -67,7 +67,7 @@ export function login({email, password}) {
       if (getState().auth.logged) {
         reject({error: 'Already logged in'})  
       } else {
-        dispatch(logginAttempt(credentials))  
+        dispatch(logginAttempt({login, password}))  
         /*
         return fetch('http://dah.com/login' + createQueryString({ email, password }),
           applyHeaders({
