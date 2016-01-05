@@ -1,15 +1,11 @@
+/* Example with selectors */
+
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { removeDish} from '../actions/dishes'
 import { Link } from 'react-router'
-// Example with reselect
 import { totalSelector, escandalloSelector } from '../selectors/dishSelectors'
-
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ removeDish }, dispatch)
-}
 
 class ShowDish extends Component {
   onRemove() {
@@ -35,8 +31,13 @@ class ShowDish extends Component {
   }
 }
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ removeDish }, dispatch)
+}
+
 ShowDish.propTypes = {
-  dish: PropTypes.object
+  dish: PropTypes.object,
+  removeDish: PropTypes.func.isRequired
 }
 
 export default connect(totalSelector, mapDispatchToProps)(ShowDish)

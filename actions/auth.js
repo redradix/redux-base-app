@@ -1,7 +1,13 @@
 import fetch from 'isomorphic-fetch'
 import webStorage from '../utils/WebStorage'
-import { pushPath } from 'redux-simple-router'
 import { applyToken, applyHeaders } from './helpers';
+
+/* Actions */
+import { fetchIngredients } from './ingredients'
+import { fetchDishes } from './dishes'
+import { fetchOrders } from './orders'
+import { initNotifications } from './notifications'
+import { pushPath, replacePath } from 'redux-simple-router'
 
 export const LOGIN_ATTEMPT = "AUTH:LOGIN_ATTEMPT"
 export const LOGIN_FAIL = "AUTH:LOGIN_FAIL"
@@ -18,7 +24,36 @@ const session = {
   token: '1234'
 }
 
-//validateToken()
+function loadInitialData(store) {
+  return (dispatch, getState) => {
+    dispatch(fetchIngredients())
+    dispatch(fetchDishes())
+    dispatch(fetchOrders())
+    dispatch(initNotifications())
+    //store.dispatch(validateToken())
+  }
+}
+
+export function requireAuth(callback) {
+  return (dispatch, getState) => {
+    if (getState().auth.logged) {
+      callback()
+    } else {
+      // DOC: An action creator that you can use to replace the current URL without updating the browser history.
+      dispatch(replacePath('/login'));
+    }
+  }
+}
+
+export function checkLogged(callback) {
+  return (dispatch, getState) => {
+    if (getState().auth.logged) {
+      dispatch(replacePath('/'))   
+    } else {
+      callback()  
+    }
+  }
+}
 
 function logginAttempt(credentials) {
   return {
@@ -41,11 +76,17 @@ function loginFail(error) {
   }  
 }
 
-function validateToken(token) {
-  return fetch('http://dah.com/session', applyToken({}, webStorage.load('token')))
-  .then( response => {
-    dispatch(loginSuccess(response.data))  
-  })
+export function validateToken() {
+  return (dispatch, getState) => {
+    const token = webStorage.load('token')
+    if (token) {
+      return fetch('http://dah.com/session', applyToken({}, token))
+      .then( response => {
+        dispatch(loadInitialData())
+        dispatch(loginSuccess(response.data))  
+      })
+    }
+  }
 }
 
 function logoutSuccess() {
@@ -85,6 +126,7 @@ export function login({email, password}) {
         })
         .catch(error => {console.log('request failed', error)})
         */
+        dispatch(loadInitialData())
         dispatch(loginSuccess(session))
         dispatch(pushPath('/'))
         resolve()
@@ -118,6 +160,7 @@ export function register(credentials) {
       dispatch(registerAttempt(credentials))  
       //fetch
       dispatch(registerSuccess(session))
+      dispatch(loadInitialData())
       dispatch(pushPath('/'))
       resolve()
     })  

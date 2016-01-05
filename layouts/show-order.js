@@ -17,7 +17,7 @@ class ShowOrder extends Component {
     this.props.removeOrder(this.props.order)  
   }
   render() {
-    const { order: {id, date }, onRemove, pvp } = this.props
+    const { order: { id, date }, pvp } = this.props
     return (
       <div>
         <span>
@@ -37,7 +37,8 @@ class ShowOrder extends Component {
 }
 
 ShowOrder.propTypes = {
-  order: PropTypes.object
+  order: PropTypes.object,
+  removeOrder: PropTypes.func.isRequired
 }
 
 export default connect(totalSelector, mapDispatchToProps)(ShowOrder)

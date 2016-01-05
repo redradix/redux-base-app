@@ -4,23 +4,12 @@ import { bindActionCreators } from 'redux'
 import { removeIngredient } from '../actions/ingredients'
 import { Link } from 'react-router'
 
-function mapStateToProps(state) {
-  const id = parseInt(state.routing.path.split("/")[2])
-  return {
-    ingredient: state.ingredients.list.find((e) => {return e.id == id})
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ removeIngredient }, dispatch)
-}
-
 class ShowIngredient extends Component {
   onRemove() {
     this.props.removeIngredient(this.props.ingredient)  
   }
   render() {
-    const { ingredient: {id, name, cost, stock }, onRemove } = this.props
+    const { ingredient: {id, name, cost, stock }} = this.props
     return (
       <div>
         <span>
@@ -40,7 +29,19 @@ class ShowIngredient extends Component {
 }
 
 ShowIngredient.propTypes = {
-  ingredient: PropTypes.object
+  ingredient: PropTypes.object,
+  removeIngredient: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+  const id = parseInt(state.routing.path.split("/")[2])
+  return {
+    ingredient: state.ingredients.list.find((e) => {return e.id == id})
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ removeIngredient }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowIngredient)

@@ -1,90 +1,53 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { Router, Route, IndexRoute } from 'react-router'
+import { Router, createRoutes } from 'react-router'
 import { createHistory } from 'history'
-import { syncReduxAndRouter, routeReducer } from 'redux-simple-router'
-import WebStorage from './utils/WebStorage'
+import { syncReduxAndRouter } from 'redux-simple-router'
 import configureStore from './store/configureStore'
-import { replacePath } from 'redux-simple-router'
-
-import App from './containers/app'
-import Home from './layouts/home'
-import Ingredients from './layouts/ingredients'
-import ListIngredients from './layouts/list-ingredients'
-import CreateIngredient from './layouts/create-ingredient'
-import ShowIngredient from './layouts/show-ingredient'
-import Orders from './layouts/orders'
-import CreateOrder from './layouts/create-order'
-import ListOrders from './layouts/list-orders'
-import ShowOrder from './layouts/show-order'
-import Dishes from './layouts/dishes'
-import CreateDish from './layouts/create-dish'
-import ListDishes from './layouts/list-dishes'
-import ShowDish from './layouts/show-dish'
-import Login from './layouts/login'
-import Register from './layouts/register'
-import { fetchIngredients } from './actions/ingredients'
-import { fetchDishes } from './actions/dishes'
-import { fetchOrders } from './actions/orders'
-import { initNotifications } from './actions/notifications'
+import rawRoutes from './routes';
+/* Actions */
+import { validateToken } from './actions/auth'
 
 
 // Wraps with middleware the createStore function
 const store = configureStore()
+/* DOC: History: history is a JavaScript library that lets you easily manage session history in browsers, testing environments, and (soon, via React Native) native devices. history abstracts away the differences in these different platforms and provides a minimal API that lets you manage the history stack, navigate, confirm navigation, and persist state between sessions. history is library-agnostic and may easily be included in any JavaScript project.
+ */
 const history = createHistory()
 
+/* DOC: ReduxSimpleRouter: Redux is awesome. React Router is cool. The problem is that react-router manages an important piece of your application state: the URL. If you are using redux, you want your app state to fully represent your UI; if you snapshotted the app state, you should be able to load it up later and see the same thing.
+ * react-router does a great job of mapping the current URL to a component tree, and continually does so with any URL changes. This is very useful, but we really want to store this state in redux as well.
+ * The entire state that we are interested in boils down to one thing: the URL. This is an extremely simple library that just puts the URL in redux state and keeps it in sync with any react-router changes. Additionally, you can change the URL via redux and react-router will change accordingly.
+ */
+
+/*
+ * DOC: Call this with a react-router and a redux store instance to install hooks that always keep both of them in sync. When one changes, so will the other.
+ */
 syncReduxAndRouter(history, store)
 
-// Load initial data
-store.dispatch(fetchIngredients())
-store.dispatch(fetchDishes())
-store.dispatch(fetchOrders())
-store.dispatch(initNotifications())
+// Trigger loading of initial data
+store.dispatch(validateToken())
 
-function requireAuth(nextState, transition, callback) {
-  if (store.getState().auth.logged) {
-    callback()
-  } else {
-    store.dispatch(replacePath('/login'));
-  }
+// Trick to have the dispatcher available on the router
+// Warning: The order of the arguments have been change from default
+function mixDispatch(routes) {
+  return routes && routes.map(route => ({
+    ...route,
+    childRoutes: mixDispatch(route.childRoutes),
+    onEnter: route.onEnter && function (props, replaceState, cb) {
+      route.onEnter(store.dispatch, cb, props, replaceState)
+    }
+  }));
 }
 
-function checkLogged(nextState, transition, callback) {
-  if (store.getState().auth.logged) {
-    store.dispatch(replacePath('/'))   
-  } else {
-    callback()  
-  }
-}
+const routes = mixDispatch(createRoutes(rawRoutes));
 
+
+// DOC: Provider: Makes the Redux store available to the connect() calls in the component hierarchy below
 render(
-  // Makes the Redux store available to the connect() calls in the component hierarchy below
   <Provider store={store}>
-    <Router history={history}>
-      <Route path="/login" component={Login} onEnter={checkLogged}/>
-      <Route path="/register" component={Register} onEnter={checkLogged}/>
-      <Route path= "/" component={App}>
-        <IndexRoute component={Home} onEnter={requireAuth} />
-        <Route path="ingredients" component={Ingredients} onEnter={requireAuth}>
-          <IndexRoute component={ListIngredients}/>
-          <Route path="create" component={CreateIngredient}/>
-          <Route path=":id/show" component={ShowIngredient}/>
-          <Route path=":id/edit" component={CreateIngredient}/>
-        </Route>  
-        <Route path="dishes" component={Dishes} onEnter={requireAuth}>
-          <IndexRoute component={ListDishes}/>
-          <Route path="create" component={CreateDish}/>
-          <Route path=":id/edit" component={CreateDish}/>
-          <Route path=":id/show" component={ShowDish}/>
-        </Route>  
-        <Route path="orders" component={Orders} onEnter={requireAuth}>
-          <IndexRoute component={ListOrders}/>
-          <Route path="create" component={CreateOrder}/>
-          <Route path=":id/edit" component={CreateOrder}/>
-          <Route path=":id/show" component={ShowOrder}/>
-        </Route>  
-      </Route>
+    <Router history={history} routes={routes}>
     </Router>
   </Provider>,
   document.getElementById('root')

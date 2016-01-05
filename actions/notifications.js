@@ -8,7 +8,7 @@ const THRESOLD = 5
 
 export function initNotifications() {
   return (dispatch, getState) => {
-    setTimeout(() => {
+    setInterval(() => {
       if (getState().auth.logged) {
         dispatch(fetchIngredients())  
         .then(() => {

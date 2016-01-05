@@ -5,17 +5,6 @@ import { removeDish, fetchDishes } from '../actions/dishes'
 import { pushPath } from 'redux-simple-router'
 import { Link } from 'react-router'
 
-function mapStateToProps(state) {
-  return {
-    isFetching: state.dishes.isFetching,
-    list: state.dishes.list
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ removeDish, fetchDishes }, dispatch, pushPath)
-}
-
 class ListDishes extends Component {
   onRemove(dish) {
     this.props.removeDish(dish)  
@@ -49,6 +38,17 @@ class ListDishes extends Component {
 ListDishes.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   list: PropTypes.array.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    isFetching: state.dishes.isFetching,
+    list: state.dishes.list
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ removeDish, fetchDishes }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListDishes)

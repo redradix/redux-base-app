@@ -97,6 +97,7 @@ export function addOrder(order) {
       //fetch
       order.date = new Date()
       dispatch(addOrderSuccess(order))
+      // DOC: An action creator that you can use to update the current URL and update the browser history. Just pass it a string like /foo/bar?param=5 as the path argument.
       dispatch(pushPath('/orders/'))
       dispatch(fetchIngredients())
       resolve()
