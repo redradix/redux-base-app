@@ -15,10 +15,10 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + '/index.html')
 })
 
+//keep this handler on the last position of the stack, it serves the index.html if reloading from any url.
 app.get('*', function (req, res){
     res.sendFile(path.resolve(__dirname, 'index.html'))
 });
-
 
 app.listen(port, function(error) {
   if (error) {
