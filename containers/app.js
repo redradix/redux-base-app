@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import DevTools from '../containers/DevTools'
+import DevTools from '../containers/dev-tools'
 import { logout } from '../actions/auth'
 import Header from '../components/header'
 
