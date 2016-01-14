@@ -3,7 +3,7 @@ import { ADD_INGREDIENT, RECEIVE_INGREDIENTS, REQUEST_INGREDIENTS, EDIT_INGREDIE
 function ingredientList(state=[], action) {
   switch (action.type) {
     case RECEIVE_INGREDIENTS:
-      return action.payload.list 
+      return action.payload
     case EDIT_INGREDIENT:
       return state.map(ingredient =>
         ingredient.id == action.payload.id ?
@@ -40,6 +40,7 @@ export default function (state = {
         list: ingredientList(state.list, action)
       })
     case REQUEST_INGREDIENTS:
+    debugger
       return Object.assign({}, state, {
         isFetching: true 
       })

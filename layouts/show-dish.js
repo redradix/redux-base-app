@@ -12,7 +12,7 @@ class ShowDish extends Component {
     this.props.removeDish(this.props.dish)  
   }
   render() {
-    const { dish: {id, name, pvp }, onRemove, escandallo } = this.props
+    const { dish: {id, name, price }, onRemove, escandallo } = this.props
     return (
       <div>
         <span>
@@ -20,7 +20,7 @@ class ShowDish extends Component {
         </span>
         <ul>
           <li><p>{name}</p></li>
-          <li><p>{pvp}</p></li>
+          <li><p>{price}</p></li>
           <li><p>{escandallo}</p></li>
         </ul>
         <Link to={`/dishes/${id}/edit/`}>Edit</Link>

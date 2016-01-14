@@ -29,7 +29,7 @@ syncReduxAndRouter(history, store)
 // Trigger loading of initial data
 store.dispatch(validateToken())
 
-// Trick to have the dispatcher available on the router
+// Hack to have the dispatcher available on the router
 // Warning: The order of the arguments have been change from default
 function mixDispatch(routes) {
   return routes && routes.map(route => ({
@@ -37,6 +37,7 @@ function mixDispatch(routes) {
     childRoutes: mixDispatch(route.childRoutes),
     onEnter: route.onEnter && function (props, replaceState, cb) {
       route.onEnter(store.dispatch, cb, props, replaceState)
+      return cb()
     }
   }));
 }

@@ -26,7 +26,7 @@ class CreateIngredientForm extends Component {
         </div>
         <div>
           <label>Cost per Kg</label>
-          <input type="text" placeholder="Cost" {...cost}/>
+          <input type='number' placeholder="Cost" {...cost}/>
           {cost.touched && cost.error && <div>{cost.error}</div>}
         </div>
         <div>
@@ -54,6 +54,7 @@ CreateIngredientForm.propTypes = {
     submitting: PropTypes.bool.isRequired
   }
 
+//TODO: Parse params to manipulate them before sending (parseInt)
 CreateIngredientForm = reduxForm({
   form: 'create-ingredient',
   fields: ['name', 'cost', 'stock', 'id']

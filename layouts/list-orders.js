@@ -34,7 +34,7 @@ class ListOrders extends Component {
           {!isFetching && list.length == 0 && <p>Empty</p>}
           {!isFetching && list.length > 0 && list.map((d, index) =>
             <li key={index}>
-              <Link to={`/orders/${d.id}/show`}>Order {d.id} </Link> from {formatDate(d.date)}
+              <Link to={`/orders/${d.id}/show`}>Order {d.id} </Link> from {formatDate(d.createdAt)}
               {' '}
               <Link to={`/orders/${d.id}/edit`}>Edit</Link>
               {' '}

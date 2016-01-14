@@ -17,7 +17,7 @@ class ShowOrder extends Component {
     this.props.removeOrder(this.props.order)  
   }
   render() {
-    const { order: { id, date }, pvp } = this.props
+    const { order: { id, createdAt}, pvp } = this.props
     return (
       <div>
         <span>
@@ -25,7 +25,7 @@ class ShowOrder extends Component {
         </span>
         <ul>
           <li><p>Order {id}</p></li>
-          <li><p>{formatDate(date)}</p></li>
+          <li><p>{formatDate(createdAt)}</p></li>
           <li><p>{pvp}</p></li>
         </ul>
         <Link to={`/orders/${id}/edit/`}>Edit</Link>

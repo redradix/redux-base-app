@@ -34,11 +34,12 @@ export const orderSelector = createSelector(
 
 // Be careful, orderDishes could be from the form or from the dishes of the order
 function pvp(dishes, orderDishes) {
+  debugger
   return orderDishes.reduce((acc, od) => {
     const d = dishes.find(d => {
       return d.id == od.id.value ? od.id.value : od.id
     })  
-    return acc + (d.pvp * (od.quantity.value ? od.quantity.value : od.quantity)) 
+    return acc + (d.price * (od.quantity.value ? od.quantity.value : od.quantity)) 
   }, 0)  
 }
 

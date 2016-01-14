@@ -1,36 +1,12 @@
 import { pushPath } from 'redux-simple-router'
 import fetch from 'isomorphic-fetch'
 import applyToken from './helpers';
-
-const dishes = [{
-  id: 1,
-  name: "Pollo al limon",
-  pvp: 10,
-  ingredients: [{
-    id: 1,
-    quantity: 34
-  },
-  {
-   id: 2,
-   quantity: 21
-  }]
-}, {
-  id: 2,
-  name: "Osobuco",
-  pvp: 1,
-  ingredients: [{
-    id: 1,
-    quantity: 64
-  },
-  {
-   id: 2,
-   quantity: 2
-  }]
-}
-]
+import { CALL_API } from '../middleware/api'
 
 export const REQUEST_DISHES = "REQUEST:DISHES";
 export const RECEIVE_DISHES = "RECEIVE:DISHES";
+export const REQUEST_DISH = "REQUEST:DISH";
+export const RECEIVE_DISH = "RECEIVE:DISH";
 export const ADD_DISH = "ADD:DISH";
 export const ADD_DISH_ATTEMPT = "ADD:DISH_ATTEMPT";
 export const ADD_DISH_FAIL = "ADD:DISH_FAIL";
@@ -42,150 +18,89 @@ export const REMOVE_DISH_ATTEMPT = "REMOVE:DISH_ATTEMPT";
 export const REMOVE_DISH_FAIL = "REMOVE:DISH_FAIL";
 
 
-export function fetchDishes(delay = 1000) {
+export function fetchDishes() {
+  return {
+    [CALL_API]: {
+      endpoint: 'dishes',
+      authenticated: true,
+      types: [REQUEST_DISHES, RECEIVE_DISHES]
+    }  
+  }
+}
+
+export function fetchDish(id) {
   return (dispatch, getState) => {
-    const token = getState().auth.token
-    dispatch(requestDishes())
-    /*fetch('https://dah.com/dishes', applyToken({}, token))
-      .then(response => response.json())
-      .then(json => dispatch(receiveDishes(json)))
-    */
-    setTimeout(() => {
-      dispatch(receiveDishes(dishes))  
-    }, delay)
-  }
-}
-
-function addDishSuccess(dish) {
-  return {
-    type: ADD_DISH,
-    payload: dish
-  }
-}
-function addDishAttempt(dish) {
-  return {
-    type: ADD_DISH_ATTEMPT,
-    payload: dish
-  }
-}
-
-
-function addDishFail(dish) {
-  return {
-    type: ADD_DISH_FAIL,
-    payload: dish
-  }
-}
-
-function editDishAttempt(dish) {
-  return {
-    type: EDIT_DISH_ATTEMPT,
-    payload: dish
-  }
-}
-
-
-function editDishSuccess(dish) {
-  return {
-    type: EDIT_DISH,
-    payload: dish
-  }
-}
-
-function editDishFail(dish) {
-  return {
-    type: EDIT_DISH_FAIL,
-    payload: dish
+    return dispatch({
+      [CALL_API]: {
+        endpoint: ['dishes', '/',  id].join(''),
+        authenticated: true,
+        types: [REQUEST_DISH, RECEIVE_DISH]
+      }  
+    })
   }
 }
 
 export function addDish(dish) {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      dispatch(addDishAttempt(dish))
-      if (getState().dishes.list.map((i) => i.name).includes(dish.name)) {
-        dispatch(addDishFail(dish))
-        reject({name: "Dish already exists", error: 'Addition fail'})
+    return dispatch({
+      [CALL_API]: {
+        endpoint: 'dishes',
+        authenticated: true,
+        config: {
+          method: 'POST',
+          body: JSON.stringify(dish)
+        },
+        types: [ADD_DISH_ATTEMPT, ADD_DISH, ADD_DISH_FAIL]
+      }  
+    }).then( ({ payload, error }) => {
+      if (error) {
+        Promise.reject({name: "Dish already exists", error: 'Addition fail'})
       } else {
-        //fetch
-        dispatch(addDishSuccess(dish))
         dispatch(pushPath('/dishes/'))
-        resolve()
       }
-    })
+    }) 
   }
 }
 
 export function editDish(dish) {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      dispatch(editDishAttempt(dish))
-      const exists = getState().dishes.list.find(e => e.id == dish.id)
-      if (exists) {
-        //fetch
-        dispatch(editDishSuccess(dish))
-        dispatch(pushPath('/dishes/'))
-        resolve()
+    return dispatch({
+      [CALL_API]: {
+        endpoint: ['dishes', '/',  dish.id].join(''),
+        authenticated: true,
+        config: {
+          method: 'PUT',
+          body: JSON.stringify(dish)
+        },
+        types: [EDIT_DISH_ATTEMPT, EDIT_DISH, EDIT_DISH_FAIL]
+      }  
+    }).then( ({ payload, error }) => {
+      if (error) {
+        Promise.reject({name: "Dish does not  exists", error: 'Edition fail'})
       } else {
-        dispatch(editDishFail(dish))
-        reject({name: "Dish does not exists", error: 'Edit fail'})
+        dispatch(pushPath('/dishes/'))
       }
-    })
+    }) 
   }
 }
 
 export function removeDish(dish) {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      //API call
-      dispatch(removeDishAttempt(dish))
-      //fetch
-      if (true) {
-        dispatch(removeDishSuccess(dish))  
-        dispatch(pushPath('dishes'))
-        resolve()
+    return dispatch({
+      [CALL_API]: {
+        endpoint: ['dishes', '/',  dish.id].join(''),
+        authenticated: true,
+        config: {
+          method: 'DELETE'
+        },
+        types: [REMOVE_DISH_ATTEMPT, REMOVE_DISH, REMOVE_DISH_FAIL]
+      }  
+    }).then( ({ payload, error }) => {
+      if (error) {
+        Promise.reject({name: "Dish does not exists", error: 'Remove fail'})
       } else {
-        dispatch(removeDishFail(dish))  
-        reject({name: "Dish cannot be removed right now", error: 'Remove fail'})  
+        dispatch(pushPath('/dishes/'))
       }
-    })  
+    }) 
   }  
 }
-
-export function removeDishAttempt(dish) {
-  return {
-    type: REMOVE_DISH_ATTEMPT,
-    payload: dish
-  }  
-}
-
-export function removeDishFail(dish) {
-  return {
-    type: REMOVE_DISH_FAIL,
-    payload: dish
-  }  
-}
-
-export function removeDishSuccess(dish) {
-  return {
-    type: REMOVE_DISH,
-    payload: dish
-  }  
-}
-
-
-function receiveDishes(dishes) {
-  return {
-    type: RECEIVE_DISHES,
-    payload: {
-      list: dishes  
-    }
-  }  
-}
-
-function requestDishes() {
-  return {
-    type: REQUEST_DISHES 
-  }  
-}
-

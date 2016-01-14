@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import {reduxForm} from 'redux-form'
 import ElementsToAdd from '../components/elements-to-add'
 import ElementsAdded from '../components/elements-added'
+import { getIndice } from '../utils/utils'
 
 
 class CreateOrderForm extends Component {

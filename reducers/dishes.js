@@ -1,9 +1,15 @@
-import { ADD_DISH, RECEIVE_DISHES, REQUEST_DISHES, EDIT_DISH, REMOVE_DISH } from '../actions/dishes'
+import { ADD_DISH, RECEIVE_DISHES, RECEIVE_DISH, REQUEST_DISHES, EDIT_DISH, REMOVE_DISH } from '../actions/dishes'
 
 function dishList(state=[], action) {
   switch (action.type) {
     case RECEIVE_DISHES:
-      return action.payload.list 
+      return action.payload 
+    case RECEIVE_DISH:
+      return state.map(dish =>
+        dish.id == action.payload.id ?
+          Object.assign({}, action.payload) :
+          dish
+      )
     case EDIT_DISH:
       return state.map(dish =>
         dish.id == action.payload.id ?
@@ -44,6 +50,7 @@ export default function (state = {
         isFetching: true 
       })
     case RECEIVE_DISHES:
+    case RECEIVE_DISH:
       return Object.assign({}, state, {
         isFetching: false,
         list: dishList(state.list, action)

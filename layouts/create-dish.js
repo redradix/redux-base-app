@@ -26,7 +26,7 @@ class CreateDish extends Component {
     const { dish, ingredients, escandallo,  addArrayValue, removeArrayValue } = this.props
     return (
       <div>
-        <p>Crea el plato indicando su lista de ingredientes, nombre y pvp</p>
+        <p>Crea el plato indicando su lista de ingredientes, nombre y precio</p>
         <CreateDishForm onSubmit={this.onSubmit.bind(this)} initialValues={ dish } totalIngredients={ingredients}  removeIngredient={removeArrayValue} escandallo={escandallo} addIngredient={addArrayValue}/>
       </div>
     )

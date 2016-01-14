@@ -6,7 +6,7 @@ import {reduxForm} from 'redux-form'
 
 const validate = createValidator({
   name: [required, minLength(5), maxLength(10)],
-  pvp: [required, integer]
+  price: [required, integer]
 });
 
 class CreateDishForm extends Component {
@@ -26,7 +26,7 @@ class CreateDishForm extends Component {
   }
   render() {
     const {
-          fields: {name, cost, pvp, id, ingredients  },
+          fields: {name, cost, price, id, ingredients  },
           totalIngredients,
           escandallo,
           removeIngredientFromDish,
@@ -43,9 +43,9 @@ class CreateDishForm extends Component {
           {name.touched && name.error && <div>{name.error}</div>}
         </div>
         <div>
-          <label>PVP</label>
-          <input type="integer" placeholder="PVP" {...pvp}/>
-          {pvp.touched && pvp.error && <div>{pvp.error}</div>}
+          <label>price</label>
+          <input type="integer" placeholder="price" {...price}/>
+          {price.touched && price.error && <div>{price.error}</div>}
         </div>
         <ElementsToAdd subject='ingredient' elements={totalIngredients}  add={this.addIngredientToDish.bind(this)} />
         <ElementsAdded subject='ingredient' elements= {ingredients} totalElements={totalIngredients} remove={this.removeIngredientFromDish.bind(this)}/>
@@ -78,7 +78,7 @@ CreateDishForm = reduxForm({
   form: 'create-dish',
   validate,
   fields: ['name',
-           'pvp', 
+           'price', 
            'id',
            'ingredients[].name',
            'ingredients[].id',

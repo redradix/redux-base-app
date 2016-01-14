@@ -3,7 +3,7 @@ import { ADD_ORDER, RECEIVE_ORDERS, REQUEST_ORDERS, EDIT_ORDER, REMOVE_ORDER } f
 function orderList(state=[], action) {
   switch (action.type) {
     case RECEIVE_ORDERS:
-      return action.payload.list 
+      return action.payload 
     case EDIT_ORDER:
       return state.map(order =>
         order.id == action.payload.id ?

@@ -2,7 +2,6 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import bindActionData from 'redux-form/lib/bindActionData'
-import { getIndice } from '../utils/utils'
 
 /* Selectors */
 import { totalSelector } from '../selectors/orders'

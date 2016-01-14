@@ -1,32 +1,9 @@
 import { pushPath } from 'redux-simple-router'
+import { CALL_API } from '../middleware/api'
 import fetch from 'isomorphic-fetch'
-import { applyToken } from './helpers'
+import { applyHeaders } from './helpers'
+import config from '../config'
 import { fetchIngredients } from './ingredients'
-
-const orders = [{
-  id: 1,
-  date: new Date(),
-  dishes: [{
-    id: 1,
-    quantity: 3
-  },
-  {
-   id: 2,
-   quantity: 2
-  }]
-}, {
-  id: 2,
-  date: new Date(),
-  dishes: [{
-    id: 1,
-    quantity: 6
-  },
-  {
-   id: 2,
-   quantity: 1
-  }]
-}
-]
 
 export const REQUEST_ORDERS = "REQUEST:ORDERS";
 export const RECEIVE_ORDERS = "RECEIVE:ORDERS";
@@ -41,11 +18,10 @@ export const REMOVE_ORDER_ATTEMPT = "REMOVE:ORDER_ATTEMPT";
 export const REMOVE_ORDER_FAIL = "REMOVE:ORDER_FAIL";
 
 function receiveOrders(orders) {
+  debugger
   return {
     type: RECEIVE_ORDERS,
-    payload: {
-      list: orders  
-    }
+    payload: orders
   }  
 }
 
@@ -59,13 +35,14 @@ export function fetchOrders(delay = 1000) {
   return (dispatch, getState) => {
     const token = getState().auth.token
     dispatch(requestOrders())
-    /*fetch('https://dah.com/orders', applyToken({}, token))
+    return fetch([config.api, 'orders'].join(''), applyHeaders({}, token))
       .then(response => response.json())
-      .then(json => dispatch(receiveOrders(json)))
-    */
-    setTimeout(() => {
+      .then(json => dispatch(receiveOrders(json.data)))
+    
+    /*setTimeout(() => {
       dispatch(receiveOrders(orders))  
     }, delay)
+    */
   }
 }
 
@@ -92,18 +69,42 @@ function addOrderFail(order) {
 
 export function addOrder(order) {
   return (dispatch, getState) => {
+    /*order.date = new Date()
+    return {
+      [CALL_API]: {
+        endpoint: 'orders',
+        authenticated: true,
+        body: order, 
+        method: 'POST',
+        types: [ADD_ORDER, ADD_ORDER_FAIL, ADD_ORDER_ATTEMPT]
+      }
+    }*/
     return new Promise((resolve, reject) => {
       dispatch(addOrderAttempt(order))
-      //fetch
+      const token = localStorage.getItem('token')
       order.date = new Date()
-      dispatch(addOrderSuccess(order))
-      // DOC: An action creator that you can use to update the current URL and update the browser history. Just pass it a string like /foo/bar?param=5 as the path argument.
-      dispatch(pushPath('/orders/'))
-      dispatch(fetchIngredients())
-      resolve()
-      //Fail
-      //dispatch(addOrderFail(order))
-      //reject({name: "Order already exists", error: 'Addition fail'})
+      return fetch([config.api, 'orders'].join(''), 
+        applyToken({
+          body: order
+        }, {
+          token,
+          method: 'POST',
+        })  
+      )
+      .then( response => {
+        response.json().then(json => ({ json, response }))
+      }).then(({ json, response }) =>  {
+        if (response.ok) {
+        dispatch(addOrderSuccess(json.data))
+        // DOC: An action creator that you can use to update the current URL and update the browser history. Just pass it a string like /foo/bar?param=5 as the path argument.
+        dispatch(pushPath('/orders/'))
+        dispatch(fetchIngredients())
+        resolve()
+        } else {
+          dispatch(addOrderFail(json.errors[0].message))
+          reject({name: json.errors[0].message, _error: 'Addition fail'})
+        }
+      })
     })
   }
 }

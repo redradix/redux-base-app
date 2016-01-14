@@ -1,6 +1,8 @@
+//TODO: Introducir los metodos de middleware api
+//TODO: Cambiar validate token por session (get) y llamarlo desde el login
 import fetch from 'isomorphic-fetch'
-import webStorage from '../utils/WebStorage'
 import { applyToken, applyHeaders } from './helpers';
+import config from "../config" 
 
 /* Actions */
 import { fetchIngredients } from './ingredients'
@@ -18,27 +20,18 @@ export const REGISTER = "AUTH:REGISTER"
 export const REGISTER_ATTEMPT = "AUTH:REGISTER_ATTEMPT"
 export const REGISTER_FAIL = "AUTH:REGISTER_FAIL"
 
-const session = {
-  username: 'Kanedaki',
-  email: 'kanedaki@gmail.com',
-  token: '1234'
-}
-
 function loadInitialData(store) {
   return (dispatch, getState) => {
     dispatch(fetchIngredients())
     dispatch(fetchDishes())
     dispatch(fetchOrders())
-    dispatch(initNotifications())
-    //store.dispatch(validateToken())
+    //dispatch(initNotifications())
   }
 }
 
-export function requireAuth(callback) {
+export function requireAuth() {
   return (dispatch, getState) => {
-    if (getState().auth.logged) {
-      callback()
-    } else {
+    if (!getState().auth.logged) {
       // DOC: An action creator that you can use to replace the current URL without updating the browser history.
       dispatch(replacePath('/login'));
     }
@@ -78,14 +71,21 @@ function loginFail(error) {
 
 export function validateToken() {
   return (dispatch, getState) => {
-    const token = webStorage.load('token')
-    if (token) {
-      return fetch('http://dah.com/session', applyToken({}, token))
-      .then( response => {
+    const token = localStorage.getItem('token')
+    return fetch([config.api, "session"].join(""), applyHeaders({}, token))
+    .then(response =>
+      response.json().then(json => ({ json, response }))
+    ).then(({ json, response }) =>  {
+      if (response.ok) {
+        json.data.token = localStorage.getItem('token')
+        delete json.data.id
+        dispatch(loginSuccess(json.data))  
         dispatch(loadInitialData())
-        dispatch(loginSuccess(response.data))  
-      })
-    }
+      } else {
+        dispatch(logout())  
+        localStorage.removeItem('token')
+      } 
+    })
   }
 }
 
@@ -97,40 +97,39 @@ function logoutSuccess() {
 
 export function logout() {
   return (dispatch, getState) => {
+    localStorage.removeItem('token')
     dispatch(logoutSuccess())
     dispatch(pushPath("/login"))
   }
 }
 
-export function login({email, password}) {
+export function login({username, password}) {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-      if (getState().auth.logged) {
-        reject({error: 'Already logged in'})  
-      } else {
-        dispatch(logginAttempt({login, password}))  
-        /*
-        return fetch('http://dah.com/login' + createQueryString({ email, password }),
-          applyHeaders({
-            method: 'post',
-          }, {})
-        )
-        .then( response => {
-          if (response.status >= 200 && response.status < 300) {
-            dispatch(loginSuccess(response.data))  
-            resolve()
-          } else {
-            dispatch(loginFail(response))
-            reject({error: response.statusText})
-          } 
-        })
-        .catch(error => {console.log('request failed', error)})
-        */
-        dispatch(loadInitialData())
-        dispatch(loginSuccess(session))
-        dispatch(pushPath('/'))
-        resolve()
-      } 
+      dispatch(logginAttempt({login, password}))  
+      return fetch([config.api, 'session'].join(''),
+        applyHeaders({
+          method: 'POST',
+          body: JSON.stringify({
+            username: username,
+            password: password
+          })
+        }, {})
+      ).then(response =>
+        response.json().then(json => ({ json, response }))
+      ).then(({ json, response }) =>  {
+        if (response.ok) {
+          localStorage.setItem('token', json.data.token)
+          dispatch(loginSuccess(json.data))  
+          dispatch(loadInitialData())
+          dispatch(pushPath('/'))
+          resolve()
+        } else {
+          dispatch(loginFail(json.errors[0].message))
+          reject({password: json.errors[0].message, _error: 'There was an error during login'})
+        } 
+      })
+      .catch(error => {console.log('request failed', error)})
     })
   }    
 }
@@ -141,7 +140,8 @@ function registerAttempt(credentials) {
   }  
 }
 
-function registerFail(credentials) {
+function registerFail(response) {
+  console.log(response)
   return {
     type: REGISTER_FAIL
   }  
@@ -158,13 +158,27 @@ export function register(credentials) {
   return (dispatch, getState) => {
     return new Promise((resolve, reject) => {
       dispatch(registerAttempt(credentials))  
-      //fetch
-      dispatch(registerSuccess(session))
-      dispatch(loadInitialData())
-      dispatch(pushPath('/'))
-      resolve()
+      return fetch([config.api, 'register'].join(""), applyHeaders({
+        method: 'POST',
+        body: JSON.stringify({
+          username: credentials.username,
+          password: credentials.password
+        })
+      }))
+      .then(response =>
+        response.json().then(json => ({ json, response }))
+      ).then(({ json, response }) =>  {
+        if (response.ok) {
+          webStorage.save('token', json.data.token)
+          dispatch(registerSuccess(json.data))
+          dispatch(loadInitialData())
+          dispatch(pushPath('/'))
+          resolve()
+        } else {
+          dispatch(registerFail(json.errors[0].message))
+          reject({username: json.errors[0].message, _error: 'There was an error during register'})
+        }
+      })
     })  
   }  
 }
-
-

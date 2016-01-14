@@ -20,6 +20,7 @@ import Login from './layouts/login'
 import Register from './layouts/register'
 
 import { checkLogged, requireAuth } from './actions/auth'
+import { fetchDish } from './actions/dishes'
 
 export default (
   <Route>
@@ -38,8 +39,8 @@ export default (
       <Route path="dishes" component={Dishes}>
         <IndexRoute component={ListDishes}/>
         <Route path="create" component={CreateDish}/>
-        <Route path=":id/edit" component={CreateDish}/>
-        <Route path=":id/show" component={ShowDish}/>
+        <Route path=":id/edit" component={CreateDish} onEnter={(dispatch, cb, props) => dispatch(fetchDish(props.params.id))}/>
+        <Route path=":id/show" component={ShowDish} onEnter={(dispatch, cb, props) => dispatch(fetchDish(props.params.id))}/>
       </Route>  
       <Route path="orders" component={Orders}>
         <IndexRoute component={ListOrders}/>
