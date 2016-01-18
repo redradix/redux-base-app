@@ -1,7 +1,13 @@
-import { ADD_ORDER, RECEIVE_ORDERS, REQUEST_ORDERS, EDIT_ORDER, REMOVE_ORDER } from '../actions/orders'
+import { REQUEST_ORDER, RECEIVE_ORDER, ADD_ORDER, RECEIVE_ORDERS, REQUEST_ORDERS, EDIT_ORDER, REMOVE_ORDER } from '../actions/orders'
 
 function orderList(state=[], action) {
   switch (action.type) {
+    case RECEIVE_ORDER:
+      return state.map(order=>
+        order.id == action.payload.id ?
+          Object.assign({}, action.payload) :
+          order 
+      )
     case RECEIVE_ORDERS:
       return action.payload 
     case EDIT_ORDER:
@@ -40,10 +46,12 @@ export default function (state = {
         list: orderList(state.list, action)
       })
     case REQUEST_ORDERS:
+    case REQUEST_ORDER:
       return Object.assign({}, state, {
         isFetching: true 
       })
     case RECEIVE_ORDERS:
+    case RECEIVE_ORDER:
       return Object.assign({}, state, {
         isFetching: false,
         list: orderList(state.list, action)

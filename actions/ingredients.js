@@ -100,13 +100,14 @@ export function removeIngredient(ingredient) {
 export function checkAvailability(order) {
   return (dispatch, getState) => {
     return dispatch(fetchIngredients())
+    return dispatch(fetchDishes())
     .then(() => {
       const ingredients = getState().ingredients.list
       const dishes = getState().dishes.list
       return order.dishes.reduce((acc, d) => {
         const dish = findById(d.id, dishes) 
         const available = dish.ingredients.reduce((acc, ingredient) => {
-          return acc && (ingredient.quantity < findById(ingredient.id, ingredients).stock)
+          return acc && (ingredient.amount < findById(ingredient.id, ingredients).stock)
         }, true)  
         available ? acc : acc.push(dish)
         return acc

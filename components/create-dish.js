@@ -10,8 +10,8 @@ const validate = createValidator({
 });
 
 class CreateDishForm extends Component {
-  addIngredientToDish(id, quantity, name) {
-    const dishIngredient = {id, quantity, name}
+  addIngredientToDish(id, amount, name) {
+    const dishIngredient = {id, amount, name}
     const index = this.props.values.ingredients.reduce((acc, i, index) => {
       return i.id == id ? index : acc
     }, undefined) 
@@ -82,7 +82,7 @@ CreateDishForm = reduxForm({
            'id',
            'ingredients[].name',
            'ingredients[].id',
-           'ingredients[].quantity'
+           'ingredients[].amount'
   ]
 })(CreateDishForm)
 

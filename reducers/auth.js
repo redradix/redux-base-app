@@ -1,9 +1,8 @@
-import { LOGIN, LOGIN_ATTEMPT, LOGIN_FAIL, LOGOUT, REGISTER, REGISTER_ATTEMPT, REGISTER_FAIL } from '../actions/auth'
+import { VALIDATE_TOKEN_FAIL, VALIDATE_TOKEN, LOGIN, LOGIN_ATTEMPT, LOGIN_FAIL, LOGOUT, REGISTER, REGISTER_ATTEMPT, REGISTER_FAIL } from '../actions/auth'
 
 function session(state={
     username: undefined,
-    email: undefined,
-    token: localStorage.getItem('token')
+    email: undefined
   }, action) {
   switch (action.type) {
     case REGISTER:
@@ -16,9 +15,8 @@ function session(state={
   } 
 }
 
-
 export default function (state={
-  logged: localStorage.getItem('token') ? true : false,
+  logged: false,
   loging: false,
   registering: false,
   session: session(undefined, {type: 'none'}) 
@@ -31,6 +29,14 @@ export default function (state={
     case LOGIN_ATTEMPT: 
       return Object.assign({}, state, {
         loging: true  
+      })
+    case VALIDATE_TOKEN_FAIL:
+      return Object.assign({}, state, {
+        logged: false
+      })
+    case VALIDATE_TOKEN:
+      return Object.assign({}, state, {
+        logged: true  
       })
     case LOGIN:
       return Object.assign({}, state, {

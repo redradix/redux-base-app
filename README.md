@@ -1,5 +1,12 @@
 # reduxBaseApp
 
+### Start up
+
+* `npm install` to download and install all dependencies.
+* `npm start` to start the node server.
+
+Your app will be running on port 3000.
+
 ## Terms in redux
 http://rackt.org/redux/docs/Glossary.html#action-creator
 
@@ -26,6 +33,6 @@ So, when should I use containers in this architecture? When the props injected t
 https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.iugz80pst
 In this architecture, the smart components are under layouts and correspond to route handlers, and dumb components are under components
 
-##Redux resources 
+##Redux resources
 More info on redux
 https://github.com/xgrommx/awesome-redux

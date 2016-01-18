@@ -4,14 +4,14 @@ import { pluralize } from "../utils/utils"
 class Element extends Component {
   onClick(e) {
     e.preventDefault()
-    this.props.add(this.props.id, parseInt(this.refs.quantity.value), this.props.name)  
+    this.props.add(this.props.id, parseInt(this.refs.amount.value), this.props.name)  
   }
   render() {
     const { name, subject } = this.props  
     return (
       <div>
         <p>{name}</p>
-        <input type="integer" placeholder="quantity" ref="quantity" />
+        <input type="integer" placeholder="amount" ref="amount" />
         <button onClick={this.onClick.bind(this)}> Add {subject}</button>
       </div>
     )  

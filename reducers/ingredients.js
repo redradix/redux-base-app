@@ -40,7 +40,6 @@ export default function (state = {
         list: ingredientList(state.list, action)
       })
     case REQUEST_INGREDIENTS:
-    debugger
       return Object.assign({}, state, {
         isFetching: true 
       })

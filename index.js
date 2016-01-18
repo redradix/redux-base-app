@@ -26,9 +26,6 @@ const history = createHistory()
  */
 syncReduxAndRouter(history, store)
 
-// Trigger loading of initial data
-store.dispatch(validateToken())
-
 // Hack to have the dispatcher available on the router
 // Warning: The order of the arguments have been change from default
 function mixDispatch(routes) {

@@ -18,6 +18,7 @@
   "homepage": "http://rackt.github.io/redux",
   "dependencies": {
     "dom-scroll-into-view": "^1.0.1",
+    "history": "^1.17.0",
     "isomorphic-fetch": "^2.2.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
@@ -27,6 +28,7 @@
     "redux": "^3.0.0",
     "redux-devtools": "^3.0.0",
     "redux-form": "^4.0.5",
+    "redux-simple-router": "^1.0.2",
     "redux-thunk": "^0.1.0",
     "reselect": "^2.0.1"
   },

@@ -6,8 +6,8 @@ import { getIndice } from '../utils/utils'
 
 
 class CreateOrderForm extends Component {
-  addDishToOrder(id, quantity, name) {
-    const orderDish= {id, quantity, name}
+  addDishToOrder(id, amount, name) {
+    const orderDish= {id, amount, name}
     const index = getIndice(id, this.props.values.dishes)
     if (index !== undefined) {this.props.removeDish('dishes', index)}
     this.props.addDish('dishes', orderDish, index == -1 ? undefined : index) 
@@ -61,7 +61,7 @@ CreateOrderForm = reduxForm({
   fields: ['id',
            'dishes[].name',
            'dishes[].id',
-           'dishes[].quantity'
+           'dishes[].amount'
   ]
 })(CreateOrderForm)
 

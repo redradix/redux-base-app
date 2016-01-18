@@ -1,8 +1,8 @@
-//TODO: Introducir los metodos de middleware api
 //TODO: Cambiar validate token por session (get) y llamarlo desde el login
 import fetch from 'isomorphic-fetch'
 import { applyToken, applyHeaders } from './helpers';
 import config from "../config" 
+import { CALL_API } from '../middleware/api'
 
 /* Actions */
 import { fetchIngredients } from './ingredients'
@@ -10,6 +10,10 @@ import { fetchDishes } from './dishes'
 import { fetchOrders } from './orders'
 import { initNotifications } from './notifications'
 import { pushPath, replacePath } from 'redux-simple-router'
+
+export const VALIDATE_TOKEN_FAIL = "AUTH:VALIDATE_TOKEN_FAIL"
+export const VALIDATE_TOKEN = "AUTH:VALIDATE_TOKEN"
+export const VALIDATE_TOKEN_ATTEMPT = "AUTH:VALIDATE_TOKEN_ATTEMPT"
 
 export const LOGIN_ATTEMPT = "AUTH:LOGIN_ATTEMPT"
 export const LOGIN_FAIL = "AUTH:LOGIN_FAIL"
@@ -29,15 +33,6 @@ function loadInitialData(store) {
   }
 }
 
-export function requireAuth() {
-  return (dispatch, getState) => {
-    if (!getState().auth.logged) {
-      // DOC: An action creator that you can use to replace the current URL without updating the browser history.
-      dispatch(replacePath('/login'));
-    }
-  }
-}
-
 export function checkLogged(callback) {
   return (dispatch, getState) => {
     if (getState().auth.logged) {
@@ -48,44 +43,23 @@ export function checkLogged(callback) {
   }
 }
 
-function logginAttempt(credentials) {
-  return {
-    type: LOGIN_ATTEMPT,
-    payload: credentials
-  }  
-}
-
-function loginSuccess(session) {
-  return {
-    type: LOGIN,
-    payload: session
-  }  
-}
-
-function loginFail(error) {
-  return {
-    type: LOGIN_FAIL,
-    payload: error 
-  }  
-}
-
 export function validateToken() {
   return (dispatch, getState) => {
-    const token = localStorage.getItem('token')
-    return fetch([config.api, "session"].join(""), applyHeaders({}, token))
-    .then(response =>
-      response.json().then(json => ({ json, response }))
-    ).then(({ json, response }) =>  {
-      if (response.ok) {
-        json.data.token = localStorage.getItem('token')
-        delete json.data.id
-        dispatch(loginSuccess(json.data))  
-        dispatch(loadInitialData())
-      } else {
-        dispatch(logout())  
-        localStorage.removeItem('token')
-      } 
-    })
+    if (!getState().auth.logged) {
+      return dispatch({
+        [CALL_API]: {
+          endpoint: 'session',
+          authenticated: true,
+          types: [VALIDATE_TOKEN_ATTEMPT, VALIDATE_TOKEN, VALIDATE_TOKEN_FAIL],
+        }  
+      }).then(({ payload, error}) =>  {
+        if (!error) {
+          dispatch(loadInitialData())
+        } else {
+          localStorage.removeItem('token')
+        } 
+      })
+    }
   }
 }
 
@@ -105,80 +79,54 @@ export function logout() {
 
 export function login({username, password}) {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      dispatch(logginAttempt({login, password}))  
-      return fetch([config.api, 'session'].join(''),
-        applyHeaders({
+    return dispatch({
+      [CALL_API]: {
+        endpoint: 'session',
+        config: {
           method: 'POST',
           body: JSON.stringify({
             username: username,
             password: password
           })
-        }, {})
-      ).then(response =>
-        response.json().then(json => ({ json, response }))
-      ).then(({ json, response }) =>  {
-        if (response.ok) {
-          localStorage.setItem('token', json.data.token)
-          dispatch(loginSuccess(json.data))  
-          dispatch(loadInitialData())
-          dispatch(pushPath('/'))
-          resolve()
-        } else {
-          dispatch(loginFail(json.errors[0].message))
-          reject({password: json.errors[0].message, _error: 'There was an error during login'})
-        } 
-      })
-      .catch(error => {console.log('request failed', error)})
+        },
+        types: [LOGIN_ATTEMPT, LOGIN, LOGIN_FAIL],
+        //parseResponse:
+      }  
+    }).then(({ payload, error}) =>  {
+      if (!error) {
+        localStorage.setItem('token', payload.token)
+        dispatch(loadInitialData())
+        dispatch(pushPath('/'))
+      } else {
+        reject({password: json.errors[0].message, _error: 'There was an error during login'})
+      } 
     })
   }    
 }
 
-function registerAttempt(credentials) {
-  return {
-    type: REGISTER_ATTEMPT  
-  }  
-}
-
-function registerFail(response) {
-  console.log(response)
-  return {
-    type: REGISTER_FAIL
-  }  
-}
-
-function registerSuccess(credentials) {
-  return {
-    type: REGISTER,
-    payload: credentials
-  }  
-}
-
 export function register(credentials) {
   return (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-      dispatch(registerAttempt(credentials))  
-      return fetch([config.api, 'register'].join(""), applyHeaders({
-        method: 'POST',
-        body: JSON.stringify({
-          username: credentials.username,
-          password: credentials.password
-        })
-      }))
-      .then(response =>
-        response.json().then(json => ({ json, response }))
-      ).then(({ json, response }) =>  {
-        if (response.ok) {
-          webStorage.save('token', json.data.token)
-          dispatch(registerSuccess(json.data))
-          dispatch(loadInitialData())
-          dispatch(pushPath('/'))
-          resolve()
-        } else {
-          dispatch(registerFail(json.errors[0].message))
-          reject({username: json.errors[0].message, _error: 'There was an error during register'})
-        }
-      })
-    })  
+    return dispatch({
+      [CALL_API]: {
+        endpoint: 'register',
+        config: {
+          method: 'POST',
+          body: JSON.stringify({
+            username: credentials.username,
+            password: credentials.password
+          })
+        },
+        types: [REGISTER_ATTEMPT, REGISTER, REGISTER_FAIL],
+        //parseResponse:
+      }  
+    }).then(({ payload, error}) =>  {
+      if (error.ok) {
+        webStorage.save('token', json.data.token)
+        dispatch(loadInitialData())
+        dispatch(pushPath('/'))
+      } else {
+        reject({username: json.errors[0].message, _error: 'There was an error during register'})
+      }
+    })
   }  
 }

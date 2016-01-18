@@ -7,11 +7,11 @@ class Element extends Component  {
     this.props.remove(this.props.id.value)  
   }
   render() {
-    const {subject, name, quantity, remove} = this.props  
+    const {subject, name, amount, remove} = this.props  
     return (
       <div>
         <p>{name.value}</p>
-        <p>{quantity.value}</p>
+        <p>{amount.value}</p>
         <button onClick={this.onClick.bind(this)}> Remove {subject}</button>
       </div>
     )  
@@ -28,7 +28,7 @@ class ElementsAdded extends Component {
         <Element
           id={e.id}
           remove= {remove}
-          quantity= {e.quantity}
+          amount= {e.amount}
           name={e.name}
           key={e.id.value}/ >
       )

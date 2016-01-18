@@ -17,16 +17,21 @@ class ShowOrder extends Component {
     this.props.removeOrder(this.props.order)  
   }
   render() {
-    const { order: { id, createdAt}, pvp } = this.props
+    const { order: { id, createdAt}, pvp, isFetching } = this.props
     return (
       <div>
         <span>
           <h1>Info de la comanda</h1>
         </span>
         <ul>
-          <li><p>Order {id}</p></li>
-          <li><p>{formatDate(createdAt)}</p></li>
-          <li><p>{pvp}</p></li>
+          {isFetching && <p>Loading...</p>}
+          {!isFetching &&  
+            <div>
+              <li><p>Order {id}</p></li>
+              <li><p>{formatDate(createdAt)}</p></li>
+              <li><p>{pvp}</p></li>
+            </div>
+          }
         </ul>
         <Link to={`/orders/${id}/edit/`}>Edit</Link>
         {' '}
@@ -38,6 +43,7 @@ class ShowOrder extends Component {
 
 ShowOrder.propTypes = {
   order: PropTypes.object,
+  isFetching: PropTypes.bool.isRequired,
   removeOrder: PropTypes.func.isRequired
 }
 

@@ -6,7 +6,7 @@ function findDishes(dishes, orderDishes) {
     const orderDish = orderDishes.find(od => {
       return d.id == od.id  
     })
-    orderDish ? acc.push(Object.assign({}, d, {quantity: orderDish.quantity})) : acc
+    orderDish ? acc.push(Object.assign({}, d, {amount: orderDish.amount})) : acc
     return acc
   }, [])  
 }
@@ -19,6 +19,7 @@ function find(dishes, orders, orderId) {
 
 const routeSelector = (state, props) => props.params.id
 const listSelector = state => state.orders.list
+const fetchingSelector = state => state.orders.isFetching
 const dishesSelector = (state) => state.dishes.list
 const formSelector = (state) => state.form['create-order'] ? state.form['create-order'].dishes :undefined 
 
@@ -39,7 +40,7 @@ function pvp(dishes, orderDishes) {
     const d = dishes.find(d => {
       return d.id == od.id.value ? od.id.value : od.id
     })  
-    return acc + (d.price * (od.quantity.value ? od.quantity.value : od.quantity)) 
+    return acc + (d.price * (od.amount.value ? od.amount.value : od.amount)) 
   }, 0)  
 }
 
@@ -53,12 +54,13 @@ export const pvpSelector = createSelector(
 )
 
 export const totalSelector = createSelector(
-  [orderSelector, pvpSelector, dishesSelector],
-  (order, pvp, dishes) => {
+  [orderSelector, pvpSelector, dishesSelector, fetchingSelector],
+  (order, pvp, dishes, isFetching) => {
     return {
       order,
       dishes,
-      pvp
+      pvp,
+      isFetching
     }  
   }
 )

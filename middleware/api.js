@@ -1,6 +1,8 @@
 //TODO: Not finished (post requests)
 import config from '../config'
 import { applyToken, applyHeaders }from '../actions/helpers'
+import { LOGOUT } from '../actions/auth'
+import { pushPath } from 'redux-simple-router'
 
 const BASE_URL = config.api 
 
@@ -10,7 +12,7 @@ function callApi(endpoint, authenticated, config={}) {
   config = applyHeaders(config, token)
 
   if (authenticated && !token) {
-    throw "No token saved!"
+    return Promise.reject("Unauthorized")
   }
 
   return fetch(BASE_URL + endpoint, config)
@@ -43,6 +45,7 @@ export default store => next => action => {
 
   const [ requestType, successType, errorType] = types
 
+  next({type: requestType, authenticated})
   // Passing the authenticated boolean back in our data will let us distinguish
   return callApi(endpoint, authenticated, config).then(
     payload =>
@@ -51,10 +54,18 @@ export default store => next => action => {
         authenticated,
         type: successType
       }),
-    error => 
-      next({
-        error: error.message || 'There was an error.',
-        type: errorType
-      })
+    error => {
+      debugger
+      if (error == 'Unauthorized') {
+        next({type: LOGOUT})
+        next(pushPath('/login'))
+        return Promise.reject(error)
+      } else {
+        next({
+          error: error.message || 'There was an error.',
+          type: errorType
+        })
+      }
+    }
   )
 }

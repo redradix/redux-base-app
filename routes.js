@@ -19,8 +19,9 @@ import ShowDish from './layouts/show-dish'
 import Login from './layouts/login'
 import Register from './layouts/register'
 
-import { checkLogged, requireAuth } from './actions/auth'
+import { checkLogged, validateToken } from './actions/auth'
 import { fetchDish } from './actions/dishes'
+import { fetchOrder} from './actions/orders'
 
 export default (
   <Route>
@@ -28,7 +29,7 @@ export default (
       <Route path="/login" component={Login}/>
       <Route path="/register" component={Register}/>
     </Route>
-    <Route component={App} onEnter={(dispatch, cb) => dispatch(requireAuth(cb))}>
+    <Route component={App} onEnter={(dispatch, cb) => dispatch(validateToken(cb))}>
       <Route  path= "/" component={Home} />
       <Route path="ingredients" component={Ingredients}>
         <IndexRoute component={ListIngredients}/>
@@ -45,8 +46,8 @@ export default (
       <Route path="orders" component={Orders}>
         <IndexRoute component={ListOrders}/>
         <Route path="create" component={CreateOrder}/>
-        <Route path=":id/edit" component={CreateOrder}/>
-        <Route path=":id/show" component={ShowOrder}/>
+        <Route path=":id/edit" component={CreateOrder} onEnter={(dispatch, cb, props) => dispatch(fetchOrder(props.params.id))}/>
+        <Route path=":id/show" component={ShowOrder} onEnter={(dispatch, cb, props) => dispatch(fetchOrder(props.params.id))}/>
       </Route>  
     </Route>
   </Route>

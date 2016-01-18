@@ -6,7 +6,7 @@ function findIngredients(ingredients, dishIngredients) {
     const dishIngredient = dishIngredients.find(di => {
       return i.id == di.id  
     })
-    dishIngredient ? acc.push(Object.assign({}, i, {quantity: dishIngredient.quantity})) : acc
+    dishIngredient ? acc.push(Object.assign({}, i, {amount: dishIngredient.amount})) : acc
     return acc
   }, [])  
 }
@@ -38,7 +38,7 @@ function escandallo(ingredients, dishIngredients) {
     const i = ingredients.find(i => {
       return i.id == di.id.value ? di.id.value : di.id
     })  
-    return acc + (i.cost * (di.quantity.value ? di.quantity.value : di.quantity))
+    return acc + (i.cost * (di.amount.value ? di.amount.value : di.amount))
   }, 0)  
 }
 
