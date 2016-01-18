@@ -52,27 +52,19 @@ export function validateToken() {
           authenticated: true,
           types: [VALIDATE_TOKEN_ATTEMPT, VALIDATE_TOKEN, VALIDATE_TOKEN_FAIL],
         }  
-      }).then(({ payload, error}) =>  {
-        if (!error) {
-          dispatch(loadInitialData())
-        } else {
-          localStorage.removeItem('token')
-        } 
+      }).then(({ payload }) =>  {
+        dispatch(loadInitialData())
+      }).catch((e) => {
+        localStorage.removeItem('token')
       })
     }
   }
 }
 
-function logoutSuccess() {
-  return {
-    type: LOGOUT
-  }  
-}
-
 export function logout() {
   return (dispatch, getState) => {
     localStorage.removeItem('token')
-    dispatch(logoutSuccess())
+    dispatch(LOGOUT)
     dispatch(pushPath("/login"))
   }
 }
@@ -92,14 +84,12 @@ export function login({username, password}) {
         types: [LOGIN_ATTEMPT, LOGIN, LOGIN_FAIL],
         //parseResponse:
       }  
-    }).then(({ payload, error}) =>  {
-      if (!error) {
-        localStorage.setItem('token', payload.token)
-        dispatch(loadInitialData())
-        dispatch(pushPath('/'))
-      } else {
-        reject({password: json.errors[0].message, _error: 'There was an error during login'})
-      } 
+    }).then(({ payload }) =>  {
+      localStorage.setItem('token', payload.token)
+      dispatch(loadInitialData())
+      dispatch(pushPath('/'))
+    }).catch((e) => {
+      return Promise.reject({ _error: e._error})
     })
   }    
 }
@@ -120,13 +110,11 @@ export function register(credentials) {
         //parseResponse:
       }  
     }).then(({ payload, error}) =>  {
-      if (error.ok) {
-        webStorage.save('token', json.data.token)
-        dispatch(loadInitialData())
-        dispatch(pushPath('/'))
-      } else {
-        reject({username: json.errors[0].message, _error: 'There was an error during register'})
-      }
+      webStorage.save('token', json.data.token)
+      dispatch(loadInitialData())
+      dispatch(pushPath('/'))
+    }).catch((e) => {
+      return Promise.reject({_error: e._error })
     })
   }  
 }

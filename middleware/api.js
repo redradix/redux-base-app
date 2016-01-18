@@ -22,7 +22,6 @@ function callApi(endpoint, authenticated, config={}) {
     if (!response.ok) {
       throw json.errors[0] 
     } else {
-      debugger
       return json.data
     }
   }).catch(error => {
@@ -55,15 +54,17 @@ export default store => next => action => {
         type: successType
       }),
     error => {
-      debugger
+      // Switch con todos los casos de excepcion comunes
       if (error == 'Unauthorized') {
         next({type: LOGOUT})
-        next(pushPath('/login'))
         return Promise.reject(error)
       } else {
         next({
-          error: error.message || 'There was an error.',
+          error: error || 'There was an error.',
           type: errorType
+        })
+        return Promise.reject({
+          _error: error || 'There was an error.',
         })
       }
     }

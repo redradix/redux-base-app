@@ -43,12 +43,10 @@ export function addIngredient(ingredient) {
         },
         types: [ADD_INGREDIENT_ATTEMPT, ADD_INGREDIENT, ADD_INGREDIENT_FAIL]
       }  
-    }).then( ({ payload, error }) => {
-      if (error) {
-        Promise.reject({name: "Ingredient already exists", error: 'Addition fail'})
-      } else {
-        dispatch(pushPath('/ingredients/'))
-      }
+    }).then( ({ payload }) => {
+      dispatch(pushPath('/ingredients/'))
+    }).catch(() => {
+      return Promise.reject({name: "Ingredient already exists", _error: 'Addition fail'})
     }) 
   }
 }
@@ -65,12 +63,10 @@ export function editIngredient(ingredient) {
         },
         types: [EDIT_INGREDIENT_ATTEMPT, EDIT_INGREDIENT, EDIT_INGREDIENT_FAIL]
       }  
-    }).then( ({ payload, error }) => {
-      if (error) {
-        Promise.reject({name: "Ingredient does not exists", error: 'Edition fail'})
-      } else {
-        dispatch(pushPath('/ingredients/'))
-      }
+    }).then( ({ payload }) => {
+      dispatch(pushPath('/ingredients/'))
+    }).catch((e) => {
+      return Promise.reject({name: "Ingredient does not exists", _error: 'Edition fail'})
     }) 
   }
 }
@@ -86,14 +82,11 @@ export function removeIngredient(ingredient) {
         },
         types: [REMOVE_INGREDIENT_ATTEMPT, REMOVE_INGREDIENT, REMOVE_INGREDIENT_FAIL]
       }  
-    }).then( ({ payload, error }) => {
+    }).then( ({ payload }) => {
       // TODO: Carlos. Control when the ingredient can not be removed due to referencial integrity
-      if (error) {
-        Promise.reject({name: "Ingredient does not exists", error: 'Remove fail'})
-      } else {
-        dispatch(pushPath('/ingredients/'))
-      }
-    }) 
+      // TODO: Carlos. Los errores deberian devolver un formato comun. Este podria ser {nameOfTheFieldIfExist: specificError, _error: genericError}
+      dispatch(pushPath('/ingredients/'))
+    })
   }  
 }
 

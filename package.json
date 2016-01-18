@@ -1,7 +1,7 @@
 {
   "name": "redux-counter-example",
   "version": "0.0.0",
-  "description": "Redux counter example",
+  "description": "Redux  example app for the redradix baseapp",
   "scripts": {
     "start": "node server.js",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
