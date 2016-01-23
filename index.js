@@ -6,9 +6,6 @@ import { createHistory } from 'history'
 import { syncReduxAndRouter } from 'redux-simple-router'
 import configureStore from './store/configureStore'
 import rawRoutes from './routes';
-/* Actions */
-import { validateToken } from './actions/auth'
-
 
 // Wraps with middleware the createStore function
 const store = configureStore()

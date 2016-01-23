@@ -57,6 +57,7 @@ export default store => next => action => {
       // Switch con todos los casos de excepcion comunes
       if (error == 'Unauthorized') {
         next({type: LOGOUT})
+        next(pushPath('login'))
         return Promise.reject(error)
       } else {
         next({
