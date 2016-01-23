@@ -4,11 +4,6 @@ import { applyToken, applyHeaders } from './helpers';
 import config from "../config" 
 import { CALL_API } from '../middleware/api'
 
-/* Actions */
-import { fetchIngredients } from './ingredients'
-import { fetchDishes } from './dishes'
-import { fetchOrders } from './orders'
-import { initNotifications } from './notifications'
 import { pushPath, replacePath } from 'redux-simple-router'
 
 export const VALIDATE_TOKEN_FAIL = "AUTH:VALIDATE_TOKEN_FAIL"
@@ -26,10 +21,6 @@ export const REGISTER_FAIL = "AUTH:REGISTER_FAIL"
 
 function loadInitialData(store) {
   return (dispatch, getState) => {
-    dispatch(fetchIngredients())
-    dispatch(fetchDishes())
-    dispatch(fetchOrders())
-    //dispatch(initNotifications())
   }
 }
 
@@ -45,7 +36,6 @@ export function checkLogged(callback) {
 
 export function validateToken() {
   return (dispatch, getState) => {
-    debugger
     if (!getState().auth.logged) {
       return dispatch({
         [CALL_API]: {

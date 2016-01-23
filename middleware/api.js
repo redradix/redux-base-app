@@ -1,3 +1,4 @@
+// Architecture file
 //TODO: Not finished (post requests)
 import config from '../config'
 import { applyToken, applyHeaders }from '../actions/helpers'

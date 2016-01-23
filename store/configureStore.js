@@ -1,3 +1,5 @@
+// Architecture file
+
 /* DOC: Usually this file takes care of the addition of all middleware
  *
  * Middleware: A middleware is a higher-order function that composes a dispatch function to return a new dispatch function. It often turns async actions into actions.

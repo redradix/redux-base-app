@@ -14,7 +14,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <p>Introduce tus datos de acceso a DAH</p>
+        <p>Introduce tus datos de acceso</p>
         <LoginForm onSubmit={this.onSubmit.bind(this)} />
         Si no estas registrado, <Link to='/register'>registrate</Link>
       </div>

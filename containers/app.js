@@ -6,10 +6,10 @@ import { logout } from '../actions/auth'
 import Header from '../components/header'
 
 
-function App({children, username, logout, notifications}) {
+function App({children, username, logout}) {
   return (
     <div>
-      <Header title={"DAH"} username={username} logout={logout} notifications={notifications}>
+      <Header title={"miApp"} username={username} logout={logout}>
       </Header>
       <div style={{marginTop: '1.5em'}}>{children}</div>
       <DevTools/>
@@ -26,8 +26,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    username: state.auth.session.username,
-    notifications: state.notifications
+    username: state.auth.session.username
   }
 }
 
