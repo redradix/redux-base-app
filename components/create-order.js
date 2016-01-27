@@ -27,7 +27,6 @@ class CreateOrderForm extends Component {
           submitting,
           error
           } = this.props
-          debugger
     return (
       <form onSubmit={handleSubmit}>
         <ElementsToAdd elements={totalDishes}  add={this.addDishToOrder.bind(this)} subject='dish' />
