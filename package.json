@@ -1,7 +1,7 @@
 {
-  "name": "redux-counter-example",
+  "name": "reduxBaseApp",
   "version": "0.0.0",
-  "description": "Redux  example app for the redradix baseapp",
+  "description": "Redux example app for the redradix baseapp",
   "scripts": {
     "start": "node server.js",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
@@ -9,13 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rackt/redux.git"
+    "url": "https://github.com/redradix/reduxBaseApp.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rackt/redux/issues"
+    "url": "https://github.com/redradix/reduxBaseApp/issues"
   },
-  "homepage": "http://rackt.github.io/redux",
   "dependencies": {
     "dom-scroll-into-view": "^1.0.1",
     "history": "^1.17.0",
