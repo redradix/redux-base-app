@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { register } from '../actions/auth'
+import { register } from '../modules/auth'
 
 /* Components */
 import RegisterForm from '../components/register'

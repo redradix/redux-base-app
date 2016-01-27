@@ -1,8 +1,8 @@
 // Architecture file
 //TODO: Not finished (post requests)
 import config from '../config'
-import { applyToken, applyHeaders }from '../actions/helpers'
-import { LOGOUT } from '../actions/auth'
+import { applyToken, applyHeaders }from './helpers'
+import { LOGOUT } from '../modules/auth'
 import { pushPath } from 'redux-simple-router'
 
 const BASE_URL = config.api 
