@@ -8,7 +8,7 @@ import Home from './components/home'
 import Login from './smart/login'
 import Register from './smart/register'
 
-import { checkLogged, validateToken } from './actions/auth'
+import { checkLogged, validateToken } from './modules/auth'
 
 export default (
   <Route>
