@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import { Router, createRoutes } from 'react-router'
 import { createHistory } from 'history'
 import { syncReduxAndRouter } from 'redux-simple-router'
-import configureStore from './store/configureStore'
+import configureStore from './configureStore'
 import rawRoutes from './routes';
 
 // Wraps with middleware the createStore function
