@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, RECEIVE_INGREDIENTS, REQUEST_INGREDIENTS, EDIT_INGREDIENT, REMOVE_INGREDIENT } from '../actions/ingredients'
+import { ADD_INGREDIENT, RECEIVE_INGREDIENTS, REQUEST_INGREDIENTS, EDIT_INGREDIENT, REMOVE_INGREDIENT } from '../../actions/ingredients'
 
 function ingredientList(state=[], action) {
   switch (action.type) {
@@ -28,7 +28,7 @@ function ingredientList(state=[], action) {
 }
 
 // Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects.
-export default function (state = {
+export default function reducer(state = {
     isFetching: false,
     list: []
   }, action) {

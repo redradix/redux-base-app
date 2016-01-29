@@ -1,4 +1,4 @@
-import { VALIDATE_TOKEN_FAIL, VALIDATE_TOKEN, LOGIN, LOGIN_ATTEMPT, LOGIN_FAIL, LOGOUT, REGISTER, REGISTER_ATTEMPT, REGISTER_FAIL } from '../actions/auth'
+import { VALIDATE_TOKEN_FAIL, VALIDATE_TOKEN, LOGIN, LOGIN_ATTEMPT, LOGIN_FAIL, LOGOUT, REGISTER, REGISTER_ATTEMPT, REGISTER_FAIL } from '../../actions/auth'
 
 function session(state={
     username: undefined,
@@ -15,7 +15,7 @@ function session(state={
   }
 }
 
-export default function (state={
+export default function reducer(state={
   logged: false,
   loging: false,
   registering: false,

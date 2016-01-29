@@ -26,7 +26,7 @@
  */
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import reducer from '../reducers'
+import reducer from '../modules'
 import api from '../middleware/api'
 import DevTools from '../containers/dev-tools'
 
@@ -42,8 +42,8 @@ export default function configureStore(initialState) {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers')
+    module.hot.accept('../modules', () => {
+      const nextReducer = require('../modules')
       store.replaceReducer(nextReducer)
     })
   }

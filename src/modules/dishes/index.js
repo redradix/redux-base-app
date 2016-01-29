@@ -1,4 +1,4 @@
-import { ADD_DISH, RECEIVE_DISHES, RECEIVE_DISH, REQUEST_DISHES, EDIT_DISH, REMOVE_DISH } from '../actions/dishes'
+import { ADD_DISH, RECEIVE_DISHES, RECEIVE_DISH, REQUEST_DISHES, EDIT_DISH, REMOVE_DISH } from '../../actions/dishes'
 
 function dishList(state=[], action) {
   switch (action.type) {
@@ -34,7 +34,7 @@ function dishList(state=[], action) {
 }
 
 // Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects.
-export default function (state = {
+export default function reducer(state = {
     isFetching: false,
     list: []
   }, action) {

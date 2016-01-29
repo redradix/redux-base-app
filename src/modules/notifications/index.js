@@ -1,6 +1,6 @@
-import { CREATE_NOTIFICATIONS} from '../actions/notifications'
+import { CREATE_NOTIFICATIONS} from '../../actions/notifications'
 
-export default function(state=[], action) {
+export default function reducer(state=[], action) {
   switch (action.type) {
     case CREATE_NOTIFICATIONS:
       return action.payload

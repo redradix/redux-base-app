@@ -1,4 +1,4 @@
-import { REQUEST_ORDER, RECEIVE_ORDER, ADD_ORDER, RECEIVE_ORDERS, REQUEST_ORDERS, EDIT_ORDER, REMOVE_ORDER } from '../actions/orders'
+import { REQUEST_ORDER, RECEIVE_ORDER, ADD_ORDER, RECEIVE_ORDERS, REQUEST_ORDERS, EDIT_ORDER, REMOVE_ORDER } from '../../actions/orders'
 
 function orderList(state=[], action) {
   switch (action.type) {
@@ -34,7 +34,7 @@ function orderList(state=[], action) {
 }
 
 // Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects.
-export default function (state = {
+export default function reducer(state = {
     isFetching: false,
     list: []
   }, action) {
