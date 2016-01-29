@@ -32,6 +32,18 @@ module.exports = {
         include: __dirname
       }
     ]
+  },
+  resolve: {
+    modulesDirectories: ['node_modules'],
+    extensions: ['', '.js']
+  },
+  resolveLoader: {
+    modulesDirectories: ['node_modules'],
+    moduleTemplates: ['*-loader', '*'],
+    extensions: ['', '.js']
+  },
+  watchOptions: {
+    aggregateTimeout: 100
   }
 }
 
