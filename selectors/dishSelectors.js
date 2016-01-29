@@ -4,15 +4,15 @@ import { findById } from '../utils/utils'
 function findIngredients(ingredients, dishIngredients) {
   return ingredients.reduce( (acc, i) => {
     const dishIngredient = dishIngredients.find(di => {
-      return i.id == di.id  
+      return i.id == di.id
     })
     dishIngredient ? acc.push(Object.assign({}, i, {amount: dishIngredient.amount})) : acc
     return acc
-  }, [])  
+  }, [])
 }
 
 function find(ingredients, dishes, dishId) {
-  const dish = findById(dishId, dishes) 
+  const dish = findById(dishId, dishes)
   dish.ingredients = dish.ingredients ? findIngredients(ingredients, dish.ingredients) : []
   return dish
 }
@@ -20,7 +20,7 @@ function find(ingredients, dishes, dishId) {
 const routeSelector = (state, props) => props.params.id
 const listSelector = state => state.dishes.list
 const ingredientsSelector = (state) => state.ingredients.list
-const formSelector = (state) => state.form['create-dish'] ? state.form['create-dish'].ingredients : undefined 
+const formSelector = (state) => state.form['create-dish'] ? state.form['create-dish'].ingredients : undefined
 
 export const dishSelector = createSelector(
   routeSelector,
@@ -37,9 +37,9 @@ function escandallo(ingredients, dishIngredients) {
   return dishIngredients.reduce((acc, di) => {
     const i = ingredients.find(i => {
       return i.id == di.id.value ? di.id.value : di.id
-    })  
+    })
     return acc + (i.cost * (di.amount.value ? di.amount.value : di.amount))
-  }, 0)  
+  }, 0)
 }
 
 export const escandalloSelector = createSelector(
@@ -47,7 +47,7 @@ export const escandalloSelector = createSelector(
   formSelector,
   dishSelector,
   (ingredients, formIngredients, dish) => {
-    return escandallo(ingredients, formIngredients ? formIngredients : dish.ingredients)  
+    return escandallo(ingredients, formIngredients ? formIngredients : dish.ingredients)
   }
 )
 
@@ -58,7 +58,6 @@ export const totalSelector = createSelector(
       dish: dish,
       ingredients: ingredients,
       escandallo: escandallo
-    }  
+    }
   }
 )
-

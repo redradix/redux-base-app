@@ -19,7 +19,7 @@ function mapDispatchToProps(dispatch) {
 
 class ListOrders extends Component {
   onRemove(order) {
-    this.props.removeOrder(order)  
+    this.props.removeOrder(order)
   }
   render() {
     const { isFetching, list} = this.props

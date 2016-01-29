@@ -14,7 +14,7 @@ function mapDispatchToProps(dispatch) {
 
 class ShowOrder extends Component {
   onRemove() {
-    this.props.removeOrder(this.props.order)  
+    this.props.removeOrder(this.props.order)
   }
   render() {
     const { order: { id, createdAt}, pvp, isFetching } = this.props
@@ -25,7 +25,7 @@ class ShowOrder extends Component {
         </span>
         <ul>
           {isFetching && <p>Loading...</p>}
-          {!isFetching &&  
+          {!isFetching &&
             <div>
               <li><p>Order {id}</p></li>
               <li><p>{formatDate(createdAt)}</p></li>

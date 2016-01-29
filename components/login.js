@@ -16,7 +16,7 @@ class LoginForm extends Component {
           error
         } = this.props
     return (
-      <form onSubmit={handleSubmit}> 
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Username</label>
           <input type="text" placeholder="username" {...username}/>
@@ -33,7 +33,7 @@ class LoginForm extends Component {
         </button>
       </form>
     )
-  }  
+  }
 }
 
 LoginForm.propTypes = {

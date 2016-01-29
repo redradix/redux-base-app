@@ -10,25 +10,25 @@ function session(state={
       return Object.assign({}, action.payload)
     case LOGOUT:
       return {}
-    default: 
+    default:
       return state
-  } 
+  }
 }
 
 export default function (state={
   logged: false,
   loging: false,
   registering: false,
-  session: session(undefined, {type: 'none'}) 
+  session: session(undefined, {type: 'none'})
   }, action) {
   switch (action.type) {
     case LOGIN_FAIL:
       return Object.assign({}, state, {
-        loging: false 
+        loging: false
       })
-    case LOGIN_ATTEMPT: 
+    case LOGIN_ATTEMPT:
       return Object.assign({}, state, {
-        loging: true  
+        loging: true
       })
     case VALIDATE_TOKEN_FAIL:
       return Object.assign({}, state, {
@@ -36,7 +36,7 @@ export default function (state={
       })
     case VALIDATE_TOKEN:
       return Object.assign({}, state, {
-        logged: true  
+        logged: true
       })
     case LOGIN:
       return Object.assign({}, state, {
@@ -49,7 +49,7 @@ export default function (state={
         logged: false,
         logging: false,
         registering: false,
-        session: session(state.session, action) 
+        session: session(state.session, action)
       })
     case REGISTER_FAIL:
       return Object.assign({}, state, {
@@ -67,5 +67,5 @@ export default function (state={
       })
     default:
       return state
-  }  
+  }
 }

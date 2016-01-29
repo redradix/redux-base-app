@@ -9,7 +9,7 @@ import { totalSelector, escandalloSelector } from '../selectors/dishSelectors'
 
 class ShowDish extends Component {
   onRemove() {
-    this.props.removeDish(this.props.dish)  
+    this.props.removeDish(this.props.dish)
   }
   render() {
     const { dish: {id, name, price }, onRemove, escandallo } = this.props

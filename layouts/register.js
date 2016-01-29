@@ -9,7 +9,7 @@ import RegisterForm from '../components/register'
 
 class Register extends Component {
   onSubmit(credentials) {
-    return this.props.register(credentials)  
+    return this.props.register(credentials)
   }
   render() {
     return (
@@ -18,8 +18,8 @@ class Register extends Component {
         <RegisterForm onSubmit={this.onSubmit.bind(this)} />
         Si ya estas registrado, <Link to='/Login'>haz login</Link>
       </div>
-    )  
-  }  
+    )
+  }
 }
 
 function mapDispatchToProps(dispatch) {

@@ -10,7 +10,7 @@ export function initNotifications() {
   return (dispatch, getState) => {
     setInterval(() => {
       if (getState().auth.logged) {
-        dispatch(fetchIngredients())  
+        dispatch(fetchIngredients())
         .then(() => {
           const ingredients = getState().ingredients.list.reduce((acc, i) => {
             i.stock < THRESOLD ? acc.push(i) : acc
@@ -18,15 +18,14 @@ export function initNotifications() {
           }, [])
           dispatch(createNotifications(ingredients))
         })
-      }  
+      }
     }, 1000)
-  } 
+  }
 }
 
 function createNotifications(notifications) {
   return {
     type: CREATE_NOTIFICATIONS,
     payload: notifications
-  }  
+  }
 }
-

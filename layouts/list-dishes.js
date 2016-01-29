@@ -7,7 +7,7 @@ import { Link } from 'react-router'
 
 class ListDishes extends Component {
   onRemove(dish) {
-    this.props.removeDish(dish)  
+    this.props.removeDish(dish)
   }
   render() {
     const { isFetching, list} = this.props

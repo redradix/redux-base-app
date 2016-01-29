@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatch) {
 
 class ListIngredients extends Component {
   onRemove(ingredient) {
-    this.props.removeIngredient(ingredient)  
+    this.props.removeIngredient(ingredient)
   }
   render() {
     const { isFetching, list} = this.props

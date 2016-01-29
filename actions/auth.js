@@ -1,7 +1,7 @@
 //TODO: Cambiar validate token por session (get) y llamarlo desde el login
 import fetch from 'isomorphic-fetch'
 import { applyToken, applyHeaders } from './helpers';
-import config from "../config" 
+import config from "../config"
 import { CALL_API } from '../middleware/api'
 
 /* Actions */
@@ -36,9 +36,9 @@ function loadInitialData(store) {
 export function checkLogged(callback) {
   return (dispatch, getState) => {
     if (getState().auth.logged) {
-      dispatch(replacePath('/'))   
+      dispatch(replacePath('/'))
     } else {
-      callback()  
+      callback()
     }
   }
 }
@@ -52,7 +52,7 @@ export function validateToken() {
           endpoint: 'session',
           authenticated: true,
           types: [VALIDATE_TOKEN_ATTEMPT, VALIDATE_TOKEN, VALIDATE_TOKEN_FAIL],
-        }  
+        }
       }).then(({ payload }) =>  {
         dispatch(loadInitialData())
       }).catch((e) => {
@@ -84,7 +84,7 @@ export function login({username, password}) {
         },
         types: [LOGIN_ATTEMPT, LOGIN, LOGIN_FAIL],
         //parseResponse:
-      }  
+      }
     }).then(({ payload }) =>  {
       localStorage.setItem('token', payload.token)
       dispatch(loadInitialData())
@@ -92,7 +92,7 @@ export function login({username, password}) {
     }).catch((e) => {
       return Promise.reject({ _error: e._error})
     })
-  }    
+  }
 }
 
 export function register(credentials) {
@@ -109,7 +109,7 @@ export function register(credentials) {
         },
         types: [REGISTER_ATTEMPT, REGISTER, REGISTER_FAIL],
         //parseResponse:
-      }  
+      }
     }).then(({ payload, error}) =>  {
       webStorage.save('token', json.data.token)
       dispatch(loadInitialData())
@@ -117,5 +117,5 @@ export function register(credentials) {
     }).catch((e) => {
       return Promise.reject({_error: e._error })
     })
-  }  
+  }
 }

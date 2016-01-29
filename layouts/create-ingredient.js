@@ -14,7 +14,7 @@ import CreateIngredientForm from '../components/create-ingredient'
 class CreateIngredient extends Component {
   onSubmit(ingredient) {
     if (this.props.location.pathname.includes("edit")) {
-      return this.props.editIngredient(ingredient)  
+      return this.props.editIngredient(ingredient)
     } else {
       return this.props.addIngredient(ingredient)
     }
@@ -48,7 +48,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(CreateIngredient)
-

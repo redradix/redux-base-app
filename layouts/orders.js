@@ -10,4 +10,4 @@ const Orders  = React.createClass({
   }
 })
 
-export default Orders 
+export default Orders

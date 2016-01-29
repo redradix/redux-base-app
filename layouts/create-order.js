@@ -16,10 +16,10 @@ import CreateOrderForm from '../components/create-order'
 
 class CreateOrder extends Component {
   onSubmit(order) {
-    return this.props.checkAvailability(order)  
+    return this.props.checkAvailability(order)
     .then(() => {
       if (this.props.location.pathname.includes("edit")) {
-        return this.props.editOrder(order)  
+        return this.props.editOrder(order)
       } else {
         return this.props.addOrder(order)
       }
@@ -55,4 +55,3 @@ export default connect(
   totalSelector,
   mapDispatchToProps
 )(CreateOrder)
-

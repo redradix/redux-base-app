@@ -41,7 +41,7 @@ class CreateIngredientForm extends Component {
         <button disabled={submitting} onClick={resetForm}>
           Clear Values
         </button>
-      </form> 
+      </form>
     )
   }
 }

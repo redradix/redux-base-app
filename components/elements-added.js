@@ -4,25 +4,25 @@ import { capitalize, pluralize } from "../utils/utils"
 class Element extends Component  {
   onClick(e) {
     e.preventDefault()
-    this.props.remove(this.props.id.value)  
+    this.props.remove(this.props.id.value)
   }
   render() {
-    const {subject, name, amount, remove} = this.props  
+    const {subject, name, amount, remove} = this.props
     return (
       <div>
         <p>{name.value}</p>
         <p>{amount.value}</p>
         <button onClick={this.onClick.bind(this)}> Remove {subject}</button>
       </div>
-    )  
+    )
   }
 }
 
 class ElementsAdded extends Component {
   render() {
-    const {totalElements, elements, remove, subject } = this.props  
+    const {totalElements, elements, remove, subject } = this.props
     const hasElements = elements.length > 0
-    const list = !hasElements ? 
+    const list = !hasElements ?
       <em>Please add some {pluralize(subject)}</em> :
       elements.map(e =>
         <Element
@@ -39,7 +39,7 @@ class ElementsAdded extends Component {
         <div>{list}</div>
       </div>
     )
-  }  
+  }
 }
 
-export default ElementsAdded 
+export default ElementsAdded

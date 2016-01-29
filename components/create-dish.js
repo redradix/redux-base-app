@@ -14,14 +14,14 @@ class CreateDishForm extends Component {
     const dishIngredient = {id, amount, name}
     const index = this.props.values.ingredients.reduce((acc, i, index) => {
       return i.id == id ? index : acc
-    }, undefined) 
+    }, undefined)
     if (index !== undefined) {this.props.removeIngredient('ingredients', index)}
-    this.props.addIngredient('ingredients', dishIngredient, index == -1 ? undefined : index) 
+    this.props.addIngredient('ingredients', dishIngredient, index == -1 ? undefined : index)
   }
   removeIngredientFromDish(id) {
     const index = this.props.values.ingredients.reduce((acc, i, index) => {
       return i.id == id ? index : acc
-    }, undefined) 
+    }, undefined)
     this.props.removeIngredient('ingredients', index)
   }
   render() {
@@ -59,7 +59,7 @@ class CreateDishForm extends Component {
         <button disabled={submitting} onClick={resetForm}>
           Clear Values
         </button>
-      </form> 
+      </form>
     )
   }
 }
@@ -78,7 +78,7 @@ CreateDishForm = reduxForm({
   form: 'create-dish',
   validate,
   fields: ['name',
-           'price', 
+           'price',
            'id',
            'ingredients[].name',
            'ingredients[].id',

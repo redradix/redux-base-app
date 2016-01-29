@@ -8,7 +8,7 @@ class Header extends Component {
     this.props.logout()
   }
   render() {
-    const {title, username, modalIsOpen, notifications} = this.props  
+    const {title, username, modalIsOpen, notifications} = this.props
     return (
       <div>
         <header>
@@ -28,12 +28,12 @@ class Header extends Component {
           <a href onClick={this.onClick.bind(this)}>Logout</a>
         </header>
       </div>
-    );  
+    );
   }
 }
 
 Header.propTypes = {
-  title: PropTypes.string, 
+  title: PropTypes.string,
   username: PropTypes.string,
   notifications: PropTypes.array,
   logout: PropTypes.func.isRequired

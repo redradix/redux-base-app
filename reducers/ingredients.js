@@ -7,7 +7,7 @@ function ingredientList(state=[], action) {
     case EDIT_INGREDIENT:
       return state.map(ingredient =>
         ingredient.id == action.payload.id ?
-          Object.assign({}, ingredient, action.payload) : 
+          Object.assign({}, ingredient, action.payload) :
           ingredient
       )
     case ADD_INGREDIENT:
@@ -21,13 +21,13 @@ function ingredientList(state=[], action) {
     case REMOVE_INGREDIENT:
       return state.filter(ingredient =>
         ingredient.id !== action.payload.id
-      )    
+      )
     default:
       return state
   }
 }
 
-// Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects. 
+// Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects.
 export default function (state = {
     isFetching: false,
     list: []
@@ -41,7 +41,7 @@ export default function (state = {
       })
     case REQUEST_INGREDIENTS:
       return Object.assign({}, state, {
-        isFetching: true 
+        isFetching: true
       })
     case RECEIVE_INGREDIENTS:
       return Object.assign({}, state, {

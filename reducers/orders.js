@@ -6,14 +6,14 @@ function orderList(state=[], action) {
       return state.map(order=>
         order.id == action.payload.id ?
           Object.assign({}, action.payload) :
-          order 
+          order
       )
     case RECEIVE_ORDERS:
-      return action.payload 
+      return action.payload
     case EDIT_ORDER:
       return state.map(order =>
         order.id == action.payload.id ?
-          Object.assign({}, order, action.payload) : 
+          Object.assign({}, order, action.payload) :
           order
       )
     case ADD_ORDER:
@@ -27,13 +27,13 @@ function orderList(state=[], action) {
     case REMOVE_ORDER:
       return state.filter(order =>
         order.id !== action.payload.id
-      )    
+      )
     default:
       return state
   }
 }
 
-// Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects. 
+// Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects.
 export default function (state = {
     isFetching: false,
     list: []
@@ -48,7 +48,7 @@ export default function (state = {
     case REQUEST_ORDERS:
     case REQUEST_ORDER:
       return Object.assign({}, state, {
-        isFetching: true 
+        isFetching: true
       })
     case RECEIVE_ORDERS:
     case RECEIVE_ORDER:

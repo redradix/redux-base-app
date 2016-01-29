@@ -24,7 +24,7 @@ export function fetchDishes() {
       endpoint: 'dishes',
       authenticated: true,
       types: [REQUEST_DISHES, RECEIVE_DISHES]
-    }  
+    }
   }
 }
 
@@ -35,7 +35,7 @@ export function fetchDish(id) {
         endpoint: ['dishes', '/',  id].join(''),
         authenticated: true,
         types: [REQUEST_DISH, RECEIVE_DISH]
-      }  
+      }
     })
   }
 }
@@ -51,12 +51,12 @@ export function addDish(dish) {
           body: JSON.stringify(dish)
         },
         types: [ADD_DISH_ATTEMPT, ADD_DISH, ADD_DISH_FAIL]
-      }  
+      }
     }).then( ({ payload }) => {
       dispatch(pushPath('/dishes/'))
     }).catch(() => {
       return Promise.reject({name: "Dish already exists", _error: 'Addition fail'})
-    }) 
+    })
   }
 }
 
@@ -71,12 +71,12 @@ export function editDish(dish) {
           body: JSON.stringify(dish)
         },
         types: [EDIT_DISH_ATTEMPT, EDIT_DISH, EDIT_DISH_FAIL]
-      }  
+      }
     }).then( ({ payload }) => {
       dispatch(pushPath('/dishes/'))
     }).catch(() => {
       return Promise.reject({name: "Dish does not exists", _error: 'Edition fail'})
-    }) 
+    })
   }
 }
 
@@ -90,9 +90,9 @@ export function removeDish(dish) {
           method: 'DELETE'
         },
         types: [REMOVE_DISH_ATTEMPT, REMOVE_DISH, REMOVE_DISH_FAIL]
-      }  
+      }
     }).then( ({ payload }) => {
       dispatch(pushPath('/dishes/'))
-    }) 
-  }  
+    })
+  }
 }

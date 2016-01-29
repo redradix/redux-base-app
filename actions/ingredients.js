@@ -27,7 +27,7 @@ export function fetchIngredients() {
       endpoint: 'ingredients',
       authenticated: true,
       types: [REQUEST_INGREDIENTS, RECEIVE_INGREDIENTS]
-    }  
+    }
   }
 }
 
@@ -42,12 +42,12 @@ export function addIngredient(ingredient) {
           body: JSON.stringify(ingredient)
         },
         types: [ADD_INGREDIENT_ATTEMPT, ADD_INGREDIENT, ADD_INGREDIENT_FAIL]
-      }  
+      }
     }).then( ({ payload }) => {
       dispatch(pushPath('/ingredients/'))
     }).catch(() => {
       return Promise.reject({name: "Ingredient already exists", _error: 'Addition fail'})
-    }) 
+    })
   }
 }
 
@@ -62,12 +62,12 @@ export function editIngredient(ingredient) {
           body: JSON.stringify(ingredient)
         },
         types: [EDIT_INGREDIENT_ATTEMPT, EDIT_INGREDIENT, EDIT_INGREDIENT_FAIL]
-      }  
+      }
     }).then( ({ payload }) => {
       dispatch(pushPath('/ingredients/'))
     }).catch((e) => {
       return Promise.reject({name: "Ingredient does not exists", _error: 'Edition fail'})
-    }) 
+    })
   }
 }
 
@@ -81,13 +81,13 @@ export function removeIngredient(ingredient) {
           method: 'DELETE'
         },
         types: [REMOVE_INGREDIENT_ATTEMPT, REMOVE_INGREDIENT, REMOVE_INGREDIENT_FAIL]
-      }  
+      }
     }).then( ({ payload }) => {
       // TODO: Carlos. Control when the ingredient can not be removed due to referencial integrity
       // TODO: Carlos. Los errores deberian devolver un formato comun. Este podria ser {nameOfTheFieldIfExist: specificError, _error: genericError}
       dispatch(pushPath('/ingredients/'))
     })
-  }  
+  }
 }
 
 export function checkAvailability(order) {
@@ -98,10 +98,10 @@ export function checkAvailability(order) {
       const ingredients = getState().ingredients.list
       const dishes = getState().dishes.list
       return order.dishes.reduce((acc, d) => {
-        const dish = findById(d.id, dishes) 
+        const dish = findById(d.id, dishes)
         const available = dish.ingredients.reduce((acc, ingredient) => {
           return acc && (ingredient.amount < findById(ingredient.id, ingredients).stock)
-        }, true)  
+        }, true)
         available ? acc : acc.push(dish)
         return acc
       }, [])
@@ -109,7 +109,7 @@ export function checkAvailability(order) {
     .then((dishesNotAvailable) => {
       if (dishesNotAvailable.length > 0) {
         return Promise.reject({_error: "There are some dishes not available right now: " + dishesNotAvailable.map( d => {return d.name}).join(", "), name: 'dishes'})
-      }  
+      }
       return Promise.resolve()
     })
   }

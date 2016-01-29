@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 
 class ShowIngredient extends Component {
   onRemove() {
-    this.props.removeIngredient(this.props.ingredient)  
+    this.props.removeIngredient(this.props.ingredient)
   }
   render() {
     const { ingredient: {id, name, cost, stock }} = this.props

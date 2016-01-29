@@ -17,7 +17,7 @@ import CreateDishForm from '../components/create-dish'
 class CreateDish extends Component {
   onSubmit(dish) {
     if (this.props.location.pathname.includes("edit")) {
-      return this.props.editDish(dish)  
+      return this.props.editDish(dish)
     } else {
       return this.props.addDish(dish)
     }
@@ -52,4 +52,3 @@ export default connect(
   totalSelector,
   mapDispatchToProps
 )(CreateDish)
-

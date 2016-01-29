@@ -35,7 +35,7 @@ class Notifications extends Component {
   render() {
     const { notifications } = this.props
     const hasElements = notifications.length > 0
-    const list = !hasElements ? 
+    const list = !hasElements ?
       <em>You don't have any notifications yet</em> :
       notifications.map(e =>
         <Notification
@@ -46,7 +46,7 @@ class Notifications extends Component {
     return (
       <div>
         <button onClick={this.openModal.bind(this)}>Notifications</button>
-        <Modal 
+        <Modal
           isOpen={this.state.modalIsOpen}
           style={customStyles} >
 
@@ -60,7 +60,7 @@ class Notifications extends Component {
 }
 
 Notifications.propTypes = {
-  notifications: PropTypes.array  
+  notifications: PropTypes.array
 }
 
 export default Notifications

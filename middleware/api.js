@@ -4,7 +4,7 @@ import { applyToken, applyHeaders }from '../actions/helpers'
 import { LOGOUT } from '../actions/auth'
 import { pushPath } from 'redux-simple-router'
 
-const BASE_URL = config.api 
+const BASE_URL = config.api
 
 
 function callApi(endpoint, authenticated, config={}) {
@@ -16,11 +16,11 @@ function callApi(endpoint, authenticated, config={}) {
   }
 
   return fetch(BASE_URL + endpoint, config)
-  .then(response => 
+  .then(response =>
     response.json().then(json=> ({ json, response }))
   ).then(({ json, response }) => {
     if (!response.ok) {
-      throw json.errors[0] 
+      throw json.errors[0]
     } else {
       return json.data
     }

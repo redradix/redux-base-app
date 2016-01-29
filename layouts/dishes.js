@@ -11,4 +11,4 @@ const Dishes = React.createClass({
   }
 })
 
-export default Dishes 
+export default Dishes

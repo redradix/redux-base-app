@@ -3,7 +3,7 @@ import { ADD_DISH, RECEIVE_DISHES, RECEIVE_DISH, REQUEST_DISHES, EDIT_DISH, REMO
 function dishList(state=[], action) {
   switch (action.type) {
     case RECEIVE_DISHES:
-      return action.payload 
+      return action.payload
     case RECEIVE_DISH:
       return state.map(dish =>
         dish.id == action.payload.id ?
@@ -13,7 +13,7 @@ function dishList(state=[], action) {
     case EDIT_DISH:
       return state.map(dish =>
         dish.id == action.payload.id ?
-          Object.assign({}, dish, action.payload) : 
+          Object.assign({}, dish, action.payload) :
           dish
       )
     case ADD_DISH:
@@ -27,13 +27,13 @@ function dishList(state=[], action) {
     case REMOVE_DISH:
       return state.filter(dish =>
         dish.id !== action.payload.id
-      )    
+      )
     default:
       return state
   }
 }
 
-// Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects. 
+// Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects.
 export default function (state = {
     isFetching: false,
     list: []
@@ -47,7 +47,7 @@ export default function (state = {
       })
     case REQUEST_DISHES:
       return Object.assign({}, state, {
-        isFetching: true 
+        isFetching: true
       })
     case RECEIVE_DISHES:
     case RECEIVE_DISH:

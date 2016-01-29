@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
     'create-ingredient': {
       cost: value => typeof value == 'number' || typeof value == 'undefined' ? value : parseInt(value, 10),
       stock: value => typeof value == 'number' || typeof value == 'undefined' ? value : parseInt(value, 10)
-    }  
+    }
   })
 })
 

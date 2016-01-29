@@ -10,7 +10,7 @@ class CreateOrderForm extends Component {
     const orderDish= {id, amount, name}
     const index = getIndice(id, this.props.values.dishes)
     if (index !== undefined) {this.props.removeDish('dishes', index)}
-    this.props.addDish('dishes', orderDish, index == -1 ? undefined : index) 
+    this.props.addDish('dishes', orderDish, index == -1 ? undefined : index)
   }
   removeDishFromOrder(id) {
     const index = getIndice(id, this.props.values.dishes)
@@ -41,7 +41,7 @@ class CreateOrderForm extends Component {
         <button disabled={submitting} onClick={resetForm}>
           Clear Values
         </button>
-      </form> 
+      </form>
     )
   }
 }
