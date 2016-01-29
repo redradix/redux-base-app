@@ -1,24 +1,42 @@
+<<<<<<< HEAD:src/server.js
 var webpack = require('webpack')
 var webpackDevMiddleware = require('webpack-dev-middleware')
 var webpackHotMiddleware = require('webpack-hot-middleware')
 var config = require('../webpack.config')
+=======
+>>>>>>> 98acf751ce8dc3329f13cb921b46c56095b83213:server.js
 var path = require('path');
+var request = require('superagent');
+
+var __DEV__ = process.env.NODE_ENV !== 'production';
 
 var app = new (require('express'))()
 var port = 3000
 
-var compiler = webpack(config)
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
-app.use(webpackHotMiddleware(compiler))
+if (__DEV__) {
+  var webpack = require('webpack')
+  var webpackDevMiddleware = require('webpack-dev-middleware')
+  var webpackHotMiddleware = require('webpack-hot-middleware')
+  var config = require('./webpack.config')
 
-app.get("/", function(req, res) {
-  res.sendFile(__dirname + '/index.html')
-})
+  var compiler = webpack(config)
+  app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
+  app.use(webpackHotMiddleware(compiler))
+}
 
 //keep this handler on the last position of the stack, it serves the index.html if reloading from any url.
-app.get('*', function (req, res){
-    res.sendFile(path.resolve(__dirname, 'index.html'))
-});
+if (__DEV__) {
+  app.get('*', function (req, res){
+    request.get('http://localhost:' + port + '/static/index.html')
+      .end(function(err, response) {
+        return err ? res.send(err) : res.send(response.text);
+      });
+  });
+} else {
+  app.get('*', function (req, res){
+    res.sendFile(path.resolve(__dirname, 'dist/index.html'))
+  });
+}
 
 app.listen(port, function(error) {
   if (error) {
