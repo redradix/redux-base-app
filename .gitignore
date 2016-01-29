@@ -1,8 +1,6 @@
-#################
-## npm
-#################
-
+# npm files
 node_modules
-.DS_Store
-**/.DS_Store
 npm-debug.log
+
+# OS-specific files
+.DS_Store
