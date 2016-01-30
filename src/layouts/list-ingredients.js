@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { removeIngredient, fetchIngredients } from '../actions/ingredients'
+import { removeIngredient, fetchIngredients } from '../modules/ingredients'
 import { pushPath } from 'redux-simple-router'
 import { Link } from 'react-router'
 

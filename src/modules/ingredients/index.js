@@ -1,16 +1,17 @@
-import { ADD_INGREDIENT, RECEIVE_INGREDIENTS, REQUEST_INGREDIENTS, EDIT_INGREDIENT, REMOVE_INGREDIENT } from '../../actions/ingredients'
+import * as actions from './actions'
+export * from './actions'
 
 function ingredientList(state=[], action) {
   switch (action.type) {
-    case RECEIVE_INGREDIENTS:
+    case actions.RECEIVE_INGREDIENTS:
       return action.payload
-    case EDIT_INGREDIENT:
+    case actions.EDIT_INGREDIENT:
       return state.map(ingredient =>
         ingredient.id == action.payload.id ?
           Object.assign({}, ingredient, action.payload) :
           ingredient
       )
-    case ADD_INGREDIENT:
+    case actions.ADD_INGREDIENT:
       return [
         {
           ...action.payload,
@@ -18,7 +19,7 @@ function ingredientList(state=[], action) {
         },
         ...state
       ]
-    case REMOVE_INGREDIENT:
+    case actions.REMOVE_INGREDIENT:
       return state.filter(ingredient =>
         ingredient.id !== action.payload.id
       )
@@ -33,17 +34,17 @@ export default function reducer(state = {
     list: []
   }, action) {
   switch (action.type) {
-    case EDIT_INGREDIENT:
-    case REMOVE_INGREDIENT:
-    case ADD_INGREDIENT:
+    case actions.EDIT_INGREDIENT:
+    case actions.REMOVE_INGREDIENT:
+    case actions.ADD_INGREDIENT:
       return Object.assign({}, state, {
         list: ingredientList(state.list, action)
       })
-    case REQUEST_INGREDIENTS:
+    case actions.REQUEST_INGREDIENTS:
       return Object.assign({}, state, {
         isFetching: true
       })
-    case RECEIVE_INGREDIENTS:
+    case actions.RECEIVE_INGREDIENTS:
       return Object.assign({}, state, {
         isFetching: false,
         list: ingredientList(state.list, action)

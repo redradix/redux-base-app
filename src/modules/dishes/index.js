@@ -1,22 +1,23 @@
-import { ADD_DISH, RECEIVE_DISHES, RECEIVE_DISH, REQUEST_DISHES, EDIT_DISH, REMOVE_DISH } from '../../actions/dishes'
+import * as actions from './actions'
+export * from './actions'
 
 function dishList(state=[], action) {
   switch (action.type) {
-    case RECEIVE_DISHES:
+    case actions.RECEIVE_DISHES:
       return action.payload
-    case RECEIVE_DISH:
+    case actions.RECEIVE_DISH:
       return state.map(dish =>
         dish.id == action.payload.id ?
           Object.assign({}, action.payload) :
           dish
       )
-    case EDIT_DISH:
+    case actions.EDIT_DISH:
       return state.map(dish =>
         dish.id == action.payload.id ?
           Object.assign({}, dish, action.payload) :
           dish
       )
-    case ADD_DISH:
+    case actions.ADD_DISH:
       return [
         {
           ...action.payload,
@@ -24,7 +25,7 @@ function dishList(state=[], action) {
         },
         ...state
       ]
-    case REMOVE_DISH:
+    case actions.REMOVE_DISH:
       return state.filter(dish =>
         dish.id !== action.payload.id
       )
@@ -39,18 +40,18 @@ export default function reducer(state = {
     list: []
   }, action) {
   switch (action.type) {
-    case EDIT_DISH:
-    case REMOVE_DISH:
-    case ADD_DISH:
+    case actions.EDIT_DISH:
+    case actions.REMOVE_DISH:
+    case actions.ADD_DISH:
       return Object.assign({}, state, {
         list: dishList(state.list, action)
       })
-    case REQUEST_DISHES:
+    case actions.REQUEST_DISHES:
       return Object.assign({}, state, {
         isFetching: true
       })
-    case RECEIVE_DISHES:
-    case RECEIVE_DISH:
+    case actions.RECEIVE_DISHES:
+    case actions.RECEIVE_DISH:
       return Object.assign({}, state, {
         isFetching: false,
         list: dishList(state.list, action)

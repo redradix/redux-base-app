@@ -7,7 +7,7 @@ import bindActionData from 'redux-form/lib/bindActionData'
 import { totalSelector } from '../selectors/dishSelectors'
 
 /* Actions */
-import { addDish, editDish} from '../actions/dishes'
+import { addDish, editDish} from '../modules/dishes'
 import {addArrayValue, removeArrayValue } from 'redux-form/lib/actions'
 
 /* Components */

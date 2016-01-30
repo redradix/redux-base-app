@@ -7,8 +7,8 @@ import bindActionData from 'redux-form/lib/bindActionData'
 import { totalSelector } from '../selectors/orders'
 
 /* Actions */
-import { addOrder, editOrder} from '../actions/orders'
-import { checkAvailability } from '../actions/ingredients'
+import { addOrder, editOrder} from '../modules/orders'
+import { checkAvailability } from '../modules/ingredients'
 import {addArrayValue, removeArrayValue } from 'redux-form/lib/actions'
 
 /* Components */

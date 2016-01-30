@@ -19,9 +19,9 @@ import ShowDish from './layouts/show-dish'
 import Login from './layouts/login'
 import Register from './layouts/register'
 
-import { checkLogged, validateToken } from './actions/auth'
-import { fetchDish } from './actions/dishes'
-import { fetchOrder} from './actions/orders'
+import { checkLogged, validateToken } from './modules/auth'
+import { fetchDish } from './modules/dishes'
+import { fetchOrder} from './modules/orders'
 
 export default (
   <Route>

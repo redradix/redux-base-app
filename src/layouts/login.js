@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { login } from '../actions/auth'
+import { login } from '../modules/auth'
 
 /* Components */
 import LoginForm from '../components/login'

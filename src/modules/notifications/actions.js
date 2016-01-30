@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
-import { applyToken } from './helpers'
-import { fetchIngredients } from './ingredients'
+import { applyToken } from '../helpers'
+import { fetchIngredients } from '../ingredients'
 
 export const CREATE_NOTIFICATIONS = "NOTIFICATIONS:CREATE"
 

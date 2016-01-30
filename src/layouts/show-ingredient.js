@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { removeIngredient } from '../actions/ingredients'
+import { removeIngredient } from '../modules/ingredients'
 import { Link } from 'react-router'
 
 class ShowIngredient extends Component {

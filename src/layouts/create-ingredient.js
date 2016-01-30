@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 /* Actions */
-import { addIngredient, editIngredient } from '../actions/ingredients'
+import { addIngredient, editIngredient } from '../modules/ingredients'
 
 /* Components */
 import CreateIngredientForm from '../components/create-ingredient'

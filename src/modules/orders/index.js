@@ -1,22 +1,23 @@
-import { REQUEST_ORDER, RECEIVE_ORDER, ADD_ORDER, RECEIVE_ORDERS, REQUEST_ORDERS, EDIT_ORDER, REMOVE_ORDER } from '../../actions/orders'
+import * as actions from './actions'
+export * from './actions'
 
 function orderList(state=[], action) {
   switch (action.type) {
-    case RECEIVE_ORDER:
+    case actions.RECEIVE_ORDER:
       return state.map(order=>
         order.id == action.payload.id ?
           Object.assign({}, action.payload) :
           order
       )
-    case RECEIVE_ORDERS:
+    case actions.RECEIVE_ORDERS:
       return action.payload
-    case EDIT_ORDER:
+    case actions.EDIT_ORDER:
       return state.map(order =>
         order.id == action.payload.id ?
           Object.assign({}, order, action.payload) :
           order
       )
-    case ADD_ORDER:
+    case actions.ADD_ORDER:
       return [
         {
           ...action.payload,
@@ -24,7 +25,7 @@ function orderList(state=[], action) {
         },
         ...state
       ]
-    case REMOVE_ORDER:
+    case actions.REMOVE_ORDER:
       return state.filter(order =>
         order.id !== action.payload.id
       )
@@ -39,19 +40,19 @@ export default function reducer(state = {
     list: []
   }, action) {
   switch (action.type) {
-    case EDIT_ORDER:
-    case REMOVE_ORDER:
-    case ADD_ORDER:
+    case actions.EDIT_ORDER:
+    case actions.REMOVE_ORDER:
+    case actions.ADD_ORDER:
       return Object.assign({}, state, {
         list: orderList(state.list, action)
       })
-    case REQUEST_ORDERS:
-    case REQUEST_ORDER:
+    case actions.REQUEST_ORDERS:
+    case actions.REQUEST_ORDER:
       return Object.assign({}, state, {
         isFetching: true
       })
-    case RECEIVE_ORDERS:
-    case RECEIVE_ORDER:
+    case actions.RECEIVE_ORDERS:
+    case actions.RECEIVE_ORDER:
       return Object.assign({}, state, {
         isFetching: false,
         list: orderList(state.list, action)

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { removeDish, fetchDishes } from '../actions/dishes'
+import { removeDish, fetchDishes } from '../modules/dishes'
 import { pushPath } from 'redux-simple-router'
 import { Link } from 'react-router'
 

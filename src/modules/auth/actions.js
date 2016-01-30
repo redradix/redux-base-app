@@ -1,14 +1,14 @@
 //TODO: Cambiar validate token por session (get) y llamarlo desde el login
 import fetch from 'isomorphic-fetch'
-import { applyToken, applyHeaders } from './helpers';
-import config from "../config"
-import { CALL_API } from '../middleware/api'
+import { applyToken, applyHeaders } from '../helpers';
+import config from "../../config"
+import { CALL_API } from '../../middleware/api'
 
 /* Actions */
-import { fetchIngredients } from './ingredients'
-import { fetchDishes } from './dishes'
-import { fetchOrders } from './orders'
-import { initNotifications } from './notifications'
+import { fetchIngredients } from '../ingredients'
+import { fetchDishes } from '../dishes'
+import { fetchOrders } from '../orders'
+import { initNotifications } from '../notifications'
 import { pushPath, replacePath } from 'redux-simple-router'
 
 export const VALIDATE_TOKEN_FAIL = "AUTH:VALIDATE_TOKEN_FAIL"

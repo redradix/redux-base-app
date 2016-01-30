@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { removeOrder} from '../actions/orders'
+import { removeOrder} from '../modules/orders'
 import { Link } from 'react-router'
 // Example with reselect
 import { totalSelector, escandalloSelector } from '../selectors/orders'

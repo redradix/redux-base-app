@@ -1,14 +1,15 @@
-import { VALIDATE_TOKEN_FAIL, VALIDATE_TOKEN, LOGIN, LOGIN_ATTEMPT, LOGIN_FAIL, LOGOUT, REGISTER, REGISTER_ATTEMPT, REGISTER_FAIL } from '../../actions/auth'
+import * as actions from './actions'
+export * from './actions'
 
 function session(state={
     username: undefined,
     email: undefined
   }, action) {
   switch (action.type) {
-    case REGISTER:
-    case LOGIN:
+    case actions.REGISTER:
+    case actions.LOGIN:
       return Object.assign({}, action.payload)
-    case LOGOUT:
+    case actions.LOGOUT:
       return {}
     default:
       return state
@@ -22,44 +23,44 @@ export default function reducer(state={
   session: session(undefined, {type: 'none'})
   }, action) {
   switch (action.type) {
-    case LOGIN_FAIL:
+    case actions.LOGIN_FAIL:
       return Object.assign({}, state, {
         loging: false
       })
-    case LOGIN_ATTEMPT:
+    case actions.LOGIN_ATTEMPT:
       return Object.assign({}, state, {
         loging: true
       })
-    case VALIDATE_TOKEN_FAIL:
+    case actions.VALIDATE_TOKEN_FAIL:
       return Object.assign({}, state, {
         logged: false
       })
-    case VALIDATE_TOKEN:
+    case actions.VALIDATE_TOKEN:
       return Object.assign({}, state, {
         logged: true
       })
-    case LOGIN:
+    case actions.LOGIN:
       return Object.assign({}, state, {
         logged: true,
         loging: false,
         session: session(state.session, action)
       })
-    case LOGOUT:
+    case actions.LOGOUT:
       return Object.assign({}, state, {
         logged: false,
         logging: false,
         registering: false,
         session: session(state.session, action)
       })
-    case REGISTER_FAIL:
+    case actions.REGISTER_FAIL:
       return Object.assign({}, state, {
         registering: false
       })
-    case REGISTER_ATTEMPT:
+    case actions.REGISTER_ATTEMPT:
       return Object.assign({}, state, {
         registering: true
       })
-    case REGISTER:
+    case actions.REGISTER:
       return Object.assign({}, state, {
         registering: false,
         logged: true,

@@ -4,10 +4,10 @@
 
 import { pushPath } from 'redux-simple-router'
 import fetch from 'isomorphic-fetch'
-import { applyToken } from './helpers';
-import { findById } from "../utils/utils"
-import config from '../config'
-import { CALL_API } from '../middleware/api'
+import { applyToken } from '../helpers';
+import { findById } from "../../utils/utils"
+import config from '../../config'
+import { CALL_API } from '../../middleware/api'
 
 export const REQUEST_INGREDIENTS = "REQUEST:INGREDIENTS";
 export const RECEIVE_INGREDIENTS = "RECEIVE:INGREDIENTS";

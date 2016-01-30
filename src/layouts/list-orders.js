@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { removeOrder, fetchOrders } from '../actions/orders'
+import { removeOrder, fetchOrders } from '../modules/orders'
 import { pushPath } from 'redux-simple-router'
 import { Link } from 'react-router'
 import { formatDate } from '../utils/utils'

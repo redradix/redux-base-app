@@ -1,9 +1,9 @@
 import { pushPath } from 'redux-simple-router'
-import { CALL_API } from '../middleware/api'
+import { CALL_API } from '../../middleware/api'
 import fetch from 'isomorphic-fetch'
-import { applyHeaders } from './helpers'
-import config from '../config'
-import { fetchIngredients } from './ingredients'
+import { applyHeaders } from '../helpers'
+import config from '../../config'
+import { fetchIngredients } from '../ingredients'
 
 export const REQUEST_ORDERS = "REQUEST:ORDERS";
 export const RECEIVE_ORDERS = "RECEIVE:ORDERS";
