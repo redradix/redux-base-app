@@ -26,9 +26,9 @@
  */
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import reducer from '../modules'
-import api from '../middleware/api'
-import DevTools from '../containers/dev-tools'
+import reducer from './modules'
+import api from './middleware/api'
+import DevTools from './containers/dev-tools'
 
 const finalCreateStore = compose(
   // Middleware you want to use in development:
@@ -42,8 +42,8 @@ export default function configureStore(initialState) {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../modules', () => {
-      const nextReducer = require('../modules')
+    module.hot.accept('./modules', () => {
+      const nextReducer = require('./modules')
       store.replaceReducer(nextReducer)
     })
   }

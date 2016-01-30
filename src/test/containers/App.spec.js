@@ -3,7 +3,7 @@ import React from 'react'
 import TestUtils from 'react-addons-test-utils'
 import { Provider } from 'react-redux'
 import App from '../../containers/App'
-import configureStore from '../../store/configureStore'
+import configureStore from '../../configureStore'
 
 function setup(initialState) {
   const store = configureStore(initialState)
