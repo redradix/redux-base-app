@@ -173,7 +173,8 @@ export function register(credentials) {
         //parseResponse:
       }  
     }).then(({ payload, error}) =>  {
-      webStorage.save('token', json.data.token)
+      debugger
+      localStorage.setItem('token', payload.token)
       dispatch(loadInitialData())
       dispatch(pushPath('/'))
     }).catch((e) => {

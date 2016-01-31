@@ -1,4 +1,5 @@
 import {createValidator, required} from '../utils/validation'
+import { Link } from 'react-router'
 import {reduxForm} from 'redux-form'
 import React, { PropTypes, Component } from 'react'
 import { translate } from 'react-i18next/lib';
@@ -19,22 +20,26 @@ class LoginForm extends Component {
           t
         } = this.props
     return (
-      <form onSubmit={handleSubmit}> 
-        <div>
-          <label>{t('username')}</label>
-          <input type="text" placeholder="username" {...username}/>
-          {username.touched && username.error && <div>{username.error}</div>}
-        </div>
-        <div>
-          <label>{t('password')}</label>
-          <input type="password" placeholder="password" {...password}/>
-          {password.touched && password.error && <div>{password.error}</div>}
-        </div>
-        {error && <div>{error}</div>}
-        <button disabled={submitting} type="submit" onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} {t('submit')}
-        </button>
-      </form>
+      <div>
+        <p>Introduce tus datos de acceso</p>
+        <form onSubmit={handleSubmit}> 
+          <div>
+            <label>{t('username')}</label>
+            <input type="text" placeholder="username" {...username}/>
+            {username.touched && username.error && <div>{username.error}</div>}
+          </div>
+          <div>
+            <label>{t('password')}</label>
+            <input type="password" placeholder="password" {...password}/>
+            {password.touched && password.error && <div>{password.error}</div>}
+          </div>
+          {error && <div>{error}</div>}
+          <button disabled={submitting} type="submit" onClick={handleSubmit}>
+            {submitting ? <i/> : <i/>} {t('submit')}
+          </button>
+        </form>
+        Si no estas registrado, <Link to='/register'>registrate</Link>
+      </div>
     )
   }  
 }

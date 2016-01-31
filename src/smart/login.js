@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { login } from '../modules/auth'
 
 /* Components */
@@ -13,11 +12,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <p>Introduce tus datos de acceso</p>
-        <LoginForm onSubmit={this.onSubmit.bind(this)} />
-        Si no estas registrado, <Link to='/register'>registrate</Link>
-      </div>
+      <LoginForm onSubmit={this.onSubmit.bind(this)} />
     )  
   }  
 }

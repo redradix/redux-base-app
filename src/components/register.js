@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import { Link } from 'react-router'
 import {reduxForm} from 'redux-form'
 import {createValidator, required, maxLength, minLength, email} from '../utils/validation'
 import { translate } from 'react-i18next/lib';
@@ -19,27 +20,31 @@ class RegisterForm extends Component {
           t
         } = this.props
     return (
-      <form onSubmit={handleSubmit}> 
-        <div>
-          <label>{t('username')}</label>
-          <input type="text" placeholder={t('username')} {...username}/>
-          {username.touched && username.error && <div>{username.error}</div>}
-        </div>
-        <div>
-          <label>{t('email')}</label>
-          <input type="email" placeholder={t('email')} {...email}/>
-          {email.touched && email.error && <div>{email.error}</div>}
-        </div>
-        <div>
-          <label>{t('password')}</label>
-          <input type="password" placeholder={t('password')} {...password}/>
-          {password.touched && password.error && <div>{password.error}</div>}
-        </div>
-        {error && <div>{error}</div>}
-        <button disabled={submitting} type="submit" onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} {t('submit')}
-        </button>
-      </form>
+      <div>
+        <p>Introduce tus datos para registrarte en DAH</p>
+        <form onSubmit={handleSubmit}> 
+          <div>
+            <label>{t('username')}</label>
+            <input type="text" placeholder={t('username')} {...username}/>
+            {username.touched && username.error && <div>{username.error}</div>}
+          </div>
+          <div>
+            <label>{t('email')}</label>
+            <input type="email" placeholder={t('email')} {...email}/>
+            {email.touched && email.error && <div>{email.error}</div>}
+          </div>
+          <div>
+            <label>{t('password')}</label>
+            <input type="password" placeholder={t('password')} {...password}/>
+            {password.touched && password.error && <div>{password.error}</div>}
+          </div>
+          {error && <div>{error}</div>}
+          <button disabled={submitting} type="submit" onClick={handleSubmit}>
+            {submitting ? <i/> : <i/>} {t('submit')}
+          </button>
+        </form>
+        Si ya estas registrado, <Link to='/Login'>haz login</Link>
+      </div>
     )
   }  
 }
