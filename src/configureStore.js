@@ -30,17 +30,21 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import reducer from './modules/reducer'
 import api from './middleware/api'
+import {browserHistory} from 'react-router'
+import {syncHistory} from 'redux-simple-router'
 import DevTools from './containers/dev-tools'
 
+const reduxRouter= syncHistory(browserHistory)
 const finalCreateStore = compose(
   // Middleware you want to use in development:
-  applyMiddleware(thunk, api),
+  applyMiddleware(reduxRouter, thunk, api),
   // Required! Enable Redux DevTools with the monitors you chose
   DevTools.instrument()
 )(createStore);
 
 export default function configureStore(initialState) {
   const store = finalCreateStore(reducer, initialState)
+  //reduxRouter.listenForReplays(store, state => ensureState(state).get('routing'));
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

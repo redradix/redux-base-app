@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import {reduxForm} from 'redux-form'
 import {createValidator, required, maxLength, minLength, email} from '../utils/validation'
-import { translate } from 'react-i18next/lib';
+import { translate, Interpolate } from 'react-i18next/lib';
 
 const validate = createValidator({
   username: [required, minLength(2), maxLength(10)],
@@ -19,9 +19,10 @@ class RegisterForm extends Component {
           error,
           t
         } = this.props
+        const GoLoginComponent = <Link to='/Login'>{t('register.loginActionCall')}</Link>
     return (
       <div>
-        <p>Introduce tus datos para registrarte en DAH</p>
+        <p>{t('register.title')}</p>
         <form onSubmit={handleSubmit}> 
           <div>
             <label>{t('username')}</label>
@@ -43,7 +44,7 @@ class RegisterForm extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        Si ya estas registrado, <Link to='/Login'>haz login</Link>
+        <Interpolate parent='p' i18nKey='register.goLogin' component={GoLoginComponent} />
       </div>
     )
   }  

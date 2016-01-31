@@ -2,7 +2,7 @@ import {createValidator, required} from '../utils/validation'
 import { Link } from 'react-router'
 import {reduxForm} from 'redux-form'
 import React, { PropTypes, Component } from 'react'
-import { translate } from 'react-i18next/lib';
+import { translate, Interpolate } from 'react-i18next/lib';
 
 
 const validate = createValidator({
@@ -19,9 +19,10 @@ class LoginForm extends Component {
           error,
           t
         } = this.props
+    const registerComponent = <Link to='/register'>{t('login.registerActionCall')}</Link>
     return (
       <div>
-        <p>Introduce tus datos de acceso</p>
+        <p>{t('login.title')}</p>
         <form onSubmit={handleSubmit}> 
           <div>
             <label>{t('username')}</label>
@@ -38,7 +39,7 @@ class LoginForm extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        Si no estas registrado, <Link to='/register'>registrate</Link>
+        <Interpolate parent='p' i18nKey='login.goRegister' component={registerComponent} />
       </div>
     )
   }  
