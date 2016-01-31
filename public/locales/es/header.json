@@ -1,6 +1,6 @@
 {
   "content": {
-    "welcome": "Welcome to this demo application "
+    "welcome": "Bienvenido a esta app de prueba, {{value}}"
   },
   "logout": "Salir",
   "home": "Inicio"

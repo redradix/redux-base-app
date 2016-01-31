@@ -21,6 +21,7 @@ function session(state, action) {
   switch (action.type) {
     case REGISTER:
     case LOGIN:
+    case VALIDATE_TOKEN:
       return Object.assign({}, action.payload)
     case LOGOUT:
       return {}
@@ -55,7 +56,8 @@ export default function reducer(state=initialState, action={}) {
       })
     case VALIDATE_TOKEN:
       return Object.assign({}, state, {
-        logged: true  
+        logged: true,
+        session: session(state.session, action)
       })
     case LOGIN:
       return Object.assign({}, state, {

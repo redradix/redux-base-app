@@ -1,6 +1,6 @@
 {
   "content": {
-    "welcome": "Welcome to this demo application "
+    "welcome": "Welcome to this demo application, {{value}}"
   },
   "logout": "Logout",
   "home": "Home"

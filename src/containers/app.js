@@ -6,15 +6,18 @@ import { logout } from '../modules/auth'
 import Header from '../components/header'
 
 
-function App({children, username, logout}) {
-  return (
-    <div>
-      <Header title={"miApp"} username={username} logout={logout}>
-      </Header>
-      <div style={{marginTop: '1.5em'}}>{children}</div>
-      <DevTools/>
-    </div>
-  )
+class App extends Component {
+  render() {
+    const {children, username, logout} = this.props
+    return (
+      <div>
+        <Header title={"miApp"} username={username} logout={logout}>
+        </Header>
+        <div style={{marginTop: '1.5em'}}>{children}</div>
+        <DevTools/>
+      </div>
+    )
+  }
 }
 
 App.propTypes = {

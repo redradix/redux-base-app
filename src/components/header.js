@@ -14,7 +14,7 @@ class Header extends Component {
         <header>
           <h1>{t('appName')}:{title}</h1>
           {' '}
-          <Interpolate parent='p' i18nKey='content.welcome' value='username' />
+          <Interpolate parent='p' i18nKey='content.welcome' value={username} />
           <Link to="/">{t('home')}</Link>
           {' '}
           <a href onClick={this.onClick.bind(this)}>{t('logout')}</a>
