@@ -1,0 +1,8 @@
+{
+  "appName": "DAH: Desarrollos para alta hosteleria",
+  "interpolateSample": "you can interplate {{value}} or {{component}} via interpolate component!",
+  "username": "Username",
+  "password": "Password",
+  "submit": "Submit",
+  "email": "Email"
+}

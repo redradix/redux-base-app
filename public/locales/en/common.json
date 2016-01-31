@@ -1,0 +1,8 @@
+{
+  "appName": "DAH: High cooking development",
+  "interpolateSample": "you can interplate {{value}} or {{component}} via interpolate component!",
+  "username": "Username",
+  "password": "Password",
+  "submit": "Submit",
+  "email": "Email"
+}

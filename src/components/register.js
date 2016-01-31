@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import {reduxForm} from 'redux-form'
 import {createValidator, required, maxLength, minLength, email} from '../utils/validation'
+import { translate } from 'react-i18next/lib';
 
 const validate = createValidator({
   username: [required, minLength(2), maxLength(10)],
@@ -14,28 +15,29 @@ class RegisterForm extends Component {
           fields: {username, email, password},
           handleSubmit,
           submitting,
-          error
+          error,
+          t
         } = this.props
     return (
       <form onSubmit={handleSubmit}> 
         <div>
-          <label>Username</label>
-          <input type="text" placeholder="username" {...username}/>
+          <label>{t('username')}</label>
+          <input type="text" placeholder={t('username')} {...username}/>
           {username.touched && username.error && <div>{username.error}</div>}
         </div>
         <div>
-          <label>Email</label>
-          <input type="email" placeholder="email" {...email}/>
+          <label>{t('email')}</label>
+          <input type="email" placeholder={t('email')} {...email}/>
           {email.touched && email.error && <div>{email.error}</div>}
         </div>
         <div>
-          <label>Password</label>
-          <input type="password" placeholder="password" {...password}/>
+          <label>{t('password')}</label>
+          <input type="password" placeholder={t('password')} {...password}/>
           {password.touched && password.error && <div>{password.error}</div>}
         </div>
         {error && <div>{error}</div>}
         <button disabled={submitting} type="submit" onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} Submit
+          {submitting ? <i/> : <i/>} {t('submit')}
         </button>
       </form>
     )
@@ -55,4 +57,4 @@ RegisterForm = reduxForm({
   fields: ['username', 'email', 'password']
 })(RegisterForm)
 
-export default RegisterForm
+export default translate(['common'])(RegisterForm);
