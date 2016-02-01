@@ -2,7 +2,9 @@ import fetch from 'isomorphic-fetch'
 import { applyToken } from '../helpers'
 import { fetchIngredients } from '../ingredients'
 
-export const CREATE_NOTIFICATIONS = "NOTIFICATIONS:CREATE"
+const MODULE_NAME = "base-app/notifications/"
+
+export const CREATE_NOTIFICATIONS = MODULE_NAME.concat("NOTIFICATIONS:CREATE")
 
 const THRESOLD = 5
 

@@ -11,18 +11,20 @@ import { fetchOrders } from '../orders'
 import { initNotifications } from '../notifications'
 import { pushPath, replacePath } from 'redux-simple-router'
 
-export const VALIDATE_TOKEN_FAIL = "AUTH:VALIDATE_TOKEN_FAIL"
-export const VALIDATE_TOKEN = "AUTH:VALIDATE_TOKEN"
-export const VALIDATE_TOKEN_ATTEMPT = "AUTH:VALIDATE_TOKEN_ATTEMPT"
+const MODULE_NAME = "base-app/auth/"
 
-export const LOGIN_ATTEMPT = "AUTH:LOGIN_ATTEMPT"
-export const LOGIN_FAIL = "AUTH:LOGIN_FAIL"
-export const LOGIN = "AUTH:LOGIN"
-export const LOGOUT = "AUTH:LOGOUT"
+export const VALIDATE_TOKEN_FAIL = MODULE_NAME.concat("VALIDATE_TOKEN_FAIL")
+export const VALIDATE_TOKEN = MODULE_NAME.concat("VALIDATE_TOKEN")
+export const VALIDATE_TOKEN_ATTEMPT = MODULE_NAME.concat("VALIDATE_TOKEN_ATTEMPT")
 
-export const REGISTER = "AUTH:REGISTER"
-export const REGISTER_ATTEMPT = "AUTH:REGISTER_ATTEMPT"
-export const REGISTER_FAIL = "AUTH:REGISTER_FAIL"
+export const LOGIN_ATTEMPT = MODULE_NAME.concat("LOGIN_ATTEMPT")
+export const LOGIN_FAIL = MODULE_NAME.concat("LOGIN_FAIL")
+export const LOGIN = MODULE_NAME.concat("LOGIN")
+export const LOGOUT = MODULE_NAME.concat("LOGOUT")
+
+export const REGISTER = MODULE_NAME.concat("REGISTER")
+export const REGISTER_ATTEMPT = MODULE_NAME.concat("REGISTER_ATTEMPT")
+export const REGISTER_FAIL = MODULE_NAME.concat("REGISTER_FAIL")
 
 function loadInitialData(store) {
   return (dispatch, getState) => {

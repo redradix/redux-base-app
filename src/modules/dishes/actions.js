@@ -3,19 +3,21 @@ import fetch from 'isomorphic-fetch'
 import applyToken from '../helpers';
 import { CALL_API } from '../../middleware/api'
 
-export const REQUEST_DISHES = "REQUEST:DISHES";
-export const RECEIVE_DISHES = "RECEIVE:DISHES";
-export const REQUEST_DISH = "REQUEST:DISH";
-export const RECEIVE_DISH = "RECEIVE:DISH";
-export const ADD_DISH = "ADD:DISH";
-export const ADD_DISH_ATTEMPT = "ADD:DISH_ATTEMPT";
-export const ADD_DISH_FAIL = "ADD:DISH_FAIL";
-export const EDIT_DISH = "EDIT:DISH";
-export const EDIT_DISH_FAIL = "EDIT:DISH_FAIL";
-export const EDIT_DISH_ATTEMPT = "EDIT:DISH_ATTEMPT";
-export const REMOVE_DISH = "REMOVE:DISH";
-export const REMOVE_DISH_ATTEMPT = "REMOVE:DISH_ATTEMPT";
-export const REMOVE_DISH_FAIL = "REMOVE:DISH_FAIL";
+const MODULE_NAME = "base-app/dishes/"
+
+export const REQUEST_DISHES = MODULE_NAME.concat("REQUEST:DISHES")
+export const RECEIVE_DISHES = MODULE_NAME.concat("RECEIVE:DISHES")
+export const REQUEST_DISH = MODULE_NAME.concat("REQUEST:DISH")
+export const RECEIVE_DISH = MODULE_NAME.concat("RECEIVE:DISH")
+export const ADD_DISH = MODULE_NAME.concat("ADD:DISH")
+export const ADD_DISH_ATTEMPT = MODULE_NAME.concat("ADD:DISH_ATTEMPT")
+export const ADD_DISH_FAIL = MODULE_NAME.concat("ADD:DISH_FAIL")
+export const EDIT_DISH = MODULE_NAME.concat("EDIT:DISH")
+export const EDIT_DISH_FAIL = MODULE_NAME.concat("EDIT:DISH_FAIL")
+export const EDIT_DISH_ATTEMPT = MODULE_NAME.concat("EDIT:DISH_ATTEMPT")
+export const REMOVE_DISH = MODULE_NAME.concat("REMOVE:DISH")
+export const REMOVE_DISH_ATTEMPT = MODULE_NAME.concat("REMOVE:DISH_ATTEMPT")
+export const REMOVE_DISH_FAIL = MODULE_NAME.concat("REMOVE:DISH_FAIL")
 
 
 export function fetchDishes() {

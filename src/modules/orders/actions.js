@@ -5,19 +5,21 @@ import { applyHeaders } from '../helpers'
 import config from '../../config'
 import { fetchIngredients } from '../ingredients'
 
-export const REQUEST_ORDERS = "REQUEST:ORDERS";
-export const RECEIVE_ORDERS = "RECEIVE:ORDERS";
-export const ADD_ORDER = "ADD:ORDER";
-export const ADD_ORDER_ATTEMPT = "ADD:ORDER_ATTEMPT";
-export const ADD_ORDER_FAIL = "ADD:ORDER_FAIL";
-export const EDIT_ORDER = "EDIT:ORDER";
-export const EDIT_ORDER_FAIL = "EDIT:ORDER_FAIL";
-export const EDIT_ORDER_ATTEMPT = "EDIT:ORDER_ATTEMPT";
-export const REMOVE_ORDER = "REMOVE:ORDER";
-export const REMOVE_ORDER_ATTEMPT = "REMOVE:ORDER_ATTEMPT";
-export const REMOVE_ORDER_FAIL = "REMOVE:ORDER_FAIL";
-export const REQUEST_ORDER = "REQUEST:ORDER";
-export const RECEIVE_ORDER = "RECEIVE:ORDER";
+const MODULE_NAME = "base-app/orders/"
+
+export const REQUEST_ORDERS = MODULE_NAME.concat("REQUEST:ORDERS")
+export const RECEIVE_ORDERS = MODULE_NAME.concat("RECEIVE:ORDERS")
+export const ADD_ORDER = MODULE_NAME.concat("ADD:ORDER")
+export const ADD_ORDER_ATTEMPT = MODULE_NAME.concat("ADD:ORDER_ATTEMPT")
+export const ADD_ORDER_FAIL = MODULE_NAME.concat("ADD:ORDER_FAIL")
+export const EDIT_ORDER = MODULE_NAME.concat("EDIT:ORDER")
+export const EDIT_ORDER_FAIL = MODULE_NAME.concat("EDIT:ORDER_FAIL")
+export const EDIT_ORDER_ATTEMPT = MODULE_NAME.concat("EDIT:ORDER_ATTEMPT")
+export const REMOVE_ORDER = MODULE_NAME.concat("REMOVE:ORDER")
+export const REMOVE_ORDER_ATTEMPT = MODULE_NAME.concat("REMOVE:ORDER_ATTEMPT")
+export const REMOVE_ORDER_FAIL = MODULE_NAME.concat("REMOVE:ORDER_FAIL")
+export const REQUEST_ORDER = MODULE_NAME.concat("REQUEST:ORDER")
+export const RECEIVE_ORDER = MODULE_NAME.concat("RECEIVE:ORDER")
 
 export function fetchOrder(id) {
   return {
