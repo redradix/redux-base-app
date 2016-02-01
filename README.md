@@ -18,6 +18,10 @@ https://github.com/acdlite/flux-standard-action
 How to create async actions:
 https://github.com/gaearon/redux-thunk
 
+## Ducks: Redux Reducer Bundles
+How to organize your modules
+https://github.com/erikras/ducks-modular-redux
+
 ## React router
 https://github.com/rackt/react-router
 
