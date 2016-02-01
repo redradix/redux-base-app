@@ -4,7 +4,7 @@
   "description": "Redux example app for the redradix baseapp",
   "scripts": {
     "start": "node ./src/server.js",
-    "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./src/test/setup.js",
+    "test": "NODE_ENV=test mocha --recursive src/test --compilers js:babel-core/register --require ./src/test/setup.js",
     "test:watch": "npm test -- --watch"
   },
   "repository": {
@@ -17,6 +17,7 @@
   },
   "homepage": "http://redradix.com",
   "dependencies": {
+    "deep-freeze": "0.0.1",
     "dom-scroll-into-view": "^1.0.1",
     "history": "^1.17.0",
     "isomorphic-fetch": "^2.2.0",
