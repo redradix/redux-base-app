@@ -30,11 +30,15 @@ function removeArrayItemById(collection, id) {
  */
 function addMapItem(collection, item, index) {
   // what if no index??
-  return index? assign({}, collection, { [index]: item }) : collection;
+  return index? assign(collection, { [index]: item }) : collection;
 }
 
 function removeMapItemByKey(collection, key) {
-  return assign(collection, { [key]: undefined });
+  let newCollection = assign(collection);
+  if (key != undefined) {
+    delete newCollection[key];
+  }
+  return newCollection;
 }
 
 /**
@@ -71,7 +75,7 @@ export function addItem(collection, item, index) {
 
 export function addItemById(collection, item, id) {
   return isArray(collection) ?
-    addArrayItem(collection, { id: id || getNextId(collection), ...item }) :
+    addArrayItem(collection, { ...item, id: id || getNextId(collection) }) :
     addMapItem(...arguments);
 }
 
