@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import bindActionData from 'redux-form/lib/bindActionData'
 
 /* Selectors */
-import { totalSelector } from '../selectors/dishSelectors'
+import { totalSelector } from '../modules/dishes/selectors'
 
 /* Actions */
 import { addDish, editDish} from '../modules/dishes'

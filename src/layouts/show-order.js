@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { removeOrder} from '../modules/orders'
 import { Link } from 'react-router'
 // Example with reselect
-import { totalSelector, escandalloSelector } from '../selectors/orders'
+import { totalSelector, escandalloSelector } from '../modules/orders/selectors'
 import { formatDate } from "../utils/utils"
 
 

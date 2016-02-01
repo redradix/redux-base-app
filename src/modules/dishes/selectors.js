@@ -1,5 +1,5 @@
 import { createSelector } from "reselect"
-import { findById } from '../utils/utils'
+import { findById } from '../../utils/utils'
 
 function findIngredients(ingredients, dishIngredients) {
   return ingredients.reduce( (acc, i) => {

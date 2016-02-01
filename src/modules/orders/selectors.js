@@ -1,5 +1,5 @@
 import { createSelector } from "reselect"
-import { findById } from '../utils/utils'
+import { findById } from '../../utils/utils'
 
 function findDishes(dishes, orderDishes) {
   return dishes.reduce( (acc, d) => {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import bindActionData from 'redux-form/lib/bindActionData'
 
 /* Selectors */
-import { totalSelector } from '../selectors/orders'
+import { totalSelector } from '../modules/orders/selectors'
 
 /* Actions */
 import { addOrder, editOrder} from '../modules/orders'
