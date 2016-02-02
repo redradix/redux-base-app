@@ -1,0 +1,17 @@
+{
+  "appName": "DAH: High cooking development",
+  "username": "Username",
+  "password": "Password",
+  "submit": "Submit",
+  "email": "Email",
+  "login": {
+    "title": "Write your credentials",
+    "goRegister": "If you are not register, {{component}}",
+    "registerActionCall": "do it now"
+  },
+  "register": {
+    "title": "Write your data if you want to login",
+    "goLogin": "If you are already register, {{component}}",
+    "loginActionCall": "go login"
+  }
+}
