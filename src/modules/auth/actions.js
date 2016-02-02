@@ -3,17 +3,17 @@ import { pushPath, replacePath } from 'react-router-redux';
 
 const APP_NAME = "base-app/"
 
-// Paste tense for actions
+// Past tense for actions
 export const TOKEN_VALIDATION_FAILED = APP_NAME.concat("AUTH:VALIDATE_TOKEN_FAIL")
-export const TOKEN_VALIDATION_SUCCESS = APP_NAME.concat("AUTH:VALIDATE_TOKEN")
+export const TOKEN_VALIDATION_SUCCEEDED = APP_NAME.concat("AUTH:VALIDATE_TOKEN")
 export const TOKEN_VALIDATION_ATTEMPTED = APP_NAME.concat("AUTH:VALIDATE_TOKEN_ATTEMPT")
 
 export const LOGIN_ATTEMPTED = APP_NAME.concat("AUTH:LOGIN_ATTEMPT")
 export const LOGIN_FAILED = APP_NAME.concat("AUTH:LOGIN_FAIL")
-export const LOGIN_SUCCESS = APP_NAME.concat("AUTH:LOGIN")
-export const LOGOUT_SUCCESS = APP_NAME.concat("AUTH:LOGOUT")
+export const LOGIN_SUCCEEDED = APP_NAME.concat("AUTH:LOGIN")
+export const LOGOUT_SUCCEEDED = APP_NAME.concat("AUTH:LOGOUT")
 
-export const REGISTER_SUCCESS = APP_NAME.concat("AUTH:REGISTER")
+export const REGISTER_SUCCEEDED = APP_NAME.concat("AUTH:REGISTER")
 export const REGISTER_ATTEMPTED = APP_NAME.concat("AUTH:REGISTER_ATTEMPT")
 export const REGISTER_FAILED = APP_NAME.concat("AUTH:REGISTER_FAIL")
 
@@ -39,7 +39,7 @@ export function validateToken() {
         [CALL_API]: {
           endpoint: 'session',
           authenticated: true,
-          types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCESS, TOKEN_VALIDATION_FAILED],
+          types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCEEDED, TOKEN_VALIDATION_FAILED],
         }
       }).then(({ payload }) =>  {
         dispatch(loadInitialData())
@@ -53,7 +53,7 @@ export function validateToken() {
 export function logout() {
   return (dispatch, getState) => {
     localStorage.removeItem('token')
-    dispatch(LOGOUT_SUCCESS)
+    dispatch(LOGOUT_SUCCEEDED)
     dispatch(pushPath("/login"))
   }
 }
@@ -70,7 +70,7 @@ export function login({username, password}) {
             password: password
           })
         },
-        types: [LOGIN_ATTEMPTED, LOGIN_SUCCESS, LOGIN_FAILED],
+        types: [LOGIN_ATTEMPTED, LOGIN_SUCCEEDED, LOGIN_FAILED],
         //parseResponse:
       }
     }).then(({ payload }) =>  {
@@ -95,7 +95,7 @@ export function register(credentials) {
             password: credentials.password
           })
         },
-        types: [REGISTER_ATTEMPTED, REGISTER_SUCCESS, REGISTER_FAILED],
+        types: [REGISTER_ATTEMPTED, REGISTER_SUCCEEDED, REGISTER_FAILED],
         //parseResponse:
       }
     }).then(({ payload, error}) =>  {

@@ -4,11 +4,11 @@ export * from './actions'
 
 function session(state, action) {
   switch (action.type) {
-    case actions.REGISTER_SUCCESS:
-    case actions.LOGIN_SUCCESS:
-    case actions.TOKEN_VALIDATION_SUCCESS:
+    case actions.REGISTER_SUCCEEDED:
+    case actions.LOGIN_SUCCEEDED:
+    case actions.TOKEN_VALIDATION_SUCCEEDED:
       return Object.assign({}, action.payload)
-    case actions.LOGOUT_SUCCESS:
+    case actions.LOGOUT_SUCCEEDED:
       return {}
     default: 
       return state
@@ -39,18 +39,18 @@ export default function reducer(state=initialState, action={}) {
       return Object.assign({}, state, {
         logged: false
       })
-    case actions.TOKEN_VALIDATION_SUCCESS:
+    case actions.TOKEN_VALIDATION_SUCCEEDED:
       return Object.assign({}, state, {
         logged: true,
         session: session(state.session, action)
       })
-    case actions.LOGIN_SUCCESS:
+    case actions.LOGIN_SUCCEEDED:
       return Object.assign({}, state, {
         logged: true,
         loging: false,
         session: session(state.session, action)
       })
-    case actions.LOGOUT_SUCCESS:
+    case actions.LOGOUT_SUCCEEDED:
       return Object.assign({}, state, {
         logged: false,
         logging: false,
@@ -65,7 +65,7 @@ export default function reducer(state=initialState, action={}) {
       return Object.assign({}, state, {
         registering: true
       })
-    case actions.REGISTER_SUCCESS:
+    case actions.REGISTER_SUCCEEDED:
       return Object.assign({}, state, {
         registering: false,
         logged: true,
