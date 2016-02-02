@@ -25,27 +25,6 @@ describe("Array collections", () => {
     ).toEqual(newCollection);
   });
 
-  it("should add a new element by id without specifying an id", () => {
-    const newCollection = [{id:0, thing:"car"}, {id:6, thing:"button"},{id:7, thing:"cloth"}];
-    expect(
-      _.addItemById(collection, {thing:"cloth"})
-    ).toEqual(newCollection);
-  });
-
-  it("should add a new element by id specifying its id", () => {
-    const newCollection = [{id:0, thing:"car"}, {id:6, thing:"button"},{id:4, thing:"cloth"}];
-    expect(
-      _.addItemById(collection, {thing:"cloth"}, 4)
-    ).toEqual(newCollection);
-  });
-
-  it("should add a new element by id specifying an id different from the one the element has", () => {
-    const newCollection = [{id:0, thing:"car"}, {id:6, thing:"button"},{id:4, thing:"cloth"}];
-    expect(
-      _.addItemById(collection, {id:3, thing:"cloth"}, 4)
-    ).toEqual(newCollection);
-  });
-
   /**
    * Remove
    */
@@ -59,19 +38,6 @@ describe("Array collections", () => {
     const newCollection = [{id:0, thing:"car"}];
     expect(
       _.removeItem(collection, 1)
-    ).toEqual(newCollection);
-  });
-
-  it("shouldn't remove an element if no id is specified", () => {
-    expect(
-      _.removeItemById(collection)
-    ).toEqual(collection);
-  });
-
-  it("should remove an element by its id", () => {
-    const newCollection = [{id:0, thing:"car"}];
-    expect(
-      _.removeItemById(collection, 6)
     ).toEqual(newCollection);
   });
 
@@ -89,33 +55,6 @@ describe("Array collections", () => {
     expect(
       _.replaceItem(collection, {thing:"cloth"}, 1)
     ).toEqual(newCollection); 
-  });
-
-  it("shouldn't replace an item when no id supplied", () => {
-    expect(
-      _.replaceItemById(collection, {thing:"cloth"})
-    ).toEqual(collection);
-  });
-  
-  it("should replace an item given its id", () => {
-    const newCollection = [{id:0, thing:"car"}, {id:6, thing:"cloth"}];
-    expect(
-      _.replaceItemById(collection, {thing:"cloth"}, 6)
-    ).toEqual(newCollection);
-  });
-
-  it("should replace an item given its id as item property", () => {
-    const newCollection = [{id:0, thing:"car"}, {id:6, thing:"cloth"}];
-    expect(
-      _.replaceItemById(collection, {id:6, thing:"cloth"})
-    ).toEqual(newCollection);
-  });
-
-  it("should replace an item prioritizing id argument over id item property", () => {
-    const newCollection = [{id:0, thing:"car"}, {id:6, thing:"cloth"}];
-    expect(
-      _.replaceItemById(collection, {id:4, thing:"cloth"}, 6)
-    ).toEqual(newCollection);
   });
 });
 
@@ -140,19 +79,6 @@ describe("Map collection", () => {
     ).toEqual(newCollection);
   });
 
-  it("shouldn't add an element if no id is specified", () => {
-    expect(
-      _.addItemById(collection, {thing:"cloth"})
-    ).toEqual(collection);
-  });
-
-  it("should add an element when its id is specified", () => {
-    const newCollection = {"0":{thing:"car"}, "6":{thing:"button"}, "3":{thing:"cloth"}};
-    expect(
-      _.addItemById(collection, {thing:"cloth"}, 3)
-    ).toEqual(newCollection);
-  });
-
   /**
    * Remove
    */
@@ -169,19 +95,6 @@ describe("Map collection", () => {
     ).toEqual(newCollection);
   });
 
-  it("shouldn't remove any item when no id is specified", () => {
-    expect(
-      _.removeItemById(collection)
-    ).toEqual(collection);
-  });
-
-  it("should remove an item when its id is specified", () => {
-    const newCollection = {"0":{thing:"car"}};
-    expect(
-      _.removeItemById(collection, 6)
-    ).toEqual(newCollection);
-  });
-  
   /**
    * Replace
    */
@@ -195,25 +108,6 @@ describe("Map collection", () => {
     const newCollection = {"0":{thing:"car"}, "6":{thing:"cloth"}};
     expect(
       _.replaceItem(collection, {thing:"cloth"}, 6)
-    ).toEqual(newCollection);
-  });
-
-  it("shouldn't replace any item when no index provided", () => {
-    expect(
-      _.replaceItem(collection, {thing:"cloth"})
-    ).toEqual(collection);
-  });
-
-  it("shouldn't replace an item when no id supplied", () => {
-    expect(
-      _.replaceItemById(collection, {thing:"cloth"})
-    ).toEqual(collection);
-  });
-  
-  it("should replace an item given its id", () => {
-    const newCollection = {"0":{thing:"car"}, "6":{thing:"cloth"}};
-    expect(
-      _.replaceItemById(collection, {thing:"cloth"}, 6)
     ).toEqual(newCollection);
   });
 });

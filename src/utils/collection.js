@@ -18,26 +18,11 @@ function removeArrayItem(collection, index = collection.length) {
   ];
 }
 
-function removeArrayItemById(collection, id) {
-  /*for (var i=0; i < collection.length; i++) {
-    if (collection[i].id === id) return removeArrayItem(collection, i);
-  };
-  return collection;*/
-  // better to use id2index
-  return removeArrayItem(collection, id2index(collection, id));
-}
-
 function replaceArrayItem(collection, item, index) {
   let newCollection = removeArrayItem(collection, index);
   return index != undefined? 
     addArrayItem(newCollection, item, index) :
     newCollection;
-}
-
-function replaceArrayItemById(collection, item, id = item.id) {
-  if (item.id == undefined || (item.id !== id)) item.id = id;
-  let index = id2index(collection, id);
-  return replaceArrayItem(collection, item, index);
 }
 
 /**
@@ -47,7 +32,7 @@ function addMapItem(collection, item, index) {
   return index != undefined? assign(collection, { [index]: item }) : collection;
 }
 
-function removeMapItemByKey(collection, key) {
+function removeMapItem(collection, key) {
   let newCollection = assign(collection);
   if (key != undefined) {
     delete newCollection[key];
@@ -66,6 +51,10 @@ function isArray(collection) {
   return collection instanceof Array;
 }
 
+function isPlainObject(collection) {
+  return collection.toString() === "[object Object]";
+}
+
 function getNextId(collection = []) {
   return collection.reduce((maxId, item) => {
     let id = item.id || maxId;
@@ -74,7 +63,9 @@ function getNextId(collection = []) {
 }
 
 function id2index(collection = [], id) {
-  return collection.reduce((index, item, i) => item.id === id? i : index, undefined);
+  for (var i=0; i < collection.length; i++) {
+    if (collection[i].id === id) return i;
+  };
 }
 
 function index2id(collection = [], index) {
@@ -86,37 +77,31 @@ function index2id(collection = [], index) {
  * exports
  */
 export function addItem(collection, item, index) {
-  return isArray(collection) ?
-    addArrayItem(...arguments) :
-    addMapItem(...arguments);
-}
-
-export function addItemById(collection, item, id) {
-  return isArray(collection) ?
-    addArrayItem(collection, { ...item, id: id || getNextId(collection) }) :
-    addMapItem(...arguments);
+  if (isArray(collection)) { 
+    return addArrayItem(...arguments) 
+  } else if (isPlainObject(collection)) {
+    return addMapItem(...arguments);
+  } else {
+    throw new Error("The collection must be either Object or Array");
+  }
 }
 
 export function removeItem(collection, index) {
-  return isArray(collection) ?
-    removeArrayItem(...arguments) :
-    removeMapItemByKey(...arguments);
-};
-
-export function removeItemById(collection, id) {
-  return isArray(collection) ?
-    removeArrayItemById(...arguments) :
-    removeMapItemByKey(...arguments);
+  if (isArray(collection)) { 
+    return removeArrayItem(...arguments);
+  } else if (isPlainObject(collection)) {
+    return removeMapItem(...arguments);
+  } else {
+    throw new Error("The collection must be either Object or Array");
+  }
 };
 
 export function replaceItem(collection, item, index) {
-  return isArray(collection) ?
-    replaceArrayItem(...arguments) :
-    replaceMapItem(...arguments);
-}
-
-export function replaceItemById(collection, item, id) {
-  return isArray(collection) ?
-    replaceArrayItemById(...arguments) :
-    replaceMapItem(...arguments); 
-}
+  if (isArray(collection)) { 
+    return replaceArrayItem(...arguments); 
+  } else if (isPlainObject(collection)) {
+    return replaceMapItem(...arguments);
+  } else {
+    throw new Error("The collection must be either Object or Array");
+  }
+};
