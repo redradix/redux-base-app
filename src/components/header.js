@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import Notifications from './notifications'
+import { translate, Interpolate } from 'react-i18next/lib'
 
 class Header extends Component {
   onClick(e) {
@@ -39,4 +40,4 @@ Header.propTypes = {
   logout: PropTypes.func.isRequired
 }
 
-export default Header
+export default translate(['common', 'header'])(Header);

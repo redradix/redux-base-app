@@ -28,10 +28,7 @@ class CreateOrder extends Component {
   render() {
     const { order, dishes, pvp,  addArrayValue, removeArrayValue } = this.props
     return (
-      <div>
-        <p>Crea la comanda indicando la lista de platos</p>
-        <CreateOrderForm onSubmit={this.onSubmit.bind(this)} initialValues={ order } totalDishes={dishes}  removeDish={removeArrayValue} pvp={pvp} addDish={addArrayValue}/>
-      </div>
+      <CreateOrderForm onSubmit={this.onSubmit.bind(this)} initialValues={ order } totalDishes={dishes}  removeDish={removeArrayValue} pvp={pvp} addDish={addArrayValue}/>
     )
   }
 }

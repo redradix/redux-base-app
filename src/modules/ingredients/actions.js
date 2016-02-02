@@ -1,9 +1,6 @@
-//TODO: remove boilerplate of FAIL and SUCCESS, both for actions and action_creators
 //Take a look at redux-actions
-////TODO: why orders are not fetching
 
 import { pushPath } from 'redux-simple-router'
-import fetch from 'isomorphic-fetch'
 import { applyToken } from '../helpers';
 import { findById } from "../../utils/utils"
 import config from '../../config'

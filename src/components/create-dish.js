@@ -36,30 +36,33 @@ class CreateDishForm extends Component {
           error
           } = this.props
     return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input type="text" placeholder="Name" {...name}/>
-          {name.touched && name.error && <div>{name.error}</div>}
-        </div>
-        <div>
-          <label>price</label>
-          <input type="integer" placeholder="price" {...price}/>
-          {price.touched && price.error && <div>{price.error}</div>}
-        </div>
-        <ElementsToAdd subject='ingredient' elements={totalIngredients}  add={this.addIngredientToDish.bind(this)} />
-        <ElementsAdded subject='ingredient' elements= {ingredients} totalElements={totalIngredients} remove={this.removeIngredientFromDish.bind(this)}/>
-        <div>
-          <p>Escandallo: {escandallo || 0}</p>
-        </div>
-        {error && <div>{error}</div>}
-        <button disabled={submitting }type='submit' onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} Submit
-        </button>
-        <button disabled={submitting} onClick={resetForm}>
-          Clear Values
-        </button>
-      </form>
+      <div>
+        <p>Crea el plato indicando su lista de ingredientes, nombre y precio</p>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name</label>
+            <input type="text" placeholder="Name" {...name}/>
+            {name.touched && name.error && <div>{name.error}</div>}
+          </div>
+          <div>
+            <label>price</label>
+            <input type="integer" placeholder="price" {...price}/>
+            {price.touched && price.error && <div>{price.error}</div>}
+          </div>
+          <ElementsToAdd subject='ingredient' elements={totalIngredients}  add={this.addIngredientToDish.bind(this)} />
+          <ElementsAdded subject='ingredient' elements= {ingredients} totalElements={totalIngredients} remove={this.removeIngredientFromDish.bind(this)}/>
+          <div>
+            <p>Escandallo: {escandallo || 0}</p>
+          </div>
+          {error && <div>{error}</div>}
+          <button disabled={submitting }type='submit' onClick={handleSubmit}>
+            {submitting ? <i/> : <i/>} Submit
+          </button>
+          <button disabled={submitting} onClick={resetForm}>
+            Clear Values
+          </button>
+        </form>
+      </div>
     )
   }
 }

@@ -1,5 +1,4 @@
 import { pushPath } from 'redux-simple-router'
-import fetch from 'isomorphic-fetch'
 import applyToken from '../helpers';
 import { CALL_API } from '../../middleware/api'
 

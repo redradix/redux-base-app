@@ -1,6 +1,5 @@
 import { pushPath } from 'redux-simple-router'
 import { CALL_API } from '../../middleware/api'
-import fetch from 'isomorphic-fetch'
 import { applyHeaders } from '../helpers'
 import config from '../../config'
 import { fetchIngredients } from '../ingredients'

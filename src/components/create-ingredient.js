@@ -18,30 +18,33 @@ class CreateIngredientForm extends Component {
           error
           } = this.props
     return (
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input type="text" placeholder="Name" {...name}/>
-          {name.touched && name.error && <div>{name.error}</div>}
-        </div>
-        <div>
-          <label>Cost per Kg</label>
-          <input type='number' placeholder="Cost" {...cost}/>
-          {cost.touched && cost.error && <div>{cost.error}</div>}
-        </div>
-        <div>
-          <label>Stock</label>
-          <input type="number" placeholder="Stock" {...stock}/>
-          {stock.touched && stock.error && <div>{stock.error}</div>}
-        </div>
-        {error && <div>{error}</div>}
-        <button disabled={submitting }type='submit' onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} Submit
-        </button>
-        <button disabled={submitting} onClick={resetForm}>
-          Clear Values
-        </button>
-      </form>
+      <div>
+        <p>Crea el ingrediente que necesites indicando su coste aproximado por Kg y su stock actual</p>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name</label>
+            <input type="text" placeholder="Name" {...name}/>
+            {name.touched && name.error && <div>{name.error}</div>}
+          </div>
+          <div>
+            <label>Cost per Kg</label>
+            <input type='number' placeholder="Cost" {...cost}/>
+            {cost.touched && cost.error && <div>{cost.error}</div>}
+          </div>
+          <div>
+            <label>Stock</label>
+            <input type="number" placeholder="Stock" {...stock}/>
+            {stock.touched && stock.error && <div>{stock.error}</div>}
+          </div>
+          {error && <div>{error}</div>}
+          <button disabled={submitting }type='submit' onClick={handleSubmit}>
+            {submitting ? <i/> : <i/>} Submit
+          </button>
+          <button disabled={submitting} onClick={resetForm}>
+            Clear Values
+          </button>
+        </form>
+      </div>
     )
   }
 }

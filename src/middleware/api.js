@@ -1,4 +1,4 @@
-//TODO: Not finished (post requests)
+import fetch from 'isomorphic-fetch'
 import config from '../config'
 import { applyToken, applyHeaders } from '../modules/helpers'
 import { LOGOUT } from '../modules/auth'

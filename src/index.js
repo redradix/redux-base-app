@@ -4,6 +4,8 @@ import { Provider } from 'react-redux'
 import {browserHistory} from 'react-router'
 import { Router, createRoutes } from 'react-router'
 import configureStore from './configureStore'
+import { I18nextProvider } from 'react-i18next/lib'
+import i18n from './utils/i18n'
 import rawRoutes from './routes';
 
 // Wraps with middleware the createStore function
@@ -27,9 +29,11 @@ const routes = mixDispatch(createRoutes(rawRoutes));
 
 // DOC: Provider: Makes the Redux store available to the connect() calls in the component hierarchy below
 render(
-  <Provider store={store}>
-    <Router history={browserHistory} routes={routes}>
-    </Router>
-  </Provider>,
+  <I18nextProvider i18n={ i18n }>
+    <Provider store={store}>
+      <Router history={browserHistory} routes={routes}>
+      </Router>
+    </Provider>
+  </I18nextProvider>,
   document.getElementById('root')
 )

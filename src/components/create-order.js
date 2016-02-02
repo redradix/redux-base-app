@@ -28,20 +28,23 @@ class CreateOrderForm extends Component {
           error
           } = this.props
     return (
-      <form onSubmit={handleSubmit}>
-        <ElementsToAdd elements={totalDishes}  add={this.addDishToOrder.bind(this)} subject='dish' />
-        <ElementsAdded elements={dishes} totalElements={totalDishes} remove={this.removeDishFromOrder.bind(this)} subject={'dish'}/>
-        <div>
-          <p>PVP: {pvp || 0}</p>
-        </div>
-        {error && <div>{error}</div>}
-        <button disabled={submitting} type='submit' onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} Submit
-        </button>
-        <button disabled={submitting} onClick={resetForm}>
-          Clear Values
-        </button>
-      </form>
+      <div>
+        <p>Crea la comanda indicando la lista de platos</p>
+        <form onSubmit={handleSubmit}>
+          <ElementsToAdd elements={totalDishes}  add={this.addDishToOrder.bind(this)} subject='dish' />
+          <ElementsAdded elements={dishes} totalElements={totalDishes} remove={this.removeDishFromOrder.bind(this)} subject={'dish'}/>
+          <div>
+            <p>PVP: {pvp || 0}</p>
+          </div>
+          {error && <div>{error}</div>}
+          <button disabled={submitting} type='submit' onClick={handleSubmit}>
+            {submitting ? <i/> : <i/>} Submit
+          </button>
+          <button disabled={submitting} onClick={resetForm}>
+            Clear Values
+          </button>
+        </form>
+      </div>
     )
   }
 }

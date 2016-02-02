@@ -22,10 +22,7 @@ class CreateIngredient extends Component {
   render() {
     const { ingredient } = this.props
     return (
-      <div>
-        <p>Crea el ingrediente que necesites indicando su coste aproximado por Kg y su stock actual</p>
-        <CreateIngredientForm onSubmit={this.onSubmit.bind(this)} initialValues={ ingredient }/>
-      </div>
+      <CreateIngredientForm onSubmit={this.onSubmit.bind(this)} initialValues={ ingredient }/>
     )
   }
 }
