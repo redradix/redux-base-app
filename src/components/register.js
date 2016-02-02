@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react'
+import { Link } from 'react-router'
 import {reduxForm} from 'redux-form'
 import {createValidator, required, maxLength, minLength, email} from '../utils/validation'
+import { translate, Interpolate } from 'react-i18next/lib';
 
 const validate = createValidator({
   username: [required, minLength(2), maxLength(10)],
@@ -14,30 +16,36 @@ class RegisterForm extends Component {
           fields: {username, email, password},
           handleSubmit,
           submitting,
-          error
+          error,
+          t
         } = this.props
+        const GoLoginComponent = <Link to='/Login'>{t('register.loginActionCall')}</Link>
     return (
-      <form onSubmit={handleSubmit}> 
-        <div>
-          <label>Username</label>
-          <input type="text" placeholder="username" {...username}/>
-          {username.touched && username.error && <div>{username.error}</div>}
-        </div>
-        <div>
-          <label>Email</label>
-          <input type="email" placeholder="email" {...email}/>
-          {email.touched && email.error && <div>{email.error}</div>}
-        </div>
-        <div>
-          <label>Password</label>
-          <input type="password" placeholder="password" {...password}/>
-          {password.touched && password.error && <div>{password.error}</div>}
-        </div>
-        {error && <div>{error}</div>}
-        <button disabled={submitting} type="submit" onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} Submit
-        </button>
-      </form>
+      <div>
+        <p>{t('register.title')}</p>
+        <form onSubmit={handleSubmit}> 
+          <div>
+            <label>{t('username')}</label>
+            <input type="text" placeholder={t('username')} {...username}/>
+            {username.touched && username.error && <div>{username.error}</div>}
+          </div>
+          <div>
+            <label>{t('email')}</label>
+            <input type="email" placeholder={t('email')} {...email}/>
+            {email.touched && email.error && <div>{email.error}</div>}
+          </div>
+          <div>
+            <label>{t('password')}</label>
+            <input type="password" placeholder={t('password')} {...password}/>
+            {password.touched && password.error && <div>{password.error}</div>}
+          </div>
+          {error && <div>{error}</div>}
+          <button disabled={submitting} type="submit" onClick={handleSubmit}>
+            {submitting ? <i/> : <i/>} {t('submit')}
+          </button>
+        </form>
+        <Interpolate parent='p' i18nKey='register.goLogin' component={GoLoginComponent} />
+      </div>
     )
   }  
 }
@@ -55,4 +63,4 @@ RegisterForm = reduxForm({
   fields: ['username', 'email', 'password']
 })(RegisterForm)
 
-export default RegisterForm
+export default translate(['common'])(RegisterForm);

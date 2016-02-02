@@ -1,6 +1,9 @@
 import {createValidator, required} from '../utils/validation'
+import { Link } from 'react-router'
 import {reduxForm} from 'redux-form'
 import React, { PropTypes, Component } from 'react'
+import { translate, Interpolate } from 'react-i18next/lib';
+
 
 const validate = createValidator({
   username: [required],
@@ -13,25 +16,31 @@ class LoginForm extends Component {
           fields: {username, password},
           handleSubmit,
           submitting,
-          error
+          error,
+          t
         } = this.props
+    const registerComponent = <Link to='/register'>{t('login.registerActionCall')}</Link>
     return (
-      <form onSubmit={handleSubmit}> 
-        <div>
-          <label>Username</label>
-          <input type="text" placeholder="username" {...username}/>
-          {username.touched && username.error && <div>{username.error}</div>}
-        </div>
-        <div>
-          <label>Password</label>
-          <input type="password" placeholder="password" {...password}/>
-          {password.touched && password.error && <div>{password.error}</div>}
-        </div>
-        {error && <div>{error}</div>}
-        <button disabled={submitting} type="submit" onClick={handleSubmit}>
-          {submitting ? <i/> : <i/>} Submit
-        </button>
-      </form>
+      <div>
+        <p>{t('login.title')}</p>
+        <form onSubmit={handleSubmit}> 
+          <div>
+            <label>{t('username')}</label>
+            <input type="text" placeholder="username" {...username}/>
+            {username.touched && username.error && <div>{username.error}</div>}
+          </div>
+          <div>
+            <label>{t('password')}</label>
+            <input type="password" placeholder="password" {...password}/>
+            {password.touched && password.error && <div>{password.error}</div>}
+          </div>
+          {error && <div>{error}</div>}
+          <button disabled={submitting} type="submit" onClick={handleSubmit}>
+            {submitting ? <i/> : <i/>} {t('submit')}
+          </button>
+        </form>
+        <Interpolate parent='p' i18nKey='login.goRegister' component={registerComponent} />
+      </div>
     )
   }  
 }
@@ -49,4 +58,4 @@ LoginForm = reduxForm({
   fields: ['username', 'password']
 })(LoginForm)
 
-export default LoginForm
+export default translate(['common'])(LoginForm);
