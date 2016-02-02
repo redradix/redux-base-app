@@ -1,7 +1,7 @@
 // Architecture file
 //TODO: Not finished (post requests)
 import config from '../config'
-import { applyToken, applyHeaders }from './helpers'
+import { applyHeaders }from './helpers'
 import { LOGOUT } from '../modules/auth'
 import { pushPath } from 'react-router-redux';
 
