@@ -3,11 +3,11 @@ export const assign = (state, newState = {}) => Object.assign({}, state, newStat
 /**
  * Arrays
  */
-function addArrayItem(collection, item = {}, index = collection.length) {
+function addArrayItem(collection, item = {}, index = collection.length, replace = false) {
   return [
     ...collection.slice(0, index), 
     item, 
-    ...collection.slice(index)
+    ...collection.slice(index + replace)
   ];
 }
 
@@ -19,18 +19,32 @@ function removeArrayItem(collection, index = collection.length) {
 }
 
 function removeArrayItemById(collection, id) {
-  for (var i=0; i < collection.length; i++) {
+  /*for (var i=0; i < collection.length; i++) {
     if (collection[i].id === id) return removeArrayItem(collection, i);
   };
-  return collection;
+  return collection;*/
+  // better to use id2index
+  return removeArrayItem(collection, id2index(collection, id));
+}
+
+function replaceArrayItem(collection, item, index) {
+  let newCollection = removeArrayItem(collection, index);
+  return index != undefined? 
+    addArrayItem(newCollection, item, index) :
+    newCollection;
+}
+
+function replaceArrayItemById(collection, item, id = item.id) {
+  if (item.id == undefined || (item.id !== id)) item.id = id;
+  let index = id2index(collection, id);
+  return replaceArrayItem(collection, item, index);
 }
 
 /**
  * Objects
  */
 function addMapItem(collection, item, index) {
-  // what if no index??
-  return index? assign(collection, { [index]: item }) : collection;
+  return index != undefined? assign(collection, { [index]: item }) : collection;
 }
 
 function removeMapItemByKey(collection, key) {
@@ -39,6 +53,10 @@ function removeMapItemByKey(collection, key) {
     delete newCollection[key];
   }
   return newCollection;
+}
+
+function replaceMapItem(collection, item, key) {
+  return key != undefined? assign(collection, { [key]: item }) : collection;
 }
 
 /**
@@ -90,3 +108,15 @@ export function removeItemById(collection, id) {
     removeArrayItemById(...arguments) :
     removeMapItemByKey(...arguments);
 };
+
+export function replaceItem(collection, item, index) {
+  return isArray(collection) ?
+    replaceArrayItem(...arguments) :
+    replaceMapItem(...arguments);
+}
+
+export function replaceItemById(collection, item, id) {
+  return isArray(collection) ?
+    replaceArrayItemById(...arguments) :
+    replaceMapItem(...arguments); 
+}
