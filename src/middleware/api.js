@@ -1,5 +1,6 @@
 // Architecture file
 //TODO: Not finished (post requests)
+import fetch from 'isomorphic-fetch'
 import config from '../config'
 import { applyHeaders }from './helpers'
 import { LOGOUT } from '../modules/auth'
