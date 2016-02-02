@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import auth from './auth/'
 import {reducer as formReducer} from 'redux-form';
-import { routeReducer } from 'redux-simple-router';
+import { routeReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
   auth,

@@ -1,5 +1,5 @@
 import { CALL_API } from '../../middleware/api'
-import { pushPath, replacePath } from 'redux-simple-router'
+import { pushPath, replacePath } from 'react-router-redux';
 
 const APP_NAME = "base-app/"
 
@@ -25,9 +25,9 @@ function loadInitialData(store) {
 export function checkLogged(callback) {
   return (dispatch, getState) => {
     if (getState().auth.logged) {
-      dispatch(replacePath('/'))   
+      dispatch(replacePath('/'))
     } else {
-      callback()  
+      callback()
     }
   }
 }
@@ -40,7 +40,7 @@ export function validateToken() {
           endpoint: 'session',
           authenticated: true,
           types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCESS, TOKEN_VALIDATION_FAILED],
-        }  
+        }
       }).then(({ payload }) =>  {
         dispatch(loadInitialData())
       }).catch((e) => {
@@ -72,7 +72,7 @@ export function login({username, password}) {
         },
         types: [LOGIN_ATTEMPTED, LOGIN_SUCCESS, LOGIN_FAILED],
         //parseResponse:
-      }  
+      }
     }).then(({ payload }) =>  {
       localStorage.setItem('token', payload.token)
       dispatch(loadInitialData())
@@ -80,7 +80,7 @@ export function login({username, password}) {
     }).catch((e) => {
       return Promise.reject({ _error: e._error})
     })
-  }    
+  }
 }
 
 export function register(credentials) {
@@ -97,7 +97,7 @@ export function register(credentials) {
         },
         types: [REGISTER_ATTEMPTED, REGISTER_SUCCESS, REGISTER_FAILED],
         //parseResponse:
-      }  
+      }
     }).then(({ payload, error}) =>  {
       debugger
       localStorage.setItem('token', payload.token)
@@ -106,5 +106,5 @@ export function register(credentials) {
     }).catch((e) => {
       return Promise.reject({_error: e._error })
     })
-  }  
+  }
 }
