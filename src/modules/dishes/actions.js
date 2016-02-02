@@ -1,4 +1,4 @@
-import { pushPath } from 'redux-simple-router'
+import { routeActions } from 'react-router-redux'
 import applyToken from '../helpers';
 import { CALL_API } from '../../middleware/api'
 
@@ -54,7 +54,7 @@ export function addDish(dish) {
         types: [ADD_DISH_ATTEMPT, ADD_DISH, ADD_DISH_FAIL]
       }
     }).then( ({ payload }) => {
-      dispatch(pushPath('/dishes/'))
+      dispatch(routeActions.push('/dishes/'))
     }).catch(() => {
       return Promise.reject({name: "Dish already exists", _error: 'Addition fail'})
     })
@@ -74,7 +74,7 @@ export function editDish(dish) {
         types: [EDIT_DISH_ATTEMPT, EDIT_DISH, EDIT_DISH_FAIL]
       }
     }).then( ({ payload }) => {
-      dispatch(pushPath('/dishes/'))
+      dispatch(routeActions.push('/dishes/'))
     }).catch(() => {
       return Promise.reject({name: "Dish does not exists", _error: 'Edition fail'})
     })
@@ -93,7 +93,7 @@ export function removeDish(dish) {
         types: [REMOVE_DISH_ATTEMPT, REMOVE_DISH, REMOVE_DISH_FAIL]
       }
     }).then( ({ payload }) => {
-      dispatch(pushPath('/dishes/'))
+      dispatch(routeActions.push('/dishes/'))
     })
   }
 }

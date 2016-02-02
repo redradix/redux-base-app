@@ -3,6 +3,7 @@ import {createValidator, required, maxLength, minLength, integer} from '../utils
 import ElementsToAdd from '../components/elements-to-add'
 import ElementsAdded from '../components/elements-added'
 import {reduxForm} from 'redux-form'
+import { translate } from 'react-i18next/lib'
 
 const validate = createValidator({
   name: [required, minLength(5), maxLength(10)],
@@ -33,33 +34,34 @@ class CreateDishForm extends Component {
           handleSubmit,
           resetForm,
           submitting,
-          error
+          error,
+          t
           } = this.props
     return (
       <div>
-        <p>Crea el plato indicando su lista de ingredientes, nombre y precio</p>
+        <p>{t('createDish.description')}</p>
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Name</label>
-            <input type="text" placeholder="Name" {...name}/>
+            <label>{t('createDish.nameLabel')}</label>
+            <input type="text" placeholder={t('createDish.namePlaceholder')} {...name}/>
             {name.touched && name.error && <div>{name.error}</div>}
           </div>
           <div>
-            <label>price</label>
-            <input type="integer" placeholder="price" {...price}/>
+            <label>{t('createDish.priceLabel')}</label>
+            <input type="integer" placeholder={t('createDish.pricePlaceholder')} {...price}/>
             {price.touched && price.error && <div>{price.error}</div>}
           </div>
           <ElementsToAdd subject='ingredient' elements={totalIngredients}  add={this.addIngredientToDish.bind(this)} />
           <ElementsAdded subject='ingredient' elements= {ingredients} totalElements={totalIngredients} remove={this.removeIngredientFromDish.bind(this)}/>
           <div>
-            <p>Escandallo: {escandallo || 0}</p>
+            <p>{t('createDish.escandallo')}: {escandallo || 0}</p>
           </div>
           {error && <div>{error}</div>}
           <button disabled={submitting }type='submit' onClick={handleSubmit}>
-            {submitting ? <i/> : <i/>} Submit
+            {submitting ? <i/> : <i/>} {t('createDish.submitButton')}
           </button>
           <button disabled={submitting} onClick={resetForm}>
-            Clear Values
+            {t('createDish.clearForm')}
           </button>
         </form>
       </div>
@@ -89,4 +91,4 @@ CreateDishForm = reduxForm({
   ]
 })(CreateDishForm)
 
-export default CreateDishForm
+export default translate(['common'])(CreateDishForm) 

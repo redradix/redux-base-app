@@ -3,6 +3,7 @@ import {reduxForm} from 'redux-form'
 import ElementsToAdd from '../components/elements-to-add'
 import ElementsAdded from '../components/elements-added'
 import { getIndice } from '../utils/utils'
+import { translate } from 'react-i18next/lib'
 
 
 class CreateOrderForm extends Component {
@@ -25,23 +26,25 @@ class CreateOrderForm extends Component {
           handleSubmit,
           resetForm,
           submitting,
-          error
+          error,
+          t
           } = this.props
     return (
       <div>
-        <p>Crea la comanda indicando la lista de platos</p>
+        <p>{t('createOrder.description')}</p>
+        <p></p>
         <form onSubmit={handleSubmit}>
           <ElementsToAdd elements={totalDishes}  add={this.addDishToOrder.bind(this)} subject='dish' />
           <ElementsAdded elements={dishes} totalElements={totalDishes} remove={this.removeDishFromOrder.bind(this)} subject={'dish'}/>
           <div>
-            <p>PVP: {pvp || 0}</p>
+            <p>{t('createOrder.pvp')}: {pvp || 0}</p>
           </div>
           {error && <div>{error}</div>}
           <button disabled={submitting} type='submit' onClick={handleSubmit}>
-            {submitting ? <i/> : <i/>} Submit
+            {submitting ? <i/> : <i/>} {t('createOrder.submitButton')}
           </button>
           <button disabled={submitting} onClick={resetForm}>
-            Clear Values
+            {t('createOrder.clearForm')}
           </button>
         </form>
       </div>
@@ -68,4 +71,4 @@ CreateOrderForm = reduxForm({
   ]
 })(CreateOrderForm)
 
-export default CreateOrderForm
+export default translate(['common'])(CreateOrderForm) 

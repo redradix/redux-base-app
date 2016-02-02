@@ -3,5 +3,8 @@
     "welcome": "Bienvenido a esta app de prueba, {{value}}"
   },
   "logout": "Salir",
-  "home": "Inicio"
+  "home": "Inicio",
+  "ingredients": "Ingredientes",
+  "dishes": "Platos",
+  "orders": "Comandas"
 }

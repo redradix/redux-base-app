@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import Modal from 'react-modal'
+import { translate, Interpolate } from 'react-i18next/lib'
 
 /* Example of statefull component. Something we should avoid. One of the things we are using redux is to keep all the UI on the state, so if we reload or snapshoot the state we can recover completely
  */
@@ -17,7 +18,9 @@ const customStyles = {
 
 function Notification({id, name, stock}) {
   return (
-    <div>Ingredient {name} has currently {stock} units</div>
+    <div>
+      <Interpolate parent='p' i18nKey='notifications.count' name={name} stock={stock} />
+    </div>
   )
 }
 
@@ -33,10 +36,10 @@ class Notifications extends Component {
     this.setState({modalIsOpen: false})
   }
   render() {
-    const { notifications } = this.props
+    const { notifications, t } = this.props
     const hasElements = notifications.length > 0
     const list = !hasElements ?
-      <em>You don't have any notifications yet</em> :
+      <em>{t('notifications.empty')}</em> :
       notifications.map(e =>
         <Notification
           stock={e.stock}
@@ -50,9 +53,9 @@ class Notifications extends Component {
           isOpen={this.state.modalIsOpen}
           style={customStyles} >
 
-          <h3>Notifications</h3>
+          <h3>{t('notifications.title')}</h3>
           <div>{list}</div>
-          <button onClick={this.closeModal.bind(this)}>close</button>
+          <button onClick={this.closeModal.bind(this)}>{t('notifications.closeButton')}</button>
         </Modal>
       </div>
     )
@@ -63,4 +66,4 @@ Notifications.propTypes = {
   notifications: PropTypes.array
 }
 
-export default Notifications
+export default translate(['common'])(Notifications)

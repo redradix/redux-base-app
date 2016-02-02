@@ -1,4 +1,4 @@
-import { pushPath } from 'redux-simple-router'
+import { routeActions } from 'react-router-redux'
 import { CALL_API } from '../../middleware/api'
 import { applyHeaders } from '../helpers'
 import config from '../../config'
@@ -55,7 +55,7 @@ export function addOrder(order) {
       }
     }).then( ({ payload }) => {
         // DOC: An action creator that you can use to update the current URL and update the browser history. Just pass it a string like /foo/bar?param=5 as the path argument.
-      dispatch(pushPath('/orders/'))
+      dispatch(routeActions.push('/orders/'))
     }).catch((e) => {
       //How to return errors to your form on a async validation? You can specify {Name of the field: specific error, _error: Generic error} returning it on a reject
       return Promise.reject({name: "Order already exists", _error: 'Addition fail'})
@@ -77,7 +77,7 @@ export function editOrder(order) {
       }
     }).then( ({ payload }) => {
         // DOC: An action creator that you can use to update the current URL and update the browser history. Just pass it a string like /foo/bar?param=5 as the path argument.
-      dispatch(pushPath('/orders/'))
+      dispatch(routeActions.push('/orders/'))
     }).catch((e) => {
       //How to return errors to your form on a async validation? You can specify {Name of the field: specific error, _error: Generic error} returning it on a reject
       return Promise.reject({name: "Order does not exists", _error: 'Edition fail'})
@@ -97,7 +97,7 @@ export function removeOrder(order) {
         types: [REMOVE_ORDER_ATTEMPT, REMOVE_ORDER, REMOVE_ORDER_FAIL]
       }
     }).then( ({ payload, error }) => {
-      dispatch(pushPath('/orders/'))
+      dispatch(routeActions.push('/orders/'))
     })
   }
 }

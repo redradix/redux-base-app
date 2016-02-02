@@ -1,24 +1,25 @@
 import React, { PropTypes, Component } from 'react'
+import { Link } from 'react-router'
+import { translate } from 'react-i18next/lib'
 
-export default class ListDishes extends Component {
+class ListDishes extends Component {
   render() {
-    const { isFetching, list} = this.props
+    const { isFetching, list, removeDish } = this.props
     return (
       <div>
         <span>
-          <h1>Lista de platos</h1>
-
+          <h1>{t('listDishes.title')}</h1>
         </span>
         <ul>
-          {isFetching && <p>Loading...</p>}
-          {!isFetching && list.length == 0 && <p>Empty</p>}
+          {isFetching && <p>{t('listDishes.loading')}</p>}
+          {!isFetching && list.length == 0 && <p>{t('listDishes.empty')}</p>}
           {!isFetching && list.length > 0 && list.map((d, index) =>
             <li key={index}>
               <Link to={`/dishes/${d.id}/show`}>{d.name}</Link>
               {' '}
-              <Link to={`/dishes/${d.id}/edit`}>Edit</Link>
+              <Link to={`/dishes/${d.id}/edit`}>{t('listDishes.editButton')}</Link>
               {' '}
-              <button onClick={this.props.removeDish.bind(this, d)}>Remove</button>
+              <button onClick={removeDish.bind(this, d)}>{t('listDishes.removeButton')}</button>
             </li>)
           }
         </ul>
@@ -26,3 +27,10 @@ export default class ListDishes extends Component {
     )  
   }  
 }
+
+ListDishes.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  list: PropTypes.array.isRequired
+}
+
+export default translate(['common'])(ListDishes) 

@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router'
 
 /* Route handlers/smart */
 import App from './containers/app'
+import Landing from './containers/landing'
 import Home from './components/home'
 import Ingredients from './components/ingredients'
 import ListIngredients from './smart/list-ingredients'
@@ -25,7 +26,7 @@ import { fetchOrder} from './modules/orders'
 
 export default (
   <Route>
-    <Route onEnter={(dispatch, cb) => dispatch(checkLogged(cb))}>
+    <Route component={Landing} onEnter={(dispatch, cb) => dispatch(checkLogged(cb))}>
       <Route path="/login" component={Login}/>
       <Route path="/register" component={Register}/>
     </Route>

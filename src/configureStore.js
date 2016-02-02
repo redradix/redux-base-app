@@ -55,8 +55,9 @@ export default function configureStore(initialState) {
     )
   )
 
-  //reduxRouter.listenForReplays(store, state => ensureState(state).get('routing'));
-
+  // Not working on root reload because the is no location on routing state
+  //reduxRouter.listenForReplays(store)
+  
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('./modules', () => {

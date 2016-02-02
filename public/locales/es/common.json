@@ -13,5 +13,87 @@
     "title": "Introduce tus datos para registrarte en DAH",
     "goLogin": "Si ya estas registrado, {{component}}",
     "loginActionCall": "logueate"
+  },
+  "home": {
+    "title": "Home",
+    "ingredientsLink": "Ingredientes",
+    "createIngredientLink": "Crear ingrediente",
+    "dishesLink": "Platos",
+    "createDishLink": "Crear plato",
+    "ordersLink": "Comandas",
+    "createOrderLink": "Crear comanda"
+  },
+  "dishes": {
+    "title": "Platos"
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "closeButton": "Cerrar",
+    "count": "El ingrediente {{name}} tiene actualmente {{stock}} unidades",
+    "empty": "No tienes ninguna notificacion"
+  },
+  "showDish": {
+    "title": "Info del plato",
+    "editButton": "Editar",
+    "removeButton": "Eliminar"
+  },
+  "showOrder": {
+    "title": "Info de la comanda",
+    "editButton": "Editar",
+    "removeButton": "Eliminar"
+  },
+  "showIngredient": {
+    "title": "Info del ingrediente",
+    "editButton": "Editar",
+    "removeButton": "Eliminar"
+  },
+  "listDishes": {
+    "title": "Listado de platos",
+    "editButton": "Editar",
+    "removeButton": "Eliminar",
+    "empty": "No hay platos",
+    "loading": "Cargando ..."
+  },
+  "listOrders": {
+    "title": "Listado de comandas",
+    "editButton": "Editar",
+    "removeButton": "Eliminar",
+    "empty": "No hay comandas",
+    "loading": "Cargando ...",
+    "date": "en {{date}}"
+  },
+  "listIngredients": {
+    "title": "Listado de ingredientes",
+    "editButton": "Editar",
+    "removeButton": "Eliminar",
+    "empty": "No hay ingredientes",
+    "loading": "Cargando ..."
+  },
+  "createIngredient": {
+    "description": "Crea el ingrediente que necesites indicando su coste aproximado por Kg y su stock actual", 
+    "nameLabel": "Nombre",
+    "namePlaceholder": "Introduce el nombre",
+    "costLabel": "Coste por Kg",
+    "costPlaceholder": "Introduce el coste",
+    "stockLabel": "Stock",
+    "stockPlaceholder": "Introduce el stock actual",
+    "submitButton": "Enviar",
+    "clearForm": "Limpiar campos"
+  },
+  "createDish": {
+    "description": "Crea el plato indicando su lista de ingredientes, nombre y precio", 
+    "nameLabel": "Nombre",
+    "namePlaceholder": "Introduce el nombre",
+    "priceLabel": "Coste por Kg",
+    "pricePlaceholder": "Introduce el coste",
+    "escandallo": "Escandallo",
+    "submitButton": "Enviar",
+    "clearForm": "Limpiar campos"
+  },
+  "createOrder": {
+    "description": "Crea la comanda indicando la lista de platos", 
+    "pvp": "Escandallo",
+    "submitButton": "Enviar",
+    "clearForm": "Limpiar campos"
   }
 }

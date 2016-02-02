@@ -1,6 +1,5 @@
 //Take a look at redux-actions
-
-import { pushPath } from 'redux-simple-router'
+import { routeActions} from 'react-router-redux'
 import { applyToken } from '../helpers';
 import { findById } from "../../utils/utils"
 import config from '../../config'
@@ -43,7 +42,7 @@ export function addIngredient(ingredient) {
         types: [ADD_INGREDIENT_ATTEMPT, ADD_INGREDIENT, ADD_INGREDIENT_FAIL]
       }
     }).then( ({ payload }) => {
-      dispatch(pushPath('/ingredients/'))
+      dispatch(routeActions.push('/ingredients/'))
     }).catch(() => {
       return Promise.reject({name: "Ingredient already exists", _error: 'Addition fail'})
     })
@@ -63,7 +62,7 @@ export function editIngredient(ingredient) {
         types: [EDIT_INGREDIENT_ATTEMPT, EDIT_INGREDIENT, EDIT_INGREDIENT_FAIL]
       }
     }).then( ({ payload }) => {
-      dispatch(pushPath('/ingredients/'))
+      dispatch(routeActions.push('/ingredients/'))
     }).catch((e) => {
       return Promise.reject({name: "Ingredient does not exists", _error: 'Edition fail'})
     })
@@ -84,7 +83,7 @@ export function removeIngredient(ingredient) {
     }).then( ({ payload }) => {
       // TODO: Carlos. Control when the ingredient can not be removed due to referencial integrity
       // TODO: Carlos. Los errores deberian devolver un formato comun. Este podria ser {nameOfTheFieldIfExist: specificError, _error: genericError}
-      dispatch(pushPath('/ingredients/'))
+      dispatch(routeActions.push('/ingredients/'))
     })
   }
 }

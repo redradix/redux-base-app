@@ -9,7 +9,7 @@ import { fetchIngredients } from '../ingredients'
 import { fetchDishes } from '../dishes'
 import { fetchOrders } from '../orders'
 import { initNotifications } from '../notifications'
-import { pushPath, replacePath } from 'redux-simple-router'
+import { routeActions } from 'react-router-redux'
 
 const MODULE_NAME = "base-app/auth/"
 
@@ -38,7 +38,7 @@ function loadInitialData(store) {
 export function checkLogged(callback) {
   return (dispatch, getState) => {
     if (getState().auth.logged) {
-      dispatch(replacePath('/'))
+      dispatch(routeActions.replace('/'))
     } else {
       callback()
     }
@@ -57,7 +57,7 @@ export function validateToken() {
       }).then(({ payload }) =>  {
         dispatch(loadInitialData())
       }).catch((e) => {
-        localStorage.removeItem('token')
+        dispatch(logout())
       })
     }
   }
@@ -66,8 +66,8 @@ export function validateToken() {
 export function logout() {
   return (dispatch, getState) => {
     localStorage.removeItem('token')
-    dispatch(LOGOUT)
-    dispatch(pushPath("/login"))
+    dispatch({type: LOGOUT})
+    dispatch(routeActions.replace("/login"))
   }
 }
 
@@ -89,7 +89,7 @@ export function login({username, password}) {
     }).then(({ payload }) =>  {
       localStorage.setItem('token', payload.token)
       dispatch(loadInitialData())
-      dispatch(pushPath('/'))
+      dispatch(routeActions.push('/'))
     }).catch((e) => {
       return Promise.reject({ _error: e._error})
     })
@@ -114,7 +114,7 @@ export function register(credentials) {
     }).then(({ payload, error}) =>  {
       webStorage.save('token', json.data.token)
       dispatch(loadInitialData())
-      dispatch(pushPath('/'))
+      dispatch(routeActions.push('/'))
     }).catch((e) => {
       return Promise.reject({_error: e._error })
     })

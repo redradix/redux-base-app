@@ -2,7 +2,6 @@ import fetch from 'isomorphic-fetch'
 import config from '../config'
 import { applyToken, applyHeaders } from '../modules/helpers'
 import { LOGOUT } from '../modules/auth'
-import { pushPath } from 'redux-simple-router'
 
 const BASE_URL = config.api
 
@@ -31,24 +30,23 @@ function callApi(endpoint, authenticated, config={}) {
 
 export const CALL_API = Symbol('Call API')
 
-export default store => next => action => {
+export default store => dispatch => action => {
 
   const callAPI = action[CALL_API]
 
   // So the middleware doesn't get applied to every single action
   if (typeof callAPI === 'undefined') {
-    return next(action)
+    return dispatch(action)
   }
 
   let { endpoint, types, authenticated, config  } = callAPI
 
   const [ requestType, successType, errorType] = types
-
-  next({type: requestType, authenticated})
+  dispatch({type: requestType, authenticated})
   // Passing the authenticated boolean back in our data will let us distinguish
   return callApi(endpoint, authenticated, config).then(
     payload =>
-      next({
+      dispatch({
         payload,
         authenticated,
         type: successType
@@ -56,11 +54,9 @@ export default store => next => action => {
     error => {
       // Switch con todos los casos de excepcion comunes
       if (error == 'Unauthorized') {
-        next({type: LOGOUT})
-        next(pushPath('login'))
         return Promise.reject(error)
       } else {
-        next({
+        dispatch({
           error: error || 'There was an error.',
           type: errorType
         })

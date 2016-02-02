@@ -1,6 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import {reduxForm} from 'redux-form'
 import {createValidator, required, maxLength, minLength, integer} from '../utils/validation'
+import { translate } from 'react-i18next/lib'
 
 const validate = createValidator({
   name: [required, minLength(5), maxLength(10)],
@@ -15,33 +16,34 @@ class CreateIngredientForm extends Component {
           handleSubmit,
           resetForm,
           submitting,
-          error
+          error,
+          t
           } = this.props
     return (
       <div>
-        <p>Crea el ingrediente que necesites indicando su coste aproximado por Kg y su stock actual</p>
+        <p>{t('createIngredient.description')}</p>
         <form onSubmit={handleSubmit}>
           <div>
-            <label>Name</label>
-            <input type="text" placeholder="Name" {...name}/>
+            <label>{t('createIngredient.nameLabel')}</label>
+            <input type="text" placeholder={t('createIngredient.namePlaceholder')} {...name}/>
             {name.touched && name.error && <div>{name.error}</div>}
           </div>
           <div>
-            <label>Cost per Kg</label>
-            <input type='number' placeholder="Cost" {...cost}/>
+            <label>{t('createIngredient.costLabel')}</label>
+            <input type='number' placeholder={t('createIngredient.costPlaceholder')} {...cost}/>
             {cost.touched && cost.error && <div>{cost.error}</div>}
           </div>
           <div>
-            <label>Stock</label>
-            <input type="number" placeholder="Stock" {...stock}/>
+            <label>{t('createIngredient.stockLabel')}</label>
+            <input type="number" placeholder={t('createIngredient.stockPlaceholder')} {...stock}/>
             {stock.touched && stock.error && <div>{stock.error}</div>}
           </div>
           {error && <div>{error}</div>}
           <button disabled={submitting }type='submit' onClick={handleSubmit}>
-            {submitting ? <i/> : <i/>} Submit
+            {submitting ? <i/> : <i/>} {t('createIngredient.submitButton')}
           </button>
           <button disabled={submitting} onClick={resetForm}>
-            Clear Values
+            {t('createIngredient.clearForm')}
           </button>
         </form>
       </div>
@@ -63,4 +65,4 @@ CreateIngredientForm = reduxForm({
   fields: ['name', 'cost', 'stock', 'id']
 })(CreateIngredientForm)
 
-export default CreateIngredientForm
+export default translate(['common'])(CreateIngredientForm) 

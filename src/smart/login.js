@@ -13,11 +13,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <p>Introduce tus datos de acceso a DAH</p>
-        <LoginForm onSubmit={this.onSubmit.bind(this)} />
-        Si no estas registrado, <Link to='/register'>registrate</Link>
-      </div>
+      <LoginForm onSubmit={this.onSubmit.bind(this)} />
     )
   }
 }
