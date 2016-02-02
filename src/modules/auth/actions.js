@@ -47,7 +47,6 @@ export function checkLogged(callback) {
 
 export function validateToken() {
   return (dispatch, getState) => {
-    debugger
     if (!getState().auth.logged) {
       return dispatch({
         [CALL_API]: {
