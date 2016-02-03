@@ -32,8 +32,8 @@ CreateIngredient.propTypes = {
   addIngredient: PropTypes.func
 }
 
-function mapStateToProps(state) {
-  const id = state.routing.path.split("/")[2]
+function mapStateToProps(state, ownProps) {
+  const id = ownProps.params.id
   if (!id) return {}
   return {
     ingredient: state.ingredients.list.find((e) => {return e.id == id})

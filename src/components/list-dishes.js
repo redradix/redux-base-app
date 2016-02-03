@@ -4,7 +4,7 @@ import { translate } from 'react-i18next/lib'
 
 class ListDishes extends Component {
   render() {
-    const { isFetching, list, removeDish } = this.props
+    const { isFetching, list, removeDish, t } = this.props
     return (
       <div>
         <span>

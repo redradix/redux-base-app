@@ -95,5 +95,20 @@
     "pvp": "Escandallo",
     "submitButton": "Enviar",
     "clearForm": "Limpiar campos"
+  },
+  "elementsAdded": {
+    "added": "{{item}} anadidos",
+    "add": "Por favor anande algunos {{item}}",
+    "removeButton": "Eliminar {{item}}",
+    "ingredient": "ingrediente",
+    "ingredient_plural": "ingredientes"
+  },
+  "elementsToAdd": {
+    "amountPlaceholder": "Cantidad",
+    "add": "Anade {{item}}",
+    "empty": "No tienes  {{item}} todavia",
+    "total": "{{item}} que anadir",
+    "ingredient": "ingrediente",
+    "ingredient_plural": "ingredientes"
   }
 }

@@ -19,7 +19,7 @@ class ListIngredients extends Component {
               {' '}
               <Link to={`/ingredients/${i.id}/edit`}>{t('listIngredients.editButton')}</Link>
               {' '}
-              <button onClick={removeIngredient.bind(this, i)}>{t('listIngredients.editButton')}</button>
+              <button onClick={removeIngredient.bind(this, i)}>{t('listIngredients.removeButton')}</button>
             </li>)
           }
         </ul>
