@@ -37,7 +37,7 @@ In this architecture, the smart components are under layouts and correspond to r
 More info on redux
 https://github.com/xgrommx/awesome-redux
 
-### ReduxBaseApp Recipies
+# ReduxBaseApp Recipies
 
 Recipies are some examples about how to implement specific features. Here is a list of all recipies we've done so far
-1.[ Drag and drop](DnDRecipe.md)
+1. [ Drag and drop](DnDRecipe.md)

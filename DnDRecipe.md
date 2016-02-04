@@ -1,9 +1,14 @@
 # ReduxBaseApp drag and drop recipe
 
-We have implemented drag and drop functionality using [React DnD](http://gaearon.github.io/react-dnd/) by Dan Abramov. The documentation is very descriptive and detailed so we recommend reading it. Anyway if you want to get started right away here is the explanation of what we've done
+We have implemented drag and drop functionality using [React DnD](http://gaearon.github.io/react-dnd/) by Dan Abramov. The documentation is very descriptive and detailed so we recommend reading it. Also very enlightening the tutorial, not also teaches you about DnD, but how to think to identify and build react components. Anyway, if you want to get started right away here is the explanation of what we've done.
 
 ## Where
-Create dish have two tables. One listing the whole list of ingredients and the second listing the ingredients already added to a dish
+Create dish have two tables. One listing the whole list of ingredients and the second listing the ingredients already added to a dish. The code is on the following files
+[container](src/smart/create-dish.js)
+[elementsAdded](src/components/elements-added.js)
+[elementAdded](src/components/element-added.js)
+[elementsToAdd](src/components/elements-to_add.js)
+[elementToAdd](src/components/elements-to-add.js)
 
 ## How
 
@@ -24,7 +29,7 @@ export default DragDropContext(HTML5Backend)(CreateDish)
 
 #### Drag
 In order to create a draggable item you need to define:
-A constant defining the element you want to drag. Probably on a constants file
+- A constant defining the element you want to drag. Probably on a constants file
 ```JavaScript
 export const ItemTypes = {
   ELEMENT_ADDED: 'elementAdded',
@@ -40,7 +45,7 @@ const elementSource = {
   }  
 }
 ```
-- The props to inject to your drag component: A function which returns an object with the needed properties. Most of the times you need
+- The props to inject to your drag component: A function which returns an object with the needed properties. Most of the times you will need:
   - connectDragSource: A HOC which wraps your draggable element adding functionality to it
   - connectDragPreview: A HOC that returns what you will see being dragged.
   - isDragging: A boolean which tells you if the source is being dragged
