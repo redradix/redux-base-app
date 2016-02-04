@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var baseConfig = require('./webpack.config.base');
 
 module.exports = Object.assign({
@@ -10,6 +11,10 @@ module.exports = Object.assign({
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'templates/index.html',
+      filename: 'index.html'
+    })
   ]
 }, baseConfig);

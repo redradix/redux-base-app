@@ -1,11 +1,12 @@
 // Architecture file
 //TODO: Not finished (post requests)
+import fetch from 'isomorphic-fetch'
 import config from '../config'
-import { applyToken, applyHeaders }from './helpers'
+import { applyHeaders }from './helpers'
 import { LOGOUT } from '../modules/auth'
-import { pushPath } from 'redux-simple-router'
+import { pushPath } from 'react-router-redux';
 
-const BASE_URL = config.api 
+const BASE_URL = config.api
 
 
 function callApi(endpoint, authenticated, config={}) {
@@ -17,11 +18,11 @@ function callApi(endpoint, authenticated, config={}) {
   }
 
   return fetch(BASE_URL + endpoint, config)
-  .then(response => 
+  .then(response =>
     response.json().then(json=> ({ json, response }))
   ).then(({ json, response }) => {
     if (!response.ok) {
-      throw json.errors[0] 
+      throw json.errors[0]
     } else {
       return json.data
     }

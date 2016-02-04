@@ -1,5 +1,8 @@
 node_modules
-.DS_Store
-**/.DS_Store
+public/js
+public/index.html
 npm-debug.log
-dist
+
+# OS-specific files
+.DS_Store
+*.swp

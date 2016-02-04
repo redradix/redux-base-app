@@ -4,13 +4,15 @@ import { bindActionCreators } from 'redux'
 import DevTools from '../containers/dev-tools'
 
 
-function Landing({children}) {
-  return (
-    <div>
-      <div style={{marginTop: '1.5em'}}>{children}</div>
-      <DevTools/>
-    </div>
-  )
+class Landing extends Component {
+  render() {
+    return (
+      <div>
+        <div style={{marginTop: '1.5em'}}>{this.props.children}</div>
+        <DevTools/>
+      </div>
+    )
+  }
 }
 
 Landing.propTypes = {

@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var baseConfig = require('./webpack.config.base');
 
 var __DEV__ = process.env.NODE_ENV !== 'production';
@@ -19,6 +20,10 @@ module.exports = Object.assign({
     new webpack.optimize.UglifyJsPlugin({
       compress: true,
       acorn: true
+    }),
+    new HtmlWebpackPlugin({
+      template: 'templates/index.html',
+      filename: '../index.html'
     })
   ]
 }, baseConfig);

@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import { translate, Interpolate } from 'react-i18next/lib';
 import { Link } from 'react-router'
 
 class Header extends Component {
@@ -7,16 +8,16 @@ class Header extends Component {
     this.props.logout()
   }
   render() {
-    const {title, username } = this.props  
+    const {title, username, t } = this.props  
     return (
       <div>
         <header>
-          <h1>{title}</h1>
+          <h1>{t('appName')}:{title}</h1>
           {' '}
-          <p>Welcome {username}</p>
-          <Link to="/">Home</Link>
+          <Interpolate parent='p' i18nKey='content.welcome' value={username} />
+          <Link to="/">{t('home')}</Link>
           {' '}
-          <a href onClick={this.onClick.bind(this)}>Logout</a>
+          <a href onClick={this.onClick.bind(this)}>{t('logout')}</a>
         </header>
       </div>
     );  
@@ -29,4 +30,5 @@ Header.propTypes = {
   logout: PropTypes.func.isRequired
 }
 
-export default Header
+// All given namespaces will be loaded. 
+export default translate(['common', 'header'])(Header);

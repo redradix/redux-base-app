@@ -1,0 +1,17 @@
+{
+  "appName": "DAH: Desarrollos para alta hosteleria",
+  "username": "Username",
+  "password": "Password",
+  "submit": "Submit",
+  "email": "Email",
+  "login": {
+    "title": "Introduce tus datos de acceso",
+    "goRegister": "Si no estas registrado, {{component}}",
+    "registerActionCall": "hazlo ahora"
+  },
+  "register": {
+    "title": "Introduce tus datos para registrarte en DAH",
+    "goLogin": "Si ya estas registrado, {{component}}",
+    "loginActionCall": "logueate"
+  }
+}
