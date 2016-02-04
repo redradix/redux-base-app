@@ -9,6 +9,10 @@
     "test": "NODE_ENV=test mocha --recursive src/test --compilers js:babel-core/register --require ./src/test/setup.js",
     "test:watch": "npm test -- --watch"
   },
+  "engines" : {
+    "node" : ">=4.2.6",
+    "npm" : ">=2.14"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/redradix/reduxBaseApp.git"
