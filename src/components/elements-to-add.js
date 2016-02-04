@@ -1,27 +1,29 @@
 import React, {PropTypes, Component} from 'react'
 import { capitalize } from "../utils/utils"
 import { translate } from 'react-i18next/lib'
+import { ItemTypes } from '../constants';
+import { DropTarget } from 'react-dnd';
+// Components
+import Element from './element-to-add'
 
-class Element extends Component {
-  onClick(e) {
-    e.preventDefault()
-    this.props.add(this.props.id, parseInt(this.refs.amount.value), this.props.name)
-  }
-  render() {
-    const { name, subject, t } = this.props
-    return (
-      <div>
-        <p>{name}</p>
-        <input type="integer" placeholder={t("elementsToAdd.amountPlaceholder")} ref="amount" />
-        <button onClick={this.onClick.bind(this)}>{t('elementsToAdd.add', {item: subject})}</button>
-      </div>
-    )
+const elementTarget = {
+  drop(props, monitor, element) {
+    const { id } = monitor.getItem()
+    element.props.remove(id)
   }
 }
 
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  }
+}
+
+
 class ElementsToAdd extends Component {
   render() {
-    const { subject, elements, add, t } = this.props
+    const { subject, elements, add, t, isOver, connectDropTarget } = this.props
     const hasElements = elements.length > 0
     const list = !hasElements ?
       <em>{t('elementsToAdd.empty', {item: t('elementsToAdd.' + subject, {count: 0})})}</em> :
@@ -35,13 +37,29 @@ class ElementsToAdd extends Component {
           key={e.id}/>
     )
 
-    return (
-      <div>
+    return connectDropTarget(
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%'
+      }}>
         <h3> {t('elementsToAdd.total', {item: capitalize(t('elementsToAdd.' + subject, {count: 0}))})} </h3>
         <div>{list}</div>
+        {isOver &&
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
+            width: '100%',
+            zIndex: 1,
+            opacity: 0.5,
+            backgroundColor: 'yellow',
+          }} />
+        }
       </div>
     )
   }
 }
 
-export default translate(['common'])(ElementsToAdd)
+export default translate(['common'])(DropTarget(ItemTypes.ELEMENT_ADDED, elementTarget, collect)(ElementsToAdd))

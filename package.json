@@ -7,6 +7,10 @@
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./test/setup.js",
     "test:watch": "npm test -- --watch"
   },
+  "engines" : {
+    "node" : ">=4.2.6",
+    "npm" : ">=2.14"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/redradix/reduxBaseApp.git"
@@ -22,17 +26,19 @@
     "i18next": "^2.0.23",
     "i18next-browser-languagedetector": "0.0.14",
     "i18next-xhr-backend": "^0.3.0",
-    "react-i18next": "^0.1.0",
     "isomorphic-fetch": "^2.2.0",
     "react": "^0.14.7",
+    "react-dnd": "^2.0.2",
+    "react-dnd-html5-backend": "^2.0.2",
     "react-dom": "^0.14.7",
+    "react-i18next": "^0.1.0",
     "react-modal": "^0.6.1",
     "react-redux": "^4.1.2",
     "react-router": "^2.0.0-rc5",
+    "react-router-redux": "^3.0.0",
     "redux": "^3.1.6",
     "redux-devtools": "^3.0.0",
     "redux-form": "^4.1.6",
-    "react-router-redux": "^3.0.0",
     "redux-thunk": "^1.0.3",
     "reselect": "^2.0.2"
   },

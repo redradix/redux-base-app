@@ -51,8 +51,8 @@ class CreateDishForm extends Component {
             <input type="integer" placeholder={t('createDish.pricePlaceholder')} {...price}/>
             {price.touched && price.error && <div>{price.error}</div>}
           </div>
-          <ElementsToAdd subject='ingredient' elements={totalIngredients}  add={this.addIngredientToDish.bind(this)} />
-          <ElementsAdded subject='ingredient' elements= {ingredients} totalElements={totalIngredients} remove={this.removeIngredientFromDish.bind(this)}/>
+          <ElementsToAdd subject='ingredient' elements={totalIngredients} remove={this.removeIngredientFromDish.bind(this)}/>
+          <ElementsAdded subject='ingredient' elements= {ingredients} add={this.addIngredientToDish.bind(this)} totalElements={totalIngredients}/>
           <div>
             <p>{t('createDish.escandallo')}: {escandallo || 0}</p>
           </div>
