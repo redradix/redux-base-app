@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "Redux  example app for the redradix baseapp",
   "scripts": {
-    "start": "node ./src/server.js",
+    "start": "NODE_ENV=development node ./src/server.js",
+    "build": "NODE_ENV=production webpack -p --progress --colors --config ./config/webpack.config.prod",
     "test": "NODE_ENV=test mocha --recursive --compilers js:babel-core/register --require ./src/test/setup.js",
     "test:watch": "npm test -- --watch"
   },
