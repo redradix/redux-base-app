@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "Redux example app for the redradix baseapp",
   "scripts": {
-    "start": "node ./src/server.js",
+    "start": "NODE_ENV=development nodemon ./src/server.js",
+    "start-prod": "NODE_ENV=production node ./src/server.js",
+    "build": "NODE_ENV=production webpack -p --progress --colors --config ./config/webpack.config.prod",
     "test": "NODE_ENV=test mocha --recursive src/test --compilers js:babel-core/register --require ./src/test/setup.js",
     "test:watch": "npm test -- --watch"
   },
@@ -32,22 +34,22 @@
     "redux-form": "^4.1.6",
     "react-router-redux": "^2.1.0i",
     "redux-thunk": "^1.0.3",
-    "reselect": "^2.0.2",
-    "superagent": "^1.7.1"
+    "reselect": "^2.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-plugin-react-transform": "^2.0.0",
-    "html-webpack-plugin": "^2.7.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-2": "^6.3.13",
     "expect": "^1.6.0",
     "express": "^4.13.3",
+    "html-webpack-plugin": "^2.7.1",
     "jsdom": "^8.0.1",
     "mocha": "^2.2.5",
     "node-libs-browser": "^0.5.2",
+    "nodemon": "^1.8.1",
     "react-addons-test-utils": "^0.14.0",
     "react-transform-hmr": "^1.0.0",
     "redux-devtools": "^3.0.2",

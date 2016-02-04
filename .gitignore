@@ -1,5 +1,6 @@
-# npm files
 node_modules
+public/js
+public/index.html
 npm-debug.log
 
 # OS-specific files
