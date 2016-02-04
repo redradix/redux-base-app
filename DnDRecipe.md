@@ -5,10 +5,10 @@ We have implemented drag and drop functionality using [React DnD](http://gaearon
 ## Where
 Create dish have two tables. One listing the whole list of ingredients and the second listing the ingredients already added to a dish. The code is on the following files
 - [container](../example-app/src/smart/create-dish.js)
-- [elementsAdded](src/components/elements-added.js)
-- [elementAdded](src/components/element-added.js)
-- [elementsToAdd](src/components/elements-to_add.js)
-- [elementToAdd](src/components/elements-to-add.js)
+- [elementsAdded](../example-app/src/components/elements-added.js)
+- [elementAdded](../example-app/src/components/element-added.js)
+- [elementsToAdd](../example-app/src/components/elements-to_add.js)
+- [elementToAdd](../example-app/src/components/elements-to-add.js)
 
 ## How
 
