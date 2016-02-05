@@ -155,11 +155,11 @@ export default DropTarget(ItemTypes.ELEMENT_ADDED, elementTarget, collect)(Eleme
 
 ### FAQ
 - **How to change the element being wrapped?**
-You have the connectDragPreview method for this purpose. You can pass the element you want to drag. This method accepts some extra parameters. See the [documentation about it](https://gaearon.github.io/react-dnd/docs-drag-source-connector.html)
+You have the connectDragPreview method for this purpose. You can pass the element you want to drag. This method accepts some extra parameters. See the [documentation about it](https://gaearon.github.io/react-dnd/docs-drag-source-connector.html).
 First of all, you should know that the element being wrap is a snapshoot taken by the browser before start dragging.
  - If you want change that image you can pass an image to connectDragPreview on your render method or better on your componentDidMount
  - If you want the element being wrap to be different from the draggable area, use connectDragPreview to wrap a different group of elements on your render method.
- - If you want to apply some styling to the image taken by the browser you cannot. What you should do is create a component similar to the one  you want to drag, apply to it the styles you want and then, pass it to connectDragPreview. [Here you have an example](https://github.com/gaearon/react-dnd/tree/master/examples/02%20Drag%20Around/Custom%20Drag%20Layer)
+ - If you want to apply some styling to the image taken by the browser you cannot. What you should do is create a component similar to the one  you want to drag, apply to it the styles you want and then, pass it to connectDragPreview. [Here you have an example](https://github.com/gaearon/react-dnd/tree/master/examples/02%20Drag%20Around/Custom%20Drag%20Layer).
 
-- ** How do I combine several drag sources and drop targets in a single component? Or even several HOCs? **
+- **How do I combine several drag sources and drop targets in a single component? Or even several HOCs?**
 If you see the examples, it is done manually wrapping one component into another. But if you prefer a cleaner way you can use _.flow from lodash or similar method to wrap them up
