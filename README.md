@@ -41,3 +41,4 @@ https://github.com/xgrommx/awesome-redux
 
 Recipies are some examples about how to implement specific features. Here is a list of all recipies we've done so far
 1. [ Drag and drop](DnDRecipe.md)
+2. [Modal](ModalRecipe.md)
