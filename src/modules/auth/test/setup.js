@@ -3,7 +3,7 @@ global.localStorage = {
     return;
   },
   getItem: function() {
-    return;
+    return 'madeUpToken';
   },
   setItem: function() {
     return;

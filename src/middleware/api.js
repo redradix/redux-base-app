@@ -3,7 +3,7 @@
 import fetch from 'isomorphic-fetch'
 import config from '../config'
 import { applyHeaders }from './helpers'
-import { LOGOUT } from '../modules/auth'
+import { LOGOUT_SUCCEEDED } from '../modules/auth'
 import { pushPath } from 'react-router-redux';
 
 const BASE_URL = config.api
@@ -58,7 +58,7 @@ export default store => next => action => {
     error => {
       // Switch con todos los casos de excepcion comunes
       if (error == 'Unauthorized') {
-        next({type: LOGOUT})
+        next({type: LOGOUT_SUCCEEDED})
         next(pushPath('login'))
         return Promise.reject(error)
       } else {

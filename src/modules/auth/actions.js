@@ -42,8 +42,9 @@ export function validateToken() {
           types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCEEDED, TOKEN_VALIDATION_FAILED],
         }
       }).then(({ payload }) =>  {
-        dispatch(loadInitialData())
+        //dispatch(loadInitialData())
       }).catch((e) => {
+        console.log(e);
         localStorage.removeItem('token')
       })
     }
