@@ -1,52 +1,50 @@
 // Architecture file
-//TODO: Not finished (post requests)
-import fetch from 'isomorphic-fetch'
-import config from '../config'
-import { applyHeaders }from './helpers'
-import { LOGOUT } from '../modules/auth'
+// TODO: Not finished (post requests)
+import fetch from 'isomorphic-fetch';
+import config from '../config';
+import { applyHeaders }from './helpers';
+import { LOGOUT } from '../modules/auth';
 import { pushPath } from 'react-router-redux';
 
-const BASE_URL = config.api
+const BASE_URL = config.api;
 
-
-function callApi(endpoint, authenticated, config={}) {
-  let token = localStorage.getItem('token') || null
-  config = applyHeaders(config, token)
+function callApi(endpoint, authenticated, config = {}) {
+  const token = localStorage.getItem('token') || null;
+  cfg = applyHeaders(config, token);
 
   if (authenticated && !token) {
-    return Promise.reject("Unauthorized")
+    return Promise.reject('Unauthorized');
   }
 
-  return fetch(BASE_URL + endpoint, config)
+  return fetch(BASE_URL + endpoint, cfg)
   .then(response =>
     response.json().then(json=> ({ json, response }))
   ).then(({ json, response }) => {
     if (!response.ok) {
-      throw json.errors[0]
+      throw json.errors[0];
     } else {
-      return json.data
+      return json.data;
     }
   }).catch(error => {
-    throw error.message
-  })
+    throw error.message;
+  });
 }
 
-export const CALL_API = Symbol('Call API')
+export const CALL_API = Symbol('Call API');
 
 export default store => next => action => {
-
-  const callAPI = action[CALL_API]
+  const callAPI = action[CALL_API];
 
   // So the middleware doesn't get applied to every single action
   if (typeof callAPI === 'undefined') {
-    return next(action)
+    return next(action);
   }
 
-  let { endpoint, types, authenticated, config  } = callAPI
+  const { endpoint, types, authenticated, config  } = callAPI;
 
-  const [ requestType, successType, errorType] = types
+  const [ requestType, successType, errorType] = types;
 
-  next({type: requestType, authenticated})
+  next({type: requestType, authenticated});
   // Passing the authenticated boolean back in our data will let us distinguish
   return callApi(endpoint, authenticated, config).then(
     payload =>
@@ -57,19 +55,19 @@ export default store => next => action => {
       }),
     error => {
       // Switch con todos los casos de excepcion comunes
-      if (error == 'Unauthorized') {
-        next({type: LOGOUT})
-        next(pushPath('login'))
-        return Promise.reject(error)
-      } else {
-        next({
-          error: error || 'There was an error.',
-          type: errorType
-        })
-        return Promise.reject({
-          _error: error || 'There was an error.',
-        })
+      if (error === 'Unauthorized') {
+        next({type: LOGOUT});
+        next(pushPath('login'));
+        return Promise.reject(error);
       }
+
+      next({
+        error: error || 'There was an error.',
+        type: errorType
+      });
+      return Promise.reject({
+        _error: error || 'There was an error.'
+      });
     }
-  )
-}
+  );
+};

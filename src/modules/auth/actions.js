@@ -1,35 +1,35 @@
-import { CALL_API } from '../../middleware/api'
+import { CALL_API } from '../../middleware/api';
 import { pushPath, replacePath } from 'react-router-redux';
 
-const MODULE_NAME = "base-app/auth/"
+const MODULE_NAME = 'base-app/auth/';
 
 // Past tense for actions
-export const TOKEN_VALIDATION_FAILED = MODULE_NAME.concat("VALIDATE_TOKEN_FAIL")
-export const TOKEN_VALIDATION_SUCCEEDED = MODULE_NAME.concat("VALIDATE_TOKEN")
-export const TOKEN_VALIDATION_ATTEMPTED = MODULE_NAME.concat("VALIDATE_TOKEN_ATTEMPT")
+export const TOKEN_VALIDATION_FAILED = MODULE_NAME.concat('VALIDATE_TOKEN_FAIL');
+export const TOKEN_VALIDATION_SUCCEEDED = MODULE_NAME.concat('VALIDATE_TOKEN');
+export const TOKEN_VALIDATION_ATTEMPTED = MODULE_NAME.concat('VALIDATE_TOKEN_ATTEMPT');
 
-export const LOGIN_ATTEMPTED = MODULE_NAME.concat("LOGIN_ATTEMPT")
-export const LOGIN_FAILED = MODULE_NAME.concat("LOGIN_FAIL")
-export const LOGIN_SUCCEEDED = MODULE_NAME.concat("LOGIN")
-export const LOGOUT_SUCCEEDED = MODULE_NAME.concat("LOGOUT")
+export const LOGIN_ATTEMPTED = MODULE_NAME.concat('LOGIN_ATTEMPT');
+export const LOGIN_FAILED = MODULE_NAME.concat('LOGIN_FAIL');
+export const LOGIN_SUCCEEDED = MODULE_NAME.concat('LOGIN');
+export const LOGOUT_SUCCEEDED = MODULE_NAME.concat('LOGOUT');
 
-export const REGISTER_SUCCEEDED = MODULE_NAME.concat("REGISTER")
-export const REGISTER_ATTEMPTED = MODULE_NAME.concat("REGISTER_ATTEMPT")
-export const REGISTER_FAILED = MODULE_NAME.concat("REGISTER_FAIL")
+export const REGISTER_SUCCEEDED = MODULE_NAME.concat('REGISTER');
+export const REGISTER_ATTEMPTED = MODULE_NAME.concat('REGISTER_ATTEMPT');
+export const REGISTER_FAILED = MODULE_NAME.concat('REGISTER_FAIL');
 
 function loadInitialData(store) {
   return (dispatch, getState) => {
-  }
+  };
 }
 
 export function checkLogged(callback) {
   return (dispatch, getState) => {
     if (getState().auth.logged) {
-      dispatch(replacePath('/'))
+      dispatch(replacePath('/'));
     } else {
-      callback()
+      callback();
     }
-  }
+  };
 }
 
 export function validateToken() {
@@ -39,23 +39,23 @@ export function validateToken() {
         [CALL_API]: {
           endpoint: 'session',
           authenticated: true,
-          types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCEEDED, TOKEN_VALIDATION_FAILED],
+          types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCEEDED, TOKEN_VALIDATION_FAILED]
         }
       }).then(({ payload }) =>  {
-        dispatch(loadInitialData())
+        dispatch(loadInitialData());
       }).catch((e) => {
-        localStorage.removeItem('token')
-      })
+        localStorage.removeItem('token');
+      });
     }
-  }
+  };
 }
 
 export function logout() {
   return (dispatch, getState) => {
-    localStorage.removeItem('token')
-    dispatch(LOGOUT_SUCCEEDED)
-    dispatch(pushPath("/login"))
-  }
+    localStorage.removeItem('token');
+    dispatch(LOGOUT_SUCCEEDED);
+    dispatch(pushPath('/login'));
+  };
 }
 
 export function login({username, password}) {
@@ -70,17 +70,16 @@ export function login({username, password}) {
             password: password
           })
         },
-        types: [LOGIN_ATTEMPTED, LOGIN_SUCCEEDED, LOGIN_FAILED],
-        //parseResponse:
+        types: [LOGIN_ATTEMPTED, LOGIN_SUCCEEDED, LOGIN_FAILED]
       }
     }).then(({ payload }) =>  {
-      localStorage.setItem('token', payload.token)
-      dispatch(loadInitialData())
-      dispatch(pushPath('/'))
+      localStorage.setItem('token', payload.token);
+      dispatch(loadInitialData());
+      dispatch(pushPath('/'));
     }).catch((e) => {
-      return Promise.reject({ _error: e._error})
-    })
-  }
+      return Promise.reject({ _error: e._error});
+    });
+  };
 }
 
 export function register(credentials) {
@@ -95,16 +94,14 @@ export function register(credentials) {
             password: credentials.password
           })
         },
-        types: [REGISTER_ATTEMPTED, REGISTER_SUCCEEDED, REGISTER_FAILED],
-        //parseResponse:
+        types: [REGISTER_ATTEMPTED, REGISTER_SUCCEEDED, REGISTER_FAILED]
       }
     }).then(({ payload, error}) =>  {
-      debugger
-      localStorage.setItem('token', payload.token)
-      dispatch(loadInitialData())
-      dispatch(pushPath('/'))
+      localStorage.setItem('token', payload.token);
+      dispatch(loadInitialData());
+      dispatch(pushPath('/'));
     }).catch((e) => {
-      return Promise.reject({_error: e._error })
-    })
-  }
+      return Promise.reject({_error: e._error });
+    });
+  };
 }

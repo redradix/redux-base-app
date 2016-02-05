@@ -40,4 +40,4 @@ class WebStorage {
   }
 }
 
-export default new WebStorage('dah')
+export default new WebStorage('dah');

@@ -1,17 +1,17 @@
-var path = require('path');
-var express = require('express')
-var app = new (express)()
-var port = 3000
+const path = require('path');
+const express = require('express');
+const app = express();
+const port = 3000;
 
-var __DEV__ = process.env.NODE_ENV !== 'production';
+const __DEV__ = process.env.NODE_ENV !== 'production';
 
 if (__DEV__) {
-  var webpack = require('webpack')
-  var webpackDevMiddleware = require('webpack-dev-middleware')
-  var webpackHotMiddleware = require('webpack-hot-middleware')
-  var config = require('../config/webpack.config.dev')
+  const webpack = require('webpack');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const config = require('../config/webpack.config.dev');
 
-  var compiler = webpack(config)
+  const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
     stats: {
@@ -23,36 +23,30 @@ if (__DEV__) {
       modules: false
     }
   }));
-  app.use(webpackHotMiddleware(compiler))
+  app.use(webpackHotMiddleware(compiler));
 }
 
 app.use(express.static('public'));
 
-//keep this handler on the last position of the stack, it serves the index.html if reloading from any url.
+// keep this handler on the last position of the stack, it serves the index.html if reloading from any url.
 if (__DEV__) {
   require('isomorphic-fetch');
-  app.get('*', function(req, res) {
+  app.get('*', (req, res) => {
     fetch('http://localhost:' + port + '/js/index.html')
-      .then(function(r) {
-        return r.text();
-      })
-      .then(function(html) {
-        res.send(html);
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
+      .then((r) => r.text)
+      .then((html) => res.send(html))
+      .catch((err) => console.error(err));
   });
 } else {
-  app.get('*', function(req, res) {
-    res.sendFile(path.resolve(__dirname, '../public/index.html'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../public/index.html'));
   });
 }
 
-app.listen(port, function(error) {
+app.listen(port, (error) => {
   if (error) {
-    console.error(error)
+    console.error(error);
   } else {
-    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
+    console.info('==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port);
   }
-})
+});

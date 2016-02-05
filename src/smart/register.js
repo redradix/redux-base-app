@@ -1,24 +1,26 @@
-import React, { PropTypes, Component } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { register } from '../modules/auth'
+import React, { PropTypes, Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { register } from '../modules/auth';
 
 /* Components */
-import RegisterForm from '../components/register'
+import RegisterForm from '../components/register';
 
 class Register extends Component {
   onSubmit(credentials) {
-    return this.props.register(credentials)  
+    return this.props.register(credentials);
   }
   render() {
-    return (
-      <RegisterForm onSubmit={this.onSubmit.bind(this)} />
-    )  
-  }  
+    return <RegisterForm onSubmit={this.onSubmit.bind(this)} />;
+  }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ register }, dispatch)
+  return bindActionCreators({ register }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(Register)
+Register.propTypes = {
+  register: PropTypes.func.isRequired
+};
+
+export default connect(null, mapDispatchToProps)(Register);
