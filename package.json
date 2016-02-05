@@ -9,9 +9,9 @@
     "test": "NODE_ENV=test mocha --recursive src/test --compilers js:babel-core/register --require ./src/test/setup.js",
     "test:watch": "npm test -- --watch"
   },
-  "engines" : {
-    "node" : ">=4.2.6",
-    "npm" : ">=2.14"
+  "engines": {
+    "node": ">=4.2.6",
+    "npm": ">=2.14"
   },
   "repository": {
     "type": "git",
@@ -59,7 +59,7 @@
     "redux-devtools": "^3.0.2",
     "redux-devtools-dock-monitor": "^1.0.1",
     "redux-devtools-log-monitor": "^1.0.1",
-    "webpack": "^1.12.12",
+    "webpack": "^1.12.13",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.6.4"
   }
