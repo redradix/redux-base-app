@@ -2,8 +2,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
 
-const __DEV__ = process.env.NODE_ENV !== 'production';
-
 module.exports = Object.assign({
   devtool: 'source-map',
   entry: [
@@ -11,8 +9,8 @@ module.exports = Object.assign({
   ],
   plugins: [
     new webpack.DefinePlugin({
-      __DEV__: __DEV__,
-      'process.env': { NODE_ENV: __DEV__ ? '"delevopment"' : '"production"' }
+      __DEV__: false,
+      'process.env': { NODE_ENV: '"production"' }
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),

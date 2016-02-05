@@ -10,7 +10,7 @@ const BASE_URL = config.api;
 
 function callApi(endpoint, authenticated, config = {}) {
   const token = localStorage.getItem('token') || null;
-  cfg = applyHeaders(config, token);
+  const cfg = applyHeaders(config, token);
 
   if (authenticated && !token) {
     return Promise.reject('Unauthorized');

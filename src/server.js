@@ -33,9 +33,9 @@ if (__DEV__) {
   require('isomorphic-fetch');
   app.get('*', (req, res) => {
     fetch('http://localhost:' + port + '/js/index.html')
-      .then((r) => r.text)
+      .then((r) => r.text())
       .then((html) => res.send(html))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error(err.stack));
   });
 } else {
   app.get('*', (req, res) => {
