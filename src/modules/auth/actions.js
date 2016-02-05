@@ -17,10 +17,10 @@ export const REGISTER_SUCCEEDED = MODULE_NAME.concat("REGISTER")
 export const REGISTER_ATTEMPTED = MODULE_NAME.concat("REGISTER_ATTEMPT")
 export const REGISTER_FAILED = MODULE_NAME.concat("REGISTER_FAIL")
 
-function loadInitialData(store) {
-  return (dispatch, getState) => {
-  }
-}
+//function loadInitialData(store) {
+//  return (dispatch, getState) => {
+//  }
+//}
 
 export function checkLogged(callback) {
   return (dispatch, getState) => {
@@ -75,7 +75,7 @@ export function login({username, password}) {
       }
     }).then(({ payload }) =>  {
       localStorage.setItem('token', payload.token)
-      dispatch(loadInitialData())
+      //dispatch(loadInitialData())
       dispatch(routeActions.push('/'))
     }).catch((e) => {
       return Promise.reject({ _error: e._error})
@@ -99,9 +99,8 @@ export function register(credentials) {
         //parseResponse:
       }
     }).then(({ payload, error}) =>  {
-      debugger
       localStorage.setItem('token', payload.token)
-      dispatch(loadInitialData())
+      //dispatch(loadInitialData())
       dispatch(routeActions.push('/'))
     }).catch((e) => {
       return Promise.reject({_error: e._error })

@@ -9,9 +9,9 @@
     "test": "NODE_ENV=test mocha --recursive src/test --compilers js:babel-core/register --require ./src/test/setup.js",
     "test:watch": "npm test -- --watch"
   },
-  "engines" : {
-    "node" : ">=4.2.6",
-    "npm" : ">=2.14"
+  "engines": {
+    "node": ">=4.2.6",
+    "npm": ">=2.14"
   },
   "repository": {
     "type": "git",
@@ -52,6 +52,7 @@
     "html-webpack-plugin": "^2.7.1",
     "jsdom": "^8.0.1",
     "mocha": "^2.2.5",
+    "nock": "^7.0.2",
     "node-libs-browser": "^0.5.2",
     "nodemon": "^1.8.1",
     "react-addons-test-utils": "^0.14.0",
