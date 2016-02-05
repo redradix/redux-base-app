@@ -1,10 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import DevTools from './dev-tools';
 import { logout } from '../modules/auth';
 import Header from '../components/header';
 
+const devTools = __DEV__ ? React.createFactory(require('./dev-tools').default) : () => null;
 
 class App extends Component {
   render() {
@@ -13,7 +13,7 @@ class App extends Component {
       <div>
         <Header title={'miApp'} username={username} logout={logout} />
         <div style={{marginTop: '1.5em'}}>{children}</div>
-        <DevTools/>
+        {devTools()}
       </div>
     );
   }
