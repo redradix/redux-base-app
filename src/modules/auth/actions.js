@@ -1,5 +1,5 @@
 import { CALL_API } from '../../middleware/api'
-import { pushPath, replacePath } from 'react-router-redux';
+import { routeActions } from 'react-router-redux';
 
 const MODULE_NAME = "base-app/auth/"
 
@@ -25,7 +25,7 @@ function loadInitialData(store) {
 export function checkLogged(callback) {
   return (dispatch, getState) => {
     if (getState().auth.logged) {
-      dispatch(replacePath('/'))
+      dispatch(routeActions.replace('/'))
     } else {
       callback()
     }
@@ -53,8 +53,8 @@ export function validateToken() {
 export function logout() {
   return (dispatch, getState) => {
     localStorage.removeItem('token')
-    dispatch(LOGOUT_SUCCEEDED)
-    dispatch(pushPath("/login"))
+    dispatch({type: LOGOUT_SUCCEEDED})
+    dispatch(routeActions.push("/login"))
   }
 }
 
@@ -76,7 +76,7 @@ export function login({username, password}) {
     }).then(({ payload }) =>  {
       localStorage.setItem('token', payload.token)
       dispatch(loadInitialData())
-      dispatch(pushPath('/'))
+      dispatch(routeActions.push('/'))
     }).catch((e) => {
       return Promise.reject({ _error: e._error})
     })
@@ -102,7 +102,7 @@ export function register(credentials) {
       debugger
       localStorage.setItem('token', payload.token)
       dispatch(loadInitialData())
-      dispatch(pushPath('/'))
+      dispatch(routeActions.push('/'))
     }).catch((e) => {
       return Promise.reject({_error: e._error })
     })

@@ -37,7 +37,7 @@ import DevTools from './containers/dev-tools'
 const reduxRouter= syncHistory(browserHistory)
 export default function configureStore(initialState) {
   const store = createStore(
-    reducer, 
+    reducer,
     initialState,
     compose(
       // Middleware you want to use in development:
