@@ -1,7 +1,11 @@
 {
   "content": {
-    "welcome": "Welcome to this demo application, {{value}}"
+    "welcome": "Welcome to this example app, {{value}}"
   },
-  "logout": "Logout",
-  "home": "Home"
+  "logout": "Exit",
+  "home": "Home",
+  "ingredients": "Ingredients",
+  "dishes": "Dishes",
+  "orders": "Orders",
+  "notifications": "Notifications"
 }

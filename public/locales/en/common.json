@@ -13,5 +13,107 @@
     "title": "Write your data if you want to login",
     "goLogin": "If you are already register, {{component}}",
     "loginActionCall": "go login"
+  },
+  "home": {
+    "title": "Home",
+    "ingredientsLink": "Ingrediente",
+    "createIngredientLink": "Create ingredient",
+    "dishesLink": "Dish",
+    "createDishLink": "Create dish",
+    "ordersLink": "Order",
+    "createOrderLink": "Create order"
+  },
+  "dishes": {
+    "title": "Dishes"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "closeButton": "Close",
+    "count": "The ingredient {{name}} currently has {{stock}} units",
+    "empty": "You don't have any notifications yet"
+  },
+  "showDish": {
+    "title": "Dish info",
+    "editButton": "Edit",
+    "removeButton": "Remove"
+  },
+  "showOrder": {
+    "title": "Order info",
+    "editButton": "Edit",
+    "removeButton": "Remove"
+  },
+  "showIngredient": {
+    "title": "Ingredient info",
+    "editButton": "Edit",
+    "removeButton": "Remove"
+  },
+  "listDishes": {
+    "title": "Dishes list",
+    "editButton": "Edit",
+    "removeButton": "Remove",
+    "empty": "There are no dishes",
+    "loading": "Loading ..."
+  },
+  "listOrders": {
+    "title": "Order list",
+    "editButton": "Edit",
+    "removeButton": "Remove",
+    "empty": "There are no orders yet",
+    "loading": "Loading ...",
+    "date": "at {{date}}",
+    "order": "Order "
+  },
+  "listIngredients": {
+    "title": "Ingredients list",
+    "editButton": "Edit",
+    "removeButton": "Remove",
+    "empty": "There is no ingredients",
+    "loading": "Loading ..."
+  },
+  "createIngredient": {
+    "description": "Create the needed ingredient writing its cost per kg and current stock", 
+    "nameLabel": "Name",
+    "namePlaceholder": "Fill in the name",
+    "costLabel": "Cost per Kg",
+    "costPlaceholder": "Fill in the cost",
+    "stockLabel": "Stock",
+    "stockPlaceholder": "Fill in the current stock",
+    "submitButton": "Send",
+    "clearForm": "Clear fields"
+  },
+  "createDish": {
+    "description": "Create the dish writing its list of ingredients, name and price", 
+    "nameLabel": "Name",
+    "namePlaceholder": "Write a name",
+    "priceLabel": "Cost per Kg",
+    "pricePlaceholder": "Write the cost",
+    "escandallo": "Escandallo",
+    "submitButton": "Send",
+    "clearForm": "Clear fields"
+  },
+  "createOrder": {
+    "description": "Create the order writing its list of dishes", 
+    "pvp": "Escandallo",
+    "submitButton": "Send",
+    "clearForm": "Clear fields"
+  },
+  "elementsAdded": {
+    "added": "{{item}} added",
+    "add": "Please add some {{item}}",
+    "removeButton": "Delete {{item}}",
+    "ingredient": "ingredient",
+    "ingredient_plural": "ingredients",
+    "dish": "dish",
+    "dish_plural": "dishes"
+  },
+  "elementsToAdd": {
+    "amountPlaceholder": "Amount",
+    "add": "Add {{item}}",
+    "empty": "You don't have any  {{item}} yet",
+    "total": "{{item}} to add",
+    "ingredient": "ingredient",
+    "ingredient_plural": "ingredients",
+    "dish": "dish",
+    "dish_plural": "dishes"
   }
 }

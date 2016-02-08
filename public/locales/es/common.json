@@ -60,7 +60,8 @@
     "removeButton": "Eliminar",
     "empty": "No hay comandas",
     "loading": "Cargando ...",
-    "date": "en {{date}}"
+    "date": "en {{date}}",
+    "order": "Comanda "
   },
   "listIngredients": {
     "title": "Listado de ingredientes",
@@ -101,7 +102,9 @@
     "add": "Por favor anande algunos {{item}}",
     "removeButton": "Eliminar {{item}}",
     "ingredient": "ingrediente",
-    "ingredient_plural": "ingredientes"
+    "ingredient_plural": "ingredientes",
+    "dish": "plato",
+    "dish_plural": "platos"
   },
   "elementsToAdd": {
     "amountPlaceholder": "Cantidad",
@@ -109,6 +112,8 @@
     "empty": "No tienes  {{item}} todavia",
     "total": "{{item}} que anadir",
     "ingredient": "ingrediente",
-    "ingredient_plural": "ingredientes"
+    "ingredient_plural": "ingredientes",
+    "dish": "plato",
+    "dish_plural": "platos"
   }
 }

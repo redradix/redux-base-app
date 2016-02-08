@@ -5,7 +5,7 @@ import orders from './orders'
 import auth from './auth'
 import notifications from './notifications'
 import {reducer as formReducer} from 'redux-form';
-import { routeReducer } from 'redux-simple-router';
+import { routeReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
   ingredients,
