@@ -34,7 +34,6 @@ function orderList(state=[], action) {
   }
 }
 
-// Reducers calculate a new state given the previous state and an action. They must be pure functions that return the exact same output for given inputs. They should also be free of side-effects.
 export default function reducer(state = {
     isFetching: false,
     list: []

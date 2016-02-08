@@ -3,6 +3,7 @@ import { formatDate } from "../utils/utils"
 import { Link } from 'react-router'
 import { translate } from 'react-i18next/lib'
 
+
 class ShowOrder extends Component {
   render() {
     const { order, order: { id, createdAt}, pvp, isFetching, removeOrder, t } = this.props
@@ -24,6 +25,7 @@ class ShowOrder extends Component {
         <Link to={`/orders/${id}/edit/`}>{t('showOrder.editButton')}</Link>
         {' '}
         <button onClick={removeOrder.bind(this, order)}>{t('showOrder.removeButton')}</button>
+        
       </div>
     )
   }

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import { formatDate } from '../utils/utils'
 import { translate, Interpolate } from 'react-i18next/lib'
+import CalendarOrder from '../smart/calendar-order';
 
 class ListOrders extends Component {
   render() {
@@ -24,6 +25,7 @@ class ListOrders extends Component {
             </li>)
           }
         </ul>
+        {!isFetching && <CalendarOrder />}
       </div>
     )
   }  
