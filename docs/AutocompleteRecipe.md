@@ -6,7 +6,7 @@ Brief explanation of our use case:
 
 #Where
 
-[Notifications Component](../example-app/src/components/create-order.js)
+[Create Order Component](../example-app/src/components/create-order.js)
 
 #How
 
