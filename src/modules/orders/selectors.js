@@ -22,6 +22,7 @@ const listSelector = state => state.orders.list
 const fetchingSelector = state => state.orders.isFetching
 const dishesSelector = (state) => state.dishes.list
 const formSelector = (state) => state.form['create-order'] ? state.form['create-order'].dishes :undefined
+const selectedAutocompleteItemSelector = (state) => state.ui.autocomplete['create-order']
 
 export const orderSelector = createSelector(
   routeSelector,
@@ -53,13 +54,14 @@ export const pvpSelector = createSelector(
 )
 
 export const totalSelector = createSelector(
-  [orderSelector, pvpSelector, dishesSelector, fetchingSelector],
-  (order, pvp, dishes, isFetching) => {
+  [orderSelector, pvpSelector, dishesSelector, fetchingSelector, selectedAutocompleteItemSelector],
+  (order, pvp, dishes, isFetching, selectedAutocompleteItem) => {
     return {
       order,
       dishes,
       pvp,
-      isFetching
+      isFetching,
+      selectedAutocompleteItem
     }
   }
 )

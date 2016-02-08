@@ -24,7 +24,7 @@ class Header extends Component {
           {' '}
           <Link to="/orders">{t('orders')}</Link>
           {' '}
-          <Notifications notifications={t("notifications")}/>
+          <Notifications notifications={notifications}/>
           {' '}
           <a href onClick={this.onClick.bind(this)}>{t('logout')}</a>
         </header>

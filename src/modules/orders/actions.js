@@ -20,6 +20,8 @@ export const REMOVE_ORDER_FAIL = MODULE_NAME.concat("REMOVE:ORDER_FAIL")
 export const REQUEST_ORDER = MODULE_NAME.concat("REQUEST:ORDER")
 export const RECEIVE_ORDER = MODULE_NAME.concat("RECEIVE:ORDER")
 
+//Async
+
 export function fetchOrder(id) {
   return {
     [CALL_API]: {

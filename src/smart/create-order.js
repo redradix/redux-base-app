@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import bindActionData from 'redux-form/lib/bindActionData'
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 /* Selectors */
 import { totalSelector } from '../modules/orders/selectors'
@@ -9,6 +11,7 @@ import { totalSelector } from '../modules/orders/selectors'
 /* Actions */
 import { addOrder, editOrder} from '../modules/orders'
 import { checkAvailability } from '../modules/ingredients'
+import { selectItemOnAutocomplete} from '../modules/ui'
 import {addArrayValue, removeArrayValue } from 'redux-form/lib/actions'
 
 /* Components */
@@ -26,9 +29,10 @@ class CreateOrder extends Component {
     })
   }
   render() {
-    const { order, dishes, pvp,  addArrayValue, removeArrayValue } = this.props
+    const { order, dishes, pvp,  addArrayValue, removeArrayValue, selectedAutocompleteItem, selectItemOnAutocomplete } = this.props
     return (
-      <CreateOrderForm onSubmit={this.onSubmit.bind(this)} initialValues={ order } totalDishes={dishes}  removeDish={removeArrayValue} pvp={pvp} addDish={addArrayValue}/>
+      <CreateOrderForm onSubmit={this.onSubmit.bind(this)} initialValues={ order } totalDishes={dishes}  removeDish={removeArrayValue} pvp={pvp} addDish={addArrayValue} selectedAutocompleteItem={selectedAutocompleteItem} selectItemOnAutocomplete={selectItemOnAutocomplete}
+      />
     )
   }
 }
@@ -45,10 +49,10 @@ function mapDispatchToProps(dispatch) {
   const data = {form: "create-order", key: ""}
   const bindedAddArrayValue = bindActionData(addArrayValue, data)
   const bindedRemoveArrayValue = bindActionData(removeArrayValue, data)
-  return bindActionCreators({ addOrder, editOrder, addArrayValue: bindedAddArrayValue, removeArrayValue: bindedRemoveArrayValue, checkAvailability }, dispatch)
+  return bindActionCreators({ selectItemOnAutocomplete, addOrder, editOrder, addArrayValue: bindedAddArrayValue, removeArrayValue: bindedRemoveArrayValue, checkAvailability }, dispatch)
 }
 
 export default connect(
   totalSelector,
   mapDispatchToProps
-)(CreateOrder)
+)(DragDropContext(HTML5Backend)(CreateOrder))
