@@ -95,7 +95,10 @@
     "description": "Create the order writing its list of dishes", 
     "pvp": "Escandallo",
     "submitButton": "Send",
-    "clearForm": "Clear fields"
+    "clearForm": "Clear fields",
+    "dishesPlaceholder": "Platos a anadir",
+    "amount": "Cantidad",
+    "add": "Anadir"
   },
   "elementsAdded": {
     "added": "{{item}} added",

@@ -15,6 +15,8 @@ class CreateOrderForm extends Component {
     const index = getIndice(id, this.props.values.dishes)
     if (index !== undefined) {this.props.removeDish('dishes', index)}
     this.props.addDish('dishes', {id, name, amount }, index == -1 ? undefined : index)
+    this.refs.createOrderAutocomplete.state.value = ""
+    this.refs.amount.value = ""
   }
   removeDishFromOrder(id) {
     const index = getIndice(id, this.props.values.dishes)
@@ -42,6 +44,7 @@ class CreateOrderForm extends Component {
           <div>
             <label>{t('createOrder.dishes')}</label>
             <Autocomplete 
+              ref = "createOrderAutocomplete"
               initialValue={selectedAutocompleteItem ? selectedAutocompleteItem.name : ""}
               items={totalDishes} 
               shouldItemRender={ matchStateToTerm }
@@ -58,7 +61,7 @@ class CreateOrderForm extends Component {
               )}
             />
             <input ref="amount" type="integer" placeholder={t('createOrder.amountPlaceholder')} />
-            <input type="button" value="Add" onClick={this.addDishToOrder.bind(this)} />
+            <input type="button" value={t('createOrder.add')} onClick={this.addDishToOrder.bind(this)} />
           </div>
           <ElementsAdded elements={dishes} totalElements={totalDishes} remove={this.removeDishFromOrder.bind(this)} subject={'dish'}/>
           <div>

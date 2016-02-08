@@ -95,7 +95,10 @@
     "description": "Crea la comanda indicando la lista de platos", 
     "pvp": "Escandallo",
     "submitButton": "Enviar",
-    "clearForm": "Limpiar campos"
+    "clearForm": "Limpiar campos",
+    "dishes": "Platos a anadir",
+    "amountPlaceholder": "Cantidad",
+    "add": "Anadir"
   },
   "elementsAdded": {
     "added": "{{item}} anadidos",

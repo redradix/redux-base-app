@@ -28,7 +28,7 @@
     "i18next-xhr-backend": "^0.3.0",
     "isomorphic-fetch": "^2.2.0",
     "react": "^0.14.7",
-    "react-autosuggest": "^3.4.0",
+    "react-autocomplete": "^0.1.4",
     "react-dnd": "^2.0.2",
     "react-dnd-html5-backend": "^2.0.2",
     "react-dom": "^0.14.7",
