@@ -4,6 +4,7 @@
 
 * `npm install` to download and install all dependencies.
 * `npm start` to start the node server.
+* `npm run test:modules` to start testing modules.
 
 Your app will be running on port 3000.
 

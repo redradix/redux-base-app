@@ -7,6 +7,7 @@
     "start-prod": "NODE_ENV=production node ./src/server.js",
     "build": "NODE_ENV=production webpack -p --progress --colors --config ./config/webpack.config.prod",
     "test": "NODE_ENV=test mocha --recursive src/test --compilers js:babel-core/register --require ./src/test/setup.js",
+    "test:modules": "NODE_ENV=test mocha --recursive ./src/modules/ --compilers js:babel-core/register --require ./src/test/setup.js",
     "test:watch": "npm test -- --watch"
   },
   "engines": {
