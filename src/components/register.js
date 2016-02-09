@@ -10,7 +10,7 @@ const validate = createValidator({
   password: [required, minLength(2), maxLength(10)]
 });
 
-class RegisterForm extends Component {
+export class RegisterFormComponent extends Component {
   render() {
     const {
           fields: {username, email, password},
@@ -23,7 +23,7 @@ class RegisterForm extends Component {
     return (
       <div>
         <p>{t('register.title')}</p>
-        <form onSubmit={handleSubmit}> 
+        <form onSubmit={handleSubmit}>
           <div>
             <label>{t('username')}</label>
             <input type="text" placeholder={t('username')} {...username}/>
@@ -44,23 +44,23 @@ class RegisterForm extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        <Interpolate parent='p' i18nKey='register.goLogin' component={GoLoginComponent} />
+        {/*<Interpolate parent='p' i18nKey='register.goLogin' component={GoLoginComponent} />*/}
       </div>
     )
-  }  
+  }
 }
 
-RegisterForm.propTypes = {
+RegisterFormComponent.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitting: PropTypes.bool.isRequired
 }
 
-RegisterForm = reduxForm({
+const RegisterForm = reduxForm({
   form: 'register',
   validate,
   fields: ['username', 'email', 'password']
-})(RegisterForm)
+})(RegisterFormComponent)
 
 export default translate(['common'])(RegisterForm);

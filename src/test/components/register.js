@@ -1,16 +1,16 @@
 import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import {LoginFormComponent} from '../../components/login'
+import {RegisterFormComponent} from '../../components/register'
 
 function setup() {
   const props = {
     handleSubmit: expect.createSpy(),
-    fields: {username: {}, password:{}},
+    fields: {username: {}, email: {}, password:{}},
     t: expect.createSpy(),
     submitting: false
   }
-  const component = TestUtils.renderIntoDocument(<LoginFormComponent {...props} />)
+  const component = TestUtils.renderIntoDocument(<RegisterFormComponent {...props} />)
   return {
     component: component,
     props: props,
@@ -19,7 +19,7 @@ function setup() {
   }
 }
 
-describe('LoginForm component', () => {
+describe('RegisterForm component', () => {
   it('should display login button', () => {
     const { buttons, component } = setup()
     expect(buttons[0]).toExist();
