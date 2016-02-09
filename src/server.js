@@ -26,6 +26,7 @@ if (__DEV__) {
   app.use(webpackHotMiddleware(compiler))
 }
 
+
 app.use(express.static('public'));
 
 //keep this handler on the last position of the stack, it serves the index.html if reloading from any url.
@@ -45,9 +46,10 @@ if (__DEV__) {
   });
 } else {
   app.get('*', function(req, res) {
-    res.sendFile(path.resolve(__dirname, '../public/index.html'))
+    res.sendFile(path.resolve(__dirname, '../public/main.html'))
   });
 }
+
 
 app.listen(port, function(error) {
   if (error) {
