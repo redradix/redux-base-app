@@ -5,6 +5,7 @@ var __DEV__ = process.env.NODE_ENV !== 'production';
 var express = require('express')
 var app = new (express)()
 var port = 3000
+var clientConfig = require('./config')
 
 if (__DEV__) {
   var webpack = require('webpack')
@@ -16,6 +17,8 @@ if (__DEV__) {
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
   app.use(webpackHotMiddleware(compiler))
   app.use(express.static('public'));
+
+  port = clientConfig.clientPort;
 }
 
 //keep this handler on the last position of the stack, it serves the index.html if reloading from any url.
@@ -36,6 +39,7 @@ app.listen(port, function(error) {
   if (error) {
     console.error(error)
   } else {
-    console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
+    console.info("==> 🌎  Listening on port %s. Open up http://%s:%s/ in your browser.", port, clientConfig.clientHost, port);
+    console.info("==> 🌎  Server is at port http://%s:%s", clientConfig.serverHost, clientConfig.serverPort )
   }
 })
