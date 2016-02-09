@@ -15,7 +15,7 @@ function setup() {
   }
 }
 
-describe('Header', () => {
+describe('Home', () => {
   it('should render correctly of the most simple component ever', () => {
     const { output } = setup()
 
