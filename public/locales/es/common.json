@@ -60,7 +60,8 @@
     "removeButton": "Eliminar",
     "empty": "No hay comandas",
     "loading": "Cargando ...",
-    "date": "en {{date}}"
+    "date": "en {{date}}",
+    "order": "Comanda"
   },
   "listIngredients": {
     "title": "Listado de ingredientes",
@@ -110,5 +111,8 @@
     "total": "{{item}} que anadir",
     "ingredient": "ingrediente",
     "ingredient_plural": "ingredientes"
+  },
+  "calendarOrders":{
+    "title": "Calendario de comandas"
   }
 }

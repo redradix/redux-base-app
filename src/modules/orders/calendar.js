@@ -3,8 +3,7 @@ import * as actions from './actions'
 
 export default function reducer(state = {
     currentDate:      null,
-    initialRangeDate: null,
-    selected:         null,
+    selected:         [],
   }, action) {
   switch (action.type) {
     case actions.CALENDAR_SET_CURRENT_DATE:
@@ -17,15 +16,14 @@ export default function reducer(state = {
         initialRangeDate: action.date
       })
       break;
-    case actions.CALENDAR_ADD_SELECTED_RANGE:
+    case actions.CALENDAR_ADD_SELECTED_DAY:
       return Object.assign({}, state, {
-        initialRangeDate: null,
-        selected: action.range
+        selected: state.selected.concat(action.date)
       })
       break;
-    case actions.CALENDAR_REMOVE_SELECTED_RANGE:
+    case actions.CALENDAR_REMOVE_SELECTED_DAY:
       return Object.assign({}, state, {
-        selected: null
+        selected: state.selected.filter( date => date !== action.date )
       })
       break;
     default:

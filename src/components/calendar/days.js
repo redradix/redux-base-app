@@ -11,44 +11,46 @@ class Days extends Component {
     const { stateStyles, onDayClick } = this.props;
     const customStyles            = Object.assign(styles, stateStyles);
     const dateValue               = typeof(date) === 'string' ? date : date.unix();
-    const disabled                = states.includes('disabled') || states.includes('selected') || states.includes('requested');
-    const statesStyles            = states.reduce(function(prev, state) { 
-        return Object.assign({}, prev, customStyles[state]||{}) }
-      , styles.td);
+    
 
-    return (<Day key={dateValue} disabled={disabled} date={dateValue} style={statesStyles} className={states.join(' ')} onDayClick={onDayClick}  />);
+    return (<Day key={dateValue} date={dateValue} states={states} style={customStyles} onDayClick={onDayClick}  />);
   }
 
   _generateWeek ( days, key ) { 
     return(<tr key={key}>{days}</tr>) 
   }
 
+  _getStateFromStateDates ( date ) {
+    const { stateDates } = this.props;
+    const keys           = Object.keys(stateDates);
+
+    return keys ?
+      ( keys.filter( key => {
+          if ( !stateDates[key] || Object.keys(stateDates[key]).length == 0 ) return false;
+
+          return Object.keys(stateDates[key]).reduce(function( found, id ){
+            return found || ( 
+              stateDates[key][id].reduce ? 
+                stateDates[key][id].reduce( function( found, dates ) {
+                  return found || ( 
+                    dates.indexOf ? 
+                      dates.indexOf( date ) !== -1 : 
+                      dates.contains( date )
+                  );  
+                }, false) : 
+                moment(stateDates[key][id]).isSame( date, 'day' )
+            );
+          }, false);
+
+        })
+      ) : [];
+  }
+
   _getStates ( date ) {
-    const { stateDates, initialRangeDate }  = this.props;
-    const keys            = Object.keys(stateDates);
-    // const dateToCheck     = date.format('L');
-    let states            = [];
+    const { initialRangeDate }  = this.props;
+    let states                  = [];
 
-    if ( keys ) { 
-      states = keys.filter( key => {
-        if ( !stateDates[key] || Object.keys(stateDates[key]).length == 0 ) return false;
-
-        return Object.keys(stateDates[key]).reduce(function( found, id ){
-          return found || ( 
-            stateDates[key][id].reduce ? 
-              stateDates[key][id].reduce( function( found, dates ) {
-                return found || ( 
-                  dates.indexOf ? 
-                    dates.indexOf( date ) !== -1 : 
-                    dates.contains( date )
-                );  
-              }, false) : 
-              moment(stateDates[key][id].date).isSame(date)
-          );
-        }, false);
-
-      });
-    }
+    states = this._getStateFromStateDates( date );
 
     if( initialRangeDate && date.isSame(moment(initialRangeDate)) ) states.push('initial');
 
@@ -138,20 +140,6 @@ Days.defaultProps = {
 }
 
 const styles = {
-  td: {
-    padding: 8,
-    lineHeight: '1.42857143',
-    verticalAlign: 'top',
-    borderTop: '1px solid #ddd',
-    textAlign: 'center',
-    cursor: 'pointer'
-  },
-  initial: {
-    backgroundColor: '#0F0'
-  },
-  disabled: {
-    color: '#BBB'
-  },
   prevMonth: {
     backgroundColor: '#EEE',
     color: '#BBB'

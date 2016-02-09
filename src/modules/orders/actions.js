@@ -20,9 +20,8 @@ export const REMOVE_ORDER_FAIL = MODULE_NAME.concat("REMOVE:ORDER_FAIL")
 export const REQUEST_ORDER = MODULE_NAME.concat("REQUEST:ORDER")
 export const RECEIVE_ORDER = MODULE_NAME.concat("RECEIVE:ORDER")
 export const CALENDAR_SET_CURRENT_DATE = MODULE_NAME.concat('CALENDAR:SET_CURRENT_DATE');
-export const CALENDAR_SET_INITIAL_RANGE_DATE = MODULE_NAME.concat('CALENDAR:SET_INITIAL_RANGE_DATE');
-export const CALENDAR_ADD_SELECTED_RANGE = MODULE_NAME.concat('CALENDAR:ADD_SELECTED_RANGE');
-export const CALENDAR_REMOVE_SELECTED_RANGE = MODULE_NAME.concat('CALENDAR:REMOVE_SELECTED_RANGE');
+export const CALENDAR_ADD_SELECTED_DAY = MODULE_NAME.concat('CALENDAR:ADD_SELECTED_DAY');
+export const CALENDAR_REMOVE_SELECTED_DAY = MODULE_NAME.concat('CALENDAR:REMOVE_SELECTED_DAY');
 
 export function fetchOrder(id) {
   return {
@@ -106,8 +105,17 @@ export function removeOrder(order) {
   }
 }
 
-export function setCalendarCurrentDate(date) {
+export function calendarSetCurrentDate( date ) {
   return ( dispatch ) => {
     return dispatch( { type: CALENDAR_SET_CURRENT_DATE, date } );
   }
+}
+
+
+export function calendarAddSelectedDay( date ) {
+  return ( dispatch ) => dispatch({ type: CALENDAR_ADD_SELECTED_DAY, date })
+}
+
+export function calendarRemoveSelectedDay( date ) {
+  return ( dispatch ) => dispatch({ type: CALENDAR_REMOVE_SELECTED_DAY, date })
 }

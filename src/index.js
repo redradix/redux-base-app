@@ -37,3 +37,7 @@ render(
   </I18nextProvider>,
   document.getElementById('root')
 )
+
+
+import moment from 'moment';
+window.moment = moment;

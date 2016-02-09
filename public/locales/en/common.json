@@ -13,5 +13,11 @@
     "title": "Write your data if you want to login",
     "goLogin": "If you are already register, {{component}}",
     "loginActionCall": "go login"
+  },
+  "listOrders": {
+    "order": "Order"
+  },
+  "calendarOrders":{
+    "title": "Orders calendar"
   }
 }
