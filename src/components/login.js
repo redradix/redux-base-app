@@ -39,7 +39,7 @@ export class LoginFormComponent extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        {/*<Interpolate parent='p' i18nKey='login.goRegister' component={registerComponent} />*/}
+        <Link to='/register'>{t('login.registerActionCall')}</Link>
       </div>
     )
   }

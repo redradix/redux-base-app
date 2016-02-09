@@ -19,7 +19,6 @@ export class RegisterFormComponent extends Component {
           error,
           t
         } = this.props
-        const GoLoginComponent = <Link to='/Login'>{t('register.loginActionCall')}</Link>
     return (
       <div>
         <p>{t('register.title')}</p>
@@ -44,7 +43,7 @@ export class RegisterFormComponent extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        {/*<Interpolate parent='p' i18nKey='register.goLogin' component={GoLoginComponent} />*/}
+        <Link to='/Login'>{t('register.loginActionCall')}</Link>
       </div>
     )
   }
