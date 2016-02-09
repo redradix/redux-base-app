@@ -4,14 +4,19 @@ import ElementsToAdd from '../components/elements-to-add'
 import ElementsAdded from '../components/elements-added'
 import { getIndice } from '../utils/utils'
 import { translate } from 'react-i18next/lib'
+import Autocomplete from 'react-autocomplete'
+import { matchStateToTerm, sortItems, styles } from '../utils/components/autocomplete'
 
 
 class CreateOrderForm extends Component {
-  addDishToOrder(id, amount, name) {
-    const orderDish= {id, amount, name}
+  addDishToOrder() {
+    const {id,  name} = this.props.selectedAutocompleteItem
+    const amount = parseInt(this.refs.amount.value, 10)
     const index = getIndice(id, this.props.values.dishes)
     if (index !== undefined) {this.props.removeDish('dishes', index)}
-    this.props.addDish('dishes', orderDish, index == -1 ? undefined : index)
+    this.props.addDish('dishes', {id, name, amount }, index == -1 ? undefined : index)
+    this.refs.createOrderAutocomplete.state.value = ""
+    this.refs.amount.value = ""
   }
   removeDishFromOrder(id) {
     const index = getIndice(id, this.props.values.dishes)
@@ -23,6 +28,8 @@ class CreateOrderForm extends Component {
           totalDishes,
           pvp,
           removeDishFromOrder,
+          selectedAutocompleteItem,
+          selectItemOnAutocomplete,
           handleSubmit,
           resetForm,
           submitting,
@@ -34,7 +41,28 @@ class CreateOrderForm extends Component {
         <p>{t('createOrder.description')}</p>
         <p></p>
         <form onSubmit={handleSubmit}>
-          <ElementsToAdd elements={totalDishes}  add={this.addDishToOrder.bind(this)} subject='dish' />
+          <div>
+            <label>{t('createOrder.dishes')}</label>
+            <Autocomplete 
+              ref = "createOrderAutocomplete"
+              initialValue={selectedAutocompleteItem ? selectedAutocompleteItem.name : ""}
+              items={totalDishes} 
+              shouldItemRender={ matchStateToTerm }
+              sortItems={sortItems}
+              onSelect={(value, item) => {
+                selectItemOnAutocomplete({ref: "create-order", item})
+              }}
+              getItemValue={(item) => item.name} 
+              renderItem={(item, isHighlighted) => (
+                <div
+                  style={isHighlighted ? styles.highlightedItem : styles.item}
+                  key={item.id}
+                >{item.name}</div>
+              )}
+            />
+            <input ref="amount" type="integer" placeholder={t('createOrder.amountPlaceholder')} />
+            <input type="button" value={t('createOrder.add')} onClick={this.addDishToOrder.bind(this)} />
+          </div>
           <ElementsAdded elements={dishes} totalElements={totalDishes} remove={this.removeDishFromOrder.bind(this)} subject={'dish'}/>
           <div>
             <p>{t('createOrder.pvp')}: {pvp || 0}</p>
@@ -57,6 +85,7 @@ CreateOrderForm.propTypes = {
     dishes: PropTypes.array,
     pvp: PropTypes.number,
     handleSubmit: PropTypes.func.isRequired,
+    selectItemOnAutocomplete: PropTypes.func.isRequired,
     error: PropTypes.string,
     resetForm: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired

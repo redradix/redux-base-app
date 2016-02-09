@@ -23,6 +23,8 @@ export const CALENDAR_SET_CURRENT_DATE = MODULE_NAME.concat('CALENDAR:SET_CURREN
 export const CALENDAR_ADD_SELECTED_DAY = MODULE_NAME.concat('CALENDAR:ADD_SELECTED_DAY');
 export const CALENDAR_REMOVE_SELECTED_DAY = MODULE_NAME.concat('CALENDAR:REMOVE_SELECTED_DAY');
 
+//Async
+
 export function fetchOrder(id) {
   return {
     [CALL_API]: {
