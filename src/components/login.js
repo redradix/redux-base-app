@@ -26,12 +26,12 @@ class LoginForm extends Component {
         <form onSubmit={handleSubmit}>
           <div>
             <label>{t('username')}</label>
-            <input type="text" placeholder="username" {...username}/>
+            <input type="text" placeholder="username" {...username} ref="username"/>
             {username.touched && username.error && <div>{username.error}</div>}
           </div>
           <div>
             <label>{t('password')}</label>
-            <input type="password" placeholder="password" {...password}/>
+            <input type="password" placeholder="password" {...password} ref="password"/>
             {password.touched && password.error && <div>{password.error}</div>}
           </div>
           {error && <div>{error}</div>}
