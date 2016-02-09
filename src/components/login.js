@@ -23,7 +23,7 @@ class LoginForm extends Component {
     return (
       <div>
         <p>{t('login.title')}</p>
-        <form onSubmit={handleSubmit}> 
+        <form onSubmit={handleSubmit}>
           <div>
             <label>{t('username')}</label>
             <input type="text" placeholder="username" {...username}/>
@@ -39,10 +39,10 @@ class LoginForm extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        <Interpolate parent='p' i18nKey='login.goRegister' component={registerComponent} />
+        {/*<Interpolate parent='p' i18nKey='login.goRegister' component={registerComponent} />*/}
       </div>
     )
-  }  
+  }
 }
 
 LoginForm.propTypes = {
@@ -58,4 +58,5 @@ LoginForm = reduxForm({
   fields: ['username', 'password']
 })(LoginForm)
 
-export default translate(['common'])(LoginForm);
+//export default translate(['common'])(LoginForm);
+export default LoginForm;
