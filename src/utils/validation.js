@@ -63,9 +63,7 @@ export function createValidator(rules) {
       if (error) {
         errors[key] = error;
       }
-    console.log(data);
     });
-    console.log(errors);
     return errors;
   };
 }

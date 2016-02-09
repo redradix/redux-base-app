@@ -10,7 +10,7 @@ const validate = createValidator({
   password: [required]
 });
 
-class LoginForm extends Component {
+export class LoginFormComponent extends Component {
   render() {
     const {
           fields: {username, password},
@@ -45,18 +45,17 @@ class LoginForm extends Component {
   }
 }
 
-LoginForm.propTypes = {
+LoginFormComponent.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitting: PropTypes.bool.isRequired
 }
 
-LoginForm = reduxForm({
+const LoginForm = reduxForm({
   form: 'login',
   validate,
   fields: ['username', 'password']
-})(LoginForm)
+})(LoginFormComponent)
 
-//export default translate(['common'])(LoginForm);
-export default LoginForm;
+export default translate(['common'])(LoginForm);
