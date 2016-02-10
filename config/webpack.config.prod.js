@@ -23,7 +23,7 @@ module.exports = Object.assign({
     }),
     new HtmlWebpackPlugin({
       template: 'templates/index.html',
-      filename: '../index.html'
+      filename: '../main.html'
     })
   ]
 }, baseConfig);
