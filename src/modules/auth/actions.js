@@ -4,23 +4,18 @@ import { routeActions } from 'react-router-redux';
 const MODULE_NAME = "base-app/auth/"
 
 // Past tense for actions
-export const TOKEN_VALIDATION_FAILED = MODULE_NAME.concat("VALIDATE_TOKEN_FAIL")
-export const TOKEN_VALIDATION_SUCCEEDED = MODULE_NAME.concat("VALIDATE_TOKEN")
-export const TOKEN_VALIDATION_ATTEMPTED = MODULE_NAME.concat("VALIDATE_TOKEN_ATTEMPT")
+export const TOKEN_VALIDATION_FAILED = MODULE_NAME.concat("VALIDATE_TOKEN_FAILED")
+export const TOKEN_VALIDATION_SUCCEEDED = MODULE_NAME.concat("VALIDATE_TOKEN_SUCCEEDED")
+export const TOKEN_VALIDATION_ATTEMPTED = MODULE_NAME.concat("VALIDATE_TOKEN_ATTEMPTED")
 
-export const LOGIN_ATTEMPTED = MODULE_NAME.concat("LOGIN_ATTEMPT")
-export const LOGIN_FAILED = MODULE_NAME.concat("LOGIN_FAIL")
-export const LOGIN_SUCCEEDED = MODULE_NAME.concat("LOGIN")
-export const LOGOUT_SUCCEEDED = MODULE_NAME.concat("LOGOUT")
+export const LOGIN_ATTEMPTED = MODULE_NAME.concat("LOGIN_ATTEMPTED")
+export const LOGIN_FAILED = MODULE_NAME.concat("LOGIN_FAILED")
+export const LOGIN_SUCCEEDED = MODULE_NAME.concat("LOGIN_SUCCEEDED")
+export const LOGOUT_SUCCEEDED = MODULE_NAME.concat("LOGOUT_SUCCEEDED")
 
-export const REGISTER_SUCCEEDED = MODULE_NAME.concat("REGISTER")
-export const REGISTER_ATTEMPTED = MODULE_NAME.concat("REGISTER_ATTEMPT")
-export const REGISTER_FAILED = MODULE_NAME.concat("REGISTER_FAIL")
-
-//function loadInitialData(store) {
-//  return (dispatch, getState) => {
-//  }
-//}
+export const REGISTER_SUCCEEDED = MODULE_NAME.concat("REGISTER_SUCCEEDED")
+export const REGISTER_ATTEMPTED = MODULE_NAME.concat("REGISTER_ATTEMPTED")
+export const REGISTER_FAILED = MODULE_NAME.concat("REGISTER_FAILED")
 
 export function checkLogged(callback) {
   return (dispatch, getState) => {

@@ -7,12 +7,12 @@ import { register } from '../modules/auth'
 import RegisterForm from '../components/register'
 
 class Register extends Component {
-  onSubmit(credentials) {
+  handleSubmit(credentials) {
     return this.props.register(credentials)  
   }
   render() {
     return (
-      <RegisterForm onSubmit={this.onSubmit.bind(this)} />
+      <RegisterForm onSubmit={this.handleSubmit.bind(this)} />
     )  
   }  
 }

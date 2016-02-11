@@ -19,7 +19,6 @@ export class LoginFormComponent extends Component {
           error,
           t
         } = this.props
-    const registerComponent = <Link to='/register'>{t('login.registerActionCall')}</Link>
     return (
       <div>
         <p>{t('login.title')}</p>
@@ -39,7 +38,7 @@ export class LoginFormComponent extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        <Link to='/register'>{t('login.registerActionCall')}</Link>
+        {t('login.goRegister')}<Link to='/register'>{t('login.registerActionCall')}</Link>
       </div>
     )
   }

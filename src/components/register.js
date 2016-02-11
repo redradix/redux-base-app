@@ -43,7 +43,7 @@ export class RegisterFormComponent extends Component {
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
-        <Link to='/Login'>{t('register.loginActionCall')}</Link>
+        {t('register.goLogin')}<Link to='/Login'>{t('register.loginActionCall')}</Link>
       </div>
     )
   }
