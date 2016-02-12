@@ -1,6 +1,6 @@
 {
   "name": "reduxBaseApp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Redux example app for the redradix baseapp",
   "scripts": {
     "start": "npm run clean && NODE_ENV=development nodemon ./src/server.js -w ./src/server.js",
