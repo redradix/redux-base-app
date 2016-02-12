@@ -48,6 +48,7 @@ Recipies are some examples about how to implement specific features. Here is a l
 - [ Drag and drop](docs/DnDRecipe.md)
 - [Modal](docsModalRecipe.md)
 - [Autocomplete](docs/AutocompleteRecipe.md)
+- [Router transitions](docs/RouterTransitions.md)
 
 ## JavaScript styleguide
 We are using ESLint to for check errors and keep consistent code style.
