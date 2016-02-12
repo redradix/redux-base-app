@@ -26,36 +26,17 @@
  * You might want to use it to apply several store enhancers in a row.
  *
  */
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import reducer from './modules/reducer'
-import api from './middleware/api'
+import reducer from '../modules/reducer'
+import api from '../middleware/api'
 import {browserHistory} from 'react-router'
 import {syncHistory} from 'react-router-redux'
-import DevTools from './containers/dev-tools'
 
-const reduxRouter= syncHistory(browserHistory)
 export default function configureStore(initialState) {
-  const store = createStore(
+  return createStore(
     reducer,
     initialState,
-    compose(
-      // Middleware you want to use in development:
-      applyMiddleware(reduxRouter, thunk, api),
-      // Required! Enable Redux DevTools with the monitors you chose
-      DevTools.instrument()
-    )
+    applyMiddleware(syncHistory(browserHistory), thunk, api)
   )
-
-  //reduxRouter.listenForReplays(store, state => ensureState(state).get('routing'));
-
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./modules/reducer', () => {
-      const nextReducer = require('./modules/reducer')
-      store.replaceReducer(nextReducer)
-    })
-  }
-
-  return store
 }

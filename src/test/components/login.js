@@ -22,7 +22,7 @@ function setup() {
 describe('LoginForm component', () => {
   it('should display login button', () => {
     const { buttons, component } = setup()
-    expect(buttons[0]).toExist();
+    expect(buttons[0]).toExist()
   })
 
   it('press button should call submitHandler', () => {

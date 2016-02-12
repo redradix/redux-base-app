@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path')
 
 module.exports = {
   name: 'redux-base-app',
@@ -33,4 +33,4 @@ module.exports = {
   watchOptions: {
     aggregateTimeout: 100
   }
-};
+}

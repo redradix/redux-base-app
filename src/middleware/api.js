@@ -4,20 +4,19 @@ import fetch from 'isomorphic-fetch'
 import config from '../config'
 import { applyHeaders }from './helpers'
 import { LOGOUT_SUCCEEDED } from '../modules/auth'
-import { pushPath } from 'react-router-redux';
+import { pushPath } from 'react-router-redux'
 
 const BASE_URL = config.api
 
-
-function callApi(endpoint, authenticated, config={}) {
-  let token = localStorage.getItem('token') || null
-  config = applyHeaders(config, token)
+function callApi(endpoint, authenticated, config = {}) {
+  const token = localStorage.getItem('token') || null
+  const cfg = applyHeaders(config, token)
 
   if (authenticated && !token) {
-    return Promise.reject("Unauthorized")
+    return Promise.reject('Unauthorized')
   }
 
-  return fetch(BASE_URL + endpoint, config)
+  return fetch(BASE_URL + endpoint, cfg)
   .then(response =>
     response.json().then(json=> ({ json, response }))
   ).then(({ json, response }) => {
@@ -34,7 +33,6 @@ function callApi(endpoint, authenticated, config={}) {
 export const CALL_API = Symbol('Call API')
 
 export default store => next => action => {
-
   const callAPI = action[CALL_API]
 
   // So the middleware doesn't get applied to every single action
@@ -42,7 +40,7 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { endpoint, types, authenticated, config  } = callAPI
+  const { endpoint, types, authenticated, config  } = callAPI
 
   const [ requestType, successType, errorType] = types
 
