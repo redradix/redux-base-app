@@ -21,4 +21,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({ register }, dispatch)
 }
 
+Register.propTypes = {
+  register: PropTypes.func.isRequired
+}
+
 export default connect(null, mapDispatchToProps)(Register)

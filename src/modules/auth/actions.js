@@ -1,7 +1,7 @@
 import { CALL_API } from '../../middleware/api'
 import { routeActions } from 'react-router-redux';
 
-const MODULE_NAME = "base-app/auth/"
+const MODULE_NAME = 'base-app/auth/';
 
 // Past tense for actions
 export const TOKEN_VALIDATION_FAILED = MODULE_NAME.concat("VALIDATE_TOKEN_FAILED")
@@ -22,9 +22,9 @@ export function checkLogged(callback) {
     if (getState().auth.logged) {
       dispatch(routeActions.replace('/'))
     } else {
-      callback()
+      callback();
     }
-  }
+  };
 }
 
 export function validateToken() {
@@ -34,16 +34,13 @@ export function validateToken() {
         [CALL_API]: {
           endpoint: 'session',
           authenticated: true,
-          types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCEEDED, TOKEN_VALIDATION_FAILED],
+          types: [TOKEN_VALIDATION_ATTEMPTED, TOKEN_VALIDATION_SUCCEEDED, TOKEN_VALIDATION_FAILED]
         }
-      }).then(({ payload }) =>  {
-        //dispatch(loadInitialData())
       }).catch((e) => {
-        console.log(e);
         localStorage.removeItem('token')
       })
     }
-  }
+  };
 }
 
 export function logout() {
@@ -66,17 +63,15 @@ export function login({username, password}) {
             password: password
           })
         },
-        types: [LOGIN_ATTEMPTED, LOGIN_SUCCEEDED, LOGIN_FAILED],
-        //parseResponse:
+        types: [LOGIN_ATTEMPTED, LOGIN_SUCCEEDED, LOGIN_FAILED]
       }
     }).then(({ payload }) =>  {
       localStorage.setItem('token', payload.token)
-      //dispatch(loadInitialData())
       dispatch(routeActions.push('/'))
     }).catch((e) => {
-      return Promise.reject({ _error: e._error})
-    })
-  }
+      return Promise.reject({ _error: e._error});
+    });
+  };
 }
 
 export function register(credentials) {
@@ -91,15 +86,13 @@ export function register(credentials) {
             password: credentials.password
           })
         },
-        types: [REGISTER_ATTEMPTED, REGISTER_SUCCEEDED, REGISTER_FAILED],
-        //parseResponse:
+        types: [REGISTER_ATTEMPTED, REGISTER_SUCCEEDED, REGISTER_FAILED]
       }
     }).then(({ payload, error}) =>  {
       localStorage.setItem('token', payload.token)
-      //dispatch(loadInitialData())
       dispatch(routeActions.push('/'))
     }).catch((e) => {
-      return Promise.reject({_error: e._error })
-    })
-  }
+      return Promise.reject({_error: e._error });
+    });
+  };
 }

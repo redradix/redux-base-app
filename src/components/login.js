@@ -1,14 +1,14 @@
-import {createValidator, required} from '../utils/validation'
+import { createValidator, required } from '../utils/validation'
 import { Link } from 'react-router'
-import {reduxForm} from 'redux-form'
+import { reduxForm } from 'redux-form'
 import React, { PropTypes, Component } from 'react'
-import { translate } from 'react-i18next/lib';
+import { translate } from 'react-i18next/lib'
 
 
 const validate = createValidator({
   username: [required],
   password: [required]
-});
+})
 
 export class LoginFormComponent extends Component {
   render() {
@@ -34,7 +34,7 @@ export class LoginFormComponent extends Component {
             {password.touched && password.error && <div>{password.error}</div>}
           </div>
           {error && <div>{error}</div>}
-          <button disabled={submitting} type="submit" onClick={handleSubmit}>
+          <button disabled={submitting} type='submit' onClick={handleSubmit}>
             {submitting ? <i/> : <i/>} {t('submit')}
           </button>
         </form>
@@ -47,6 +47,7 @@ export class LoginFormComponent extends Component {
 LoginFormComponent.propTypes = {
   fields: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
   error: PropTypes.string,
   submitting: PropTypes.bool.isRequired
 }
@@ -57,4 +58,4 @@ const LoginForm = reduxForm({
   fields: ['username', 'password']
 })(LoginFormComponent)
 
-export default translate(['common'])(LoginForm);
+export default translate(['common'])(LoginForm)

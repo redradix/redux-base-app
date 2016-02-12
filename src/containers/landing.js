@@ -1,18 +1,15 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import DevTools from '../containers/dev-tools'
 
+const devTools = __DEV__ ? React.createFactory(require('./dev-tools').default) : () => null
 
 
 class Landing extends Component {
   render() {
     return (
       <div>
-        <div style={{marginTop: '1.5em'}}>
-          {this.props.children}
-        </div>
-        <DevTools/>
+        <div style={{marginTop: '1.5em'}}>{this.props.children}</div>
+        {devTools()}
       </div>
     )
   }
@@ -22,13 +19,12 @@ Landing.propTypes = {
   children: PropTypes.element
 }
 
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {}
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing)
-
