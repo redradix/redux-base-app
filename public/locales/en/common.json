@@ -6,12 +6,12 @@
   "email": "Email",
   "login": {
     "title": "Write your credentials",
-    "goRegister": "If you are not register, {{component}}",
+    "goRegister": "If you are not register, ",
     "registerActionCall": "do it now"
   },
   "register": {
     "title": "Write your data if you want to login",
-    "goLogin": "If you are already register, {{component}}",
+    "goLogin": "If you are already register, ",
     "loginActionCall": "go login"
   }
 }

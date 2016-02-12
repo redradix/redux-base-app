@@ -14,7 +14,11 @@ module.exports = {
         test: /\.js$/,
         loaders: [ 'babel' ],
         exclude: /node_modules/
-      }
+      },
+			{
+				test: /\.css$/, // Only .css files
+				loader: 'style!css' // Run both loaders
+			}
     ]
   },
   resolve: {

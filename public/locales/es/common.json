@@ -6,12 +6,12 @@
   "email": "Email",
   "login": {
     "title": "Introduce tus datos de acceso",
-    "goRegister": "Si no estas registrado, {{component}}",
+    "goRegister": "Si no estas registrado, ",
     "registerActionCall": "hazlo ahora"
   },
   "register": {
     "title": "Introduce tus datos para registrarte en DAH",
-    "goLogin": "Si ya estas registrado, {{component}}",
+    "goLogin": "Si ya estas registrado, ",
     "loginActionCall": "logueate"
   }
 }
