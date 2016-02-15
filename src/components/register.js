@@ -19,7 +19,6 @@ export class RegisterFormComponent extends Component {
           error,
           t
         } = this.props
-    const GoLoginComponent = <Link to='/Login'>{t('register.loginActionCall')}</Link>
     return (
       <div>
         <p>{t('register.title')}</p>

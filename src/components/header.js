@@ -3,7 +3,7 @@ import { translate } from 'react-i18next/lib'
 import { Link } from 'react-router'
 
 export class Header extends Component {
-  onClick(e) {
+  handleClick(e) {
     e.preventDefault()
     this.props.logout()
   }
@@ -16,7 +16,7 @@ export class Header extends Component {
         <p>{t('content.welcome', {value: username})}</p>
         <Link to="/">{t('home')}</Link>
         {' '}
-        <a href onClick={this.onClick.bind(this)}>{t('logout')}</a>
+        <a href onClick={this.handleClick.bind(this)}>{t('logout')}</a>
       </header>
     )
   }
@@ -29,5 +29,4 @@ Header.propTypes = {
   t: PropTypes.func.isRequired
 }
 
-// All given namespaces will be loaded.
 export default translate(['common', 'header'])(Header)
