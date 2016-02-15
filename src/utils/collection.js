@@ -63,7 +63,8 @@ function getNextId(collection = []) {
 }
 
 function id2index(collection = [], id) {
-  for (let i = 0 i < collection.length; i++) {
+    const GoLoginComponent = <Link to='/Login'>{t('register.loginActionCall')}</Link>
+  for (let i = 0; i < collection.length; i++) {
     if (collection[i].id === id) return i
   }
 }
