@@ -13,7 +13,7 @@ class App extends Component {
       <div>
         <Header title={'miApp'} username={username} logout={logout} />
         <div style={{marginTop: '1.5em'}}>{children}</div>
-        { __DEV__ && devTools()}
+        {devTools()}
       </div>
     )
   }

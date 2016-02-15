@@ -9,7 +9,7 @@ class Landing extends Component {
     return (
       <div>
         <div style={{marginTop: '1.5em'}}>{this.props.children}</div>
-        { __DEV__ && devTools()}
+        {devTools()}
       </div>
     )
   }
