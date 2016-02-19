@@ -60,7 +60,7 @@ function mockStore(getState, expectedActions, onLastAction) {
 describe('Auth - actions', () => {
   it('checkLogged should create a replace path action if it is', (done) => {
     const expectedActions = [
-      { payload: { arg: '/', method: 'replace' }, type: '@@router/TRANSITION' }
+      { payload: { args: ['/'], method: 'replace' }, type: '@@router/TRANSITION' }
     ];
     const store = mockStore({auth: {logged: true}}, expectedActions, done)
     store.dispatch(actions.checkLogged())
@@ -93,7 +93,7 @@ describe('Auth - actions', () => {
   it('logout should create a logout action and a router transition', (done) => {
     const expectedActions = [
       {type: actions.LOGOUT_SUCCEEDED},
-      { payload: { arg: '/login', method: 'push' }, type: '@@router/TRANSITION' }
+      { payload: { args: ['/login'], method: 'push' }, type: '@@router/TRANSITION' }
     ];
     const store = mockStore({auth: {logged: false}}, expectedActions, done)
     store.dispatch(actions.logout())
