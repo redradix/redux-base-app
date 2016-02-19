@@ -2,11 +2,11 @@ import React from 'react'
 import { Route } from 'react-router'
 
 /* Route handlers/layouts */
-import App from './containers/app'
-import Landing from './containers/landing'
-import Home from './components/home'
-import Login from './smart/login'
-import Register from './smart/register'
+import App from './components/layouts/app'
+import Landing from './components/layouts/landing'
+import Home from './components/common/home'
+import Login from './containers/login'
+import Register from './containers/register'
 
 import { checkLogged, validateToken } from './modules/auth'
 

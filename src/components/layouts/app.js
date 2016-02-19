@@ -1,10 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { logout } from '../modules/auth'
-import Header from '../components/header'
+import { logout } from '../../modules/auth'
+import Header from '../common/header'
 
-const devTools = __DEV__ ? React.createFactory(require('./dev-tools').default) : () => null
+const devTools = __DEV__ ? React.createFactory(require('../common/dev-tools').default) : () => null
 
 class App extends Component {
   render() {

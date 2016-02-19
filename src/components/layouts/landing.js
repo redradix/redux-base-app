@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 
-const devTools = __DEV__ ? React.createFactory(require('./dev-tools').default) : () => null
+const devTools = __DEV__ ? React.createFactory(require('../common/dev-tools').default) : () => null
 
 
 class Landing extends Component {

@@ -32,7 +32,7 @@ import reducer from '../modules/reducer'
 import api from '../middleware/api'
 import {browserHistory} from 'react-router'
 import {syncHistory} from 'react-router-redux'
-import DevTools from '../containers/dev-tools'
+import DevTools from '../components/common/dev-tools'
 
 const reduxRouter = syncHistory(browserHistory)
 

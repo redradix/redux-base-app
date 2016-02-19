@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { register } from '../modules/auth'
 
 /* Components */
-import RegisterForm from '../components/register'
+import RegisterForm from '../components/auth/register'
 
 class Register extends Component {
   handleSubmit(credentials) {

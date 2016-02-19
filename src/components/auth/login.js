@@ -1,4 +1,4 @@
-import { createValidator, required } from '../utils/validation'
+import { createValidator, required } from '../../utils/validation'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
 import React, { PropTypes, Component } from 'react'

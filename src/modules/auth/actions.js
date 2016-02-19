@@ -29,7 +29,7 @@ export function checkLogged(callback) {
 
 export function validateToken() {
   return (dispatch, getState) => {
-    if (!getState().auth.logged) {
+    if (!getState().auth.session.name) {
       return dispatch({
         [CALL_API]: {
           endpoint: 'session',

@@ -47,15 +47,14 @@ export default function reducer(state = initialState, action = {}) {
   case actions.LOGIN_SUCCEEDED:
     return Object.assign({}, state, {
       logged: true,
-      loging: false,
-      session: session(state.session, action)
+      loging: false
     });
   case actions.LOGOUT_SUCCEEDED:
     return Object.assign({}, state, {
       logged: false,
       logging: false,
       registering: false,
-      session: session(state.session, action)
+      session: {} 
     });
   case actions.REGISTER_FAILED:
     return Object.assign({}, state, {
@@ -68,8 +67,7 @@ export default function reducer(state = initialState, action = {}) {
   case actions.REGISTER_SUCCEEDED:
     return Object.assign({}, state, {
       registering: false,
-      logged: true,
-      session: session(state.session, action)
+      logged: true
     });
   default:
     return state;

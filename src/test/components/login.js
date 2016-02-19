@@ -1,7 +1,7 @@
 import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import {LoginFormComponent} from '../../components/login'
+import { LoginFormComponent } from '../../components/auth/login'
 
 function setup() {
   const props = {
