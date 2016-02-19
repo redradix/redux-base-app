@@ -29,6 +29,7 @@ export function checkLogged(callback) {
 
 export function validateToken() {
   return (dispatch, getState) => {
+    console.log("session", getState().auth.session)
     if (!getState().auth.session.name) {
       return dispatch({
         [CALL_API]: {

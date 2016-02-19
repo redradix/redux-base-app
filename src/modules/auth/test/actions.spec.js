@@ -86,7 +86,7 @@ describe('Auth - actions', () => {
       {type: actions.TOKEN_VALIDATION_ATTEMPTED, authenticated: true},
       {type: actions.TOKEN_VALIDATION_SUCCEEDED, payload: {token: 'madeUpToken'}, authenticated: true}
     ];
-    const store = mockStore({auth: {logged: false}}, expectedActions, done)
+    const store = mockStore({auth: {logged: false, session: {}}}, expectedActions, done)
     store.dispatch(actions.validateToken())
   })
 
