@@ -111,7 +111,7 @@ describe('Auth - actions', () => {
     const expectedActions = [
       {type: actions.LOGIN_ATTEMPTED, authenticated: undefined},
       {type: actions.LOGIN_SUCCEEDED, payload: {token: 'madeUpToken'}, authenticated: undefined},
-      { payload: { arg: '/', method: 'push' }, type: '@@router/TRANSITION' }
+      { payload: { args: ['/'], method: 'push' }, type: '@@router/TRANSITION' }
     ];
     const store = mockStore({auth: {logged: false}}, expectedActions, done)
     store.dispatch(actions.login({username: 'admin', password: 'admin'}))
@@ -141,7 +141,7 @@ describe('Auth - actions', () => {
     const expectedActions = [
       {type: actions.REGISTER_ATTEMPTED, authenticated: undefined},
       {type: actions.REGISTER_SUCCEEDED, payload: {token: 'madeUpToken'}, authenticated: undefined},
-      { payload: { arg: '/', method: 'push' }, type: '@@router/TRANSITION' }
+      { payload: { args: ['/'], method: 'push' }, type: '@@router/TRANSITION' }
     ];
     const store = mockStore({auth: {logged: false}}, expectedActions, done)
     store.dispatch(actions.register({username: 'admin2', password: 'admin'}))
