@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
-import { createValidator, required, maxLength, minLength, email } from '../../utils/validation'
+import { createValidator, required, maxLength, minLength } from '../../utils/validation'
 import { translate } from 'react-i18next/lib'
 
 const validate = createValidator({
@@ -12,7 +12,7 @@ const validate = createValidator({
 export class RegisterFormComponent extends Component {
   render() {
     const {
-          fields: {username, email, password},
+          fields: {username, password},
           handleSubmit,
           submitting,
           error,

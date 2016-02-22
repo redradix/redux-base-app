@@ -3,6 +3,10 @@ import { translate } from 'react-i18next/lib'
 import { Link } from 'react-router'
 
 export class Header extends Component {
+  constructor(props){
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
   handleClick(e) {
     e.preventDefault()
     this.props.logout()
@@ -16,7 +20,7 @@ export class Header extends Component {
         <p>{t('content.welcome', {value: username})}</p>
         <Link to="/">{t('home')}</Link>
         {' '}
-        <a href onClick={this.handleClick.bind(this)}>{t('logout')}</a>
+        <a href onClick={this.handleClick}>{t('logout')}</a>
       </header>
     )
   }
