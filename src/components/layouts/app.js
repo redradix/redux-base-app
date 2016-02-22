@@ -1,12 +1,16 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { logout } from '../../modules/auth'
+import { logout, getSession } from '../../modules/auth'
 import Header from '../common/header'
 
 const devTools = __DEV__ ? React.createFactory(require('../common/dev-tools').default) : () => null
 
 class App extends Component {
+  componentDidMount() {
+    this.props.getSession()
+  }
+
   render() {
     const {children, username, logout} = this.props
     return (
@@ -33,7 +37,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ logout }, dispatch)
+  return bindActionCreators({ logout, getSession }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

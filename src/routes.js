@@ -8,15 +8,15 @@ import Home from './components/common/home'
 import Login from './containers/login'
 import Register from './containers/register'
 
-import { checkLogged, validateToken } from './modules/auth'
+import { checkLogged, getSession } from './modules/auth'
 
 export default (
   <Route>
-    <Route component={Landing} onEnter={(dispatch, cb) => dispatch(checkLogged(cb))}>
+    <Route component={Landing}>
       <Route path='/login' component={Login}/>
       <Route path='/register' component={Register}/>
     </Route>
-    <Route component={App} onEnter={(dispatch, cb) => dispatch(validateToken(cb))}>
+    <Route component={App}>
       <Route  path='/' component={Home} />
     </Route>
   </Route>

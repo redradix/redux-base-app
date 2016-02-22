@@ -2,11 +2,11 @@
 import * as actions from './actions';
 export * from './actions';
 
-function session(state, action) {
+function session(state = {}, action) {
   switch (action.type) {
   case actions.REGISTER_SUCCEEDED:
   case actions.LOGIN_SUCCEEDED:
-  case actions.TOKEN_VALIDATION_SUCCEEDED:
+  case actions.GET_SESSION_SUCCEEDED:
     return Object.assign({}, action.payload);
   case actions.LOGOUT_SUCCEEDED:
     return {};
@@ -16,58 +16,55 @@ function session(state, action) {
 }
 
 const initialState = {
-  logged: false,
-  loging: false,
-  registering: false,
-  session: {
-    username: undefined,
-    email: undefined
-  }
+  isLogged: false,
+  isLogging: false,
+  isRegistering: false,
+  session: {}
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
   case actions.LOGIN_FAILED:
     return Object.assign({}, state, {
-      loging: false
+      isLogging: false
     });
   case actions.LOGIN_ATTEMPTED:
     return Object.assign({}, state, {
-      loging: true
+      isLogging: true
     });
-  case actions.TOKEN_VALIDATION_FAILED:
+  case actions.GET_SESSION_FAILED:
     return Object.assign({}, state, {
-      logged: false
+      isLogged: false
     });
-  case actions.TOKEN_VALIDATION_SUCCEEDED:
+  case actions.GET_SESSION_SUCCEEDED:
     return Object.assign({}, state, {
-      logged: true,
+      isLogged: true,
       session: session(state.session, action)
     });
   case actions.LOGIN_SUCCEEDED:
     return Object.assign({}, state, {
-      logged: true,
-      loging: false
+      isLogged: true,
+      isLogging: false
     });
   case actions.LOGOUT_SUCCEEDED:
     return Object.assign({}, state, {
-      logged: false,
+      isLogged: false,
       logging: false,
-      registering: false,
-      session: {} 
+      isRegistering: false,
+      session: {}
     });
   case actions.REGISTER_FAILED:
     return Object.assign({}, state, {
-      registering: false
+      isRegistering: false
     });
   case actions.REGISTER_ATTEMPTED:
     return Object.assign({}, state, {
-      registering: true
+      isRegistering: true
     });
   case actions.REGISTER_SUCCEEDED:
     return Object.assign({}, state, {
-      registering: false,
-      logged: true
+      isRegistering: false,
+      isLogged: true
     });
   default:
     return state;

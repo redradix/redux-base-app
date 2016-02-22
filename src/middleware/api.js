@@ -1,38 +1,35 @@
-// Architecture file
-//TODO: Not finished (post requests)
+//polyfills fetch for non-compatible browser (issue #6)
 import fetch from 'isomorphic-fetch'
-import config from '../config'
-import { applyHeaders }from './helpers'
-import { LOGOUT_SUCCEEDED } from '../modules/auth'
-import { pushPath } from 'react-router-redux'
 
-const BASE_URL = config.api
+// Makes an AJAX call using fetch API
+function makeRequest(endpoint, config={}) {
+  return fetch(endpoint, config)
+    .then(response => {
+        return response.json()
+          .then(json => ({ json, response }))
+          .catch(() => ({ response }))
+      }
+    )
+    .then(({ json, response }) => {
+      //console.log('Fetch then', json, response);
+      if (!response.ok) {
+        //NOTE: this "errors" props is app-specific
+        //throw json.errors
+        throw json ? json : new Error(response.statusText)
+      }
+      else {
+        //NOTE: this json.data is app-specific!!!
+        //return json.data;
+        return json
 
-function callApi(endpoint, authenticated, config = {}) {
-  const token = localStorage.getItem('token') || null
-  const cfg = applyHeaders(config, token)
-
-  if (authenticated && !token) {
-    return Promise.reject('Unauthorized')
-  }
-
-  return fetch(BASE_URL + endpoint, cfg)
-  .then(response =>
-    response.json().then(json=> ({ json, response }))
-  ).then(({ json, response }) => {
-    if (!response.ok) {
-      throw json.errors[0]
-    } else {
-      return json.data
-    }
-  }).catch(error => {
-    throw error.message
-  })
+      }
+    })
 }
 
 export const CALL_API = Symbol('Call API')
 
 export default store => next => action => {
+
   const callAPI = action[CALL_API]
 
   // So the middleware doesn't get applied to every single action
@@ -40,34 +37,34 @@ export default store => next => action => {
     return next(action)
   }
 
-  const { endpoint, types, authenticated, config  } = callAPI
-
-  const [ requestType, successType, errorType] = types
-
-  next({type: requestType, authenticated})
+  let { endpoint, types, config, options  } = callAPI
+  if(!options.parse){
+    options.parse = (x) => x
+  }
+  if(!options.onError){
+    options.onError = (x) => x
+  }
+  const [requestType, successType, errorType] = types
+  next({type: requestType })
+  console.log('call api', endpoint, config)
   // Passing the authenticated boolean back in our data will let us distinguish
-  return callApi(endpoint, authenticated, config).then(
-    payload =>
+  return makeRequest(endpoint, config)
+  .then(
+    payload => {
       next({
-        payload,
-        authenticated,
+        payload: options.parse(payload),
         type: successType
-      }),
+      });
+      return options.parse(payload)
+    },
     error => {
-      // Switch con todos los casos de excepcion comunes
-      if (error == 'Unauthorized') {
-        next({type: LOGOUT_SUCCEEDED})
-        next(pushPath('login'))
-        return Promise.reject(error)
-      } else {
-        next({
-          error: error || 'There was an error.',
-          type: errorType
-        })
-        return Promise.reject({
-          _error: error || 'There was an error.',
-        })
-      }
+      let processedError = options.onError(error)
+      console.log('fetch error', processedError)
+      next({
+        error: options.onError(error),
+        type: errorType
+      });
+      throw processedError
     }
   )
 }
