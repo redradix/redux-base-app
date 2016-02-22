@@ -1,3 +1,13 @@
+/**
+
+  This file is an API adapter
+  It uses the REST API utils and provides
+  resource-specific methods
+
+  This is where the project specific response formats, etc should be handled
+
+*/
+
 import {
   LOGIN_ATTEMPTED,
   LOGIN_SUCCEEDED,
@@ -14,7 +24,6 @@ import {
 } from './action_types';
 
 import { fetch, create, update, del } from '../../utils/rest_api';
-
 
 /*
  Common "parse" function. In this case, the example Auth API
