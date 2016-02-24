@@ -1,36 +1,45 @@
 const path = require('path')
 
 module.exports = {
-  name: 'redux-base-app',
+  name: 'redux-base-app', // project name
+
+  /* output config */
   output: {
-    path: path.join(__dirname, '../public/js'),
-    filename: 'bundle.[hash:6].js',
-    publicPath: '/js/',
-    hash: true
+    path: path.join(__dirname, '../public/js'), // output directory
+    filename: 'bundle.[hash:6].js', // output file name with hash pattern
+    publicPath: '/js/', // path to output file from browser's perspective
+    hash: true // enable hash
   },
   module: {
+    /* module loaders config */
     loaders: [
       {
-        test: /\.js$/,
-        loaders: [ 'babel' ],
-        exclude: /node_modules/
+        test: /\.js$/, // include files which filename is matching the pattern
+        loaders: [ 'babel' ], // exclude files which path is matching the pattern
+        exclude: /node_modules/ // list of module loaders
       },
-			{
-				test: /\.css$/, // Only .css files
-				loader: 'style!css' // Run both loaders
-			}
+      {
+        test: /\.css$/, // Only .css files
+        loader: 'style!css' // Run both loaders
+      }
     ]
   },
+
+  /* modules resolving config */
   resolve: {
-    modulesDirectories: ['node_modules'],
-    extensions: ['', '.js']
+    modulesDirectories: ['node_modules'], // look for modules in listed directories only
+    extensions: ['', '.js'] // resolve modules with listed extensions only
   },
+
+  /* module loaders resolving config */
   resolveLoader: {
-    modulesDirectories: ['node_modules'],
-    moduleTemplates: ['*-loader', '*'],
-    extensions: ['', '.js']
+    modulesDirectories: ['node_modules'], // look for loader modules in listed directories only
+    moduleTemplates: ['*-loader', '*'], // loader module name alternatives, 'babel' -> 'babel-loader'
+    extensions: ['', '.js'] // resolve loader modules with listed extensions only
   },
+
+  /* file system watching config */
   watchOptions: {
-    aggregateTimeout: 100
+    aggregateTimeout: 100 // do not re-build for 100ms after the last build, default is 300ms
   }
 }
