@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react'
-import { translate } from 'react-i18next/lib'
+import { translate } from 'react-i18next'
 import { Link } from 'react-router'
 
 export class Header extends Component {

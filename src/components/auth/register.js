@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import { reduxForm } from 'redux-form'
 import { createValidator, required, maxLength, minLength } from '../../utils/validation'
-import { translate } from 'react-i18next/lib'
+import { translate } from 'react-i18next'
 
 const validate = createValidator({
   username: [required, minLength(2), maxLength(10)],

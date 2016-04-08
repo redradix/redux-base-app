@@ -31,10 +31,10 @@ import thunk from 'redux-thunk'
 import reducer from '../modules/reducer'
 import api from '../middleware/api'
 import {browserHistory} from 'react-router'
-import {syncHistory} from 'react-router-redux'
+import {routerMiddleware} from 'react-router-redux'
 import DevTools from '../components/common/dev-tools'
 
-const reduxRouter = syncHistory(browserHistory)
+const reduxRouter = routerMiddleware(browserHistory)
 
 export default function configureStore(initialState) {
   const store = createStore(

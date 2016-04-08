@@ -5,7 +5,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, createRoutes, browserHistory } from 'react-router'
 import configureStore from './store/configureStore'
-import { I18nextProvider } from 'react-i18next/lib' // as we build ourself via webpack
+import { I18nextProvider } from 'react-i18next' // as we build ourself via webpack
 import i18n from './utils/i18n'
 import rawRoutes from './routes'
 
