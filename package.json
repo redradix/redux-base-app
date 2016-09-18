@@ -1,7 +1,28 @@
 {
-  "name": "reduxBaseApp",
+  "name": "redux-base-app",
   "version": "0.1.0",
-  "description": "Redux example app for the redradix baseapp",
+  "description": "Redradix base app, built with react & redux",
+  "keywords": [
+    "base app",
+    "react",
+    "redux"
+  ],
+  "homepage": "http://redradix.com",
+  "bugs": "https://github.com/redradix/redux-base-app/issues",
+  "license": "MIT",
+  "author": "Redradix <info@redradix.com> (https://github.com/redradix)",
+  "contributors": [
+    "Aarón Contreras <aaron@redradix.com> (https://github.com/acontreras89)",
+    "Arturo Muñoz <arturo@redradix.com> (https://github.com/arturomtm)",
+    "Carlos de la Orden <carlos@redradix.com> (https://github.com/cdelaorden)",
+    "Julián Toledo <julian@redradix.com> (https://github.com/julianitor)",
+    "Miguel Martín <miguel@redradix.com> (https://github.com/kanedaki)",
+    "Roman Liutikov (https://github.com/roman01la)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/redradix/redux-base-app.git"
+  },
   "scripts": {
     "start": "npm run clean && NODE_ENV=development nodemon ./src/server.js -w ./src/server.js",
     "start-prod": "NODE_ENV=production node ./src/server.js",
@@ -12,19 +33,6 @@
     "lint": "eslint ./src/**",
     "clean": "rm -f public/index.html && rm -rf public/js"
   },
-  "engines": {
-    "node": ">=4.2.6",
-    "npm": ">=2.14"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/redradix/reduxBaseApp.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/redradix/reduxBaseApp/issues"
-  },
-  "homepage": "http://redradix.com",
   "dependencies": {
     "deep-freeze": "0.0.1",
     "dom-scroll-into-view": "^1.0.1",
@@ -73,5 +81,9 @@
     "webpack": "^1.12.13",
     "webpack-dev-middleware": "^1.5.1",
     "webpack-hot-middleware": "^2.6.4"
+  },
+  "engines": {
+    "node": ">=4.2.6",
+    "npm": ">=2.14"
   }
 }
