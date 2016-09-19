@@ -4,9 +4,9 @@ import { Route } from 'react-router'
 /* Route handlers/layouts */
 import App from './components/layouts/app'
 import Landing from './components/layouts/landing'
-import Home from './components/common/home'
-import Login from './containers/login'
-import Register from './containers/register'
+import Home from './components/views/home'
+import Login from './components/connected/login'
+import Register from './components/connected/register'
 
 import { checkLogged, getSession } from './modules/auth'
 

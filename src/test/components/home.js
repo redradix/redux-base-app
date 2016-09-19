@@ -1,7 +1,7 @@
 import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import Home from '../../components/common/home'
+import Home from '../../components/views/home'
 
 function setup() {
 

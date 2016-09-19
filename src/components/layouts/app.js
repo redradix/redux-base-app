@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { logout, getSession } from '../../modules/auth'
-import Header from '../common/header'
+import Header from '../views/header'
 
 class App extends Component {
   componentDidMount() {

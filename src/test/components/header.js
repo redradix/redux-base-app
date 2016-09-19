@@ -1,7 +1,7 @@
 import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import {Header} from '../../components/common/header'
+import {Header} from '../../components/views/header'
 
 function setup() {
   let props = {
