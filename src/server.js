@@ -3,9 +3,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-const __DEV__ = process.env.NODE_ENV !== 'production'
-
-if (__DEV__) {
+if (process.env.NODE_ENV === 'development') {
   const webpack = require('webpack')
   const webpackDevMiddleware = require('webpack-dev-middleware')
   const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -30,7 +28,7 @@ if (__DEV__) {
 app.use(express.static('public'))
 
 // keep this handler on the last position of the stack, it serves the index.html if reloading from any url.
-if (__DEV__) {
+if (process.env.NODE_ENV === 'development') {
   require('isomorphic-fetch')
   app.get('*', (req, res) => {
     fetch('http://localhost:' + port + '/js/index.html')

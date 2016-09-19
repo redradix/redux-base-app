@@ -18,7 +18,6 @@ module.exports = Object.assign({
 
     /* define global variables which will be replaced by its values at build time */
     new webpack.DefinePlugin({
-      __DEV__: true,
       'process.env': { NODE_ENV: '"development"' }
     }),
 
