@@ -1,6 +1,11 @@
+'use strict'
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const baseConfig = require('./webpack.config.base')
+
+// Load environment variables to pass them to webpack's define plugin
+let env = require('dotenv').load('../.env')
+Object.keys(env).forEach(k => env[k] = JSON.stringify(env[k]))
 
 module.exports = Object.assign({
 
@@ -18,7 +23,7 @@ module.exports = Object.assign({
 
     /* define global variables which will be replaced by its values at build time */
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: '"development"' }
+      process: { env: Object.assign({ NODE_ENV: JSON.stringify('development') }, env) }
     }),
 
     /* smart code reloading */
