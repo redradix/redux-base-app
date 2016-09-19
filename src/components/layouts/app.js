@@ -4,8 +4,6 @@ import { bindActionCreators } from 'redux'
 import { logout, getSession } from '../../modules/auth'
 import Header from '../common/header'
 
-const devTools = __DEV__ ? React.createFactory(require('../common/dev-tools').default) : () => null
-
 class App extends Component {
   componentDidMount() {
     this.props.getSession()
@@ -17,7 +15,6 @@ class App extends Component {
       <div>
         <Header title={'miApp'} username={username} logout={logout} />
         <div style={{marginTop: '1.5em'}}>{children}</div>
-        {devTools()}
       </div>
     )
   }

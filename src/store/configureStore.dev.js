@@ -32,7 +32,6 @@ import reducer from '../modules/reducer'
 import api from '../middleware/api'
 import {browserHistory} from 'react-router'
 import {routerMiddleware} from 'react-router-redux'
-import DevTools from '../components/common/dev-tools'
 
 const reduxRouter = routerMiddleware(browserHistory)
 
@@ -42,7 +41,7 @@ export default function configureStore(initialState) {
     initialState,
     compose(
       applyMiddleware(reduxRouter, thunk, api),
-      DevTools.instrument()
+      window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   )
 
