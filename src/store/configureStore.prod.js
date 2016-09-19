@@ -28,7 +28,7 @@
  */
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import reducer from '../modules/reducer'
+import reducer from 'modules/reducer'
 import api from '../middleware/api'
 import {browserHistory} from 'react-router'
 import {syncHistory} from 'react-router-redux'

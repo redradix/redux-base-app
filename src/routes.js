@@ -2,11 +2,11 @@ import React from 'react'
 import { Route } from 'react-router'
 
 /* Route handlers/layouts */
-import App from './components/layouts/app'
-import Landing from './components/layouts/landing'
-import Home from './components/views/home'
-import Login from './components/connected/login'
-import Register from './components/connected/register'
+import App from 'layouts/app'
+import Landing from 'layouts/landing'
+import Home from 'views/home'
+import Login from 'connected/login'
+import Register from 'connected/register'
 
 import { checkLogged, getSession } from './modules/auth'
 

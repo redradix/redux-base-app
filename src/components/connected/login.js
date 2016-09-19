@@ -1,10 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { login } from '../../modules/auth'
+import { login } from 'modules/auth'
 
 /* Components */
-import LoginForm from '../views/login'
+import LoginForm from 'views/login'
 
 class Login extends Component {
   handleSubmit(credentials) {
