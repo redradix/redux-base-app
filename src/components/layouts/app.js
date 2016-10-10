@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { logout, getSession } from 'modules/auth'
 import Header from 'views/header'
 
@@ -33,8 +32,6 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ logout, getSession }, dispatch)
-}
+const mapDispatchToProps = { logout, getSession }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

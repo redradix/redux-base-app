@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { register } from 'modules/auth'
 
@@ -17,9 +16,7 @@ class Register extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ register }, dispatch)
-}
+const mapDispatchToProps = { register }
 
 Register.propTypes = {
   register: PropTypes.func.isRequired

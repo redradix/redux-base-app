@@ -1,5 +1,4 @@
 import React, { PropTypes, Component } from 'react'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { login } from 'modules/auth'
 
@@ -17,9 +16,7 @@ class Login extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ login }, dispatch)
-}
+const mapDispatchToProps = { login }
 
 Login.propTypes = {
   login: PropTypes.func.isRequired
