@@ -10,14 +10,18 @@ import Register from 'connected/register'
 
 import { checkLogged, getSession } from './modules/auth'
 
-export default (
-  <Route>
-    <Route component={Landing}>
-      <Route path='/login' component={Login}/>
-      <Route path='/register' component={Register}/>
+const configureRoutes = ({ dispatch, getState }) => {
+  return (
+    <Route>
+      <Route component={Landing}>
+        <Route path='/login' component={Login}/>
+        <Route path='/register' component={Register}/>
+      </Route>
+      <Route component={App}>
+        <Route  path='/' component={Home} />
+      </Route>
     </Route>
-    <Route component={App}>
-      <Route  path='/' component={Home} />
-    </Route>
-  </Route>
-)
+  )
+}
+
+export default configureRoutes
