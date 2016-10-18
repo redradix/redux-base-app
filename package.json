@@ -65,7 +65,7 @@
     "eslint-plugin-babel": "3.2.0",
     "eslint-plugin-mocha": "2.0.0",
     "eslint-plugin-react": "4.3.0",
-    "expect": "1.6.0",
+    "expect": "1.20.2",
     "express": "4.13.3",
     "html-webpack-plugin": "2.7.1",
     "jsdom": "8.0.1",

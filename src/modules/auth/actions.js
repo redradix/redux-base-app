@@ -5,21 +5,21 @@ export * from './action_types'
 // TODO
 // Transform server API errors into valid redux-form errors
 
-//UTILS
-function clearToken(){
-  localStorage.removeItem(LOCALSTORAGE_TOKEN_KEY);
+// UTILS
+function clearToken() {
+  localStorage.removeItem(LOCALSTORAGE_TOKEN_KEY)
 }
 
-function getToken(){
-  return localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
+function getToken() {
+  return localStorage.getItem(LOCALSTORAGE_TOKEN_KEY)
 }
 
-function saveToken(token){
+function saveToken(token) {
   localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token)
 }
 
-function goToLogin(){
-  return push('/login');
+function goToLogin() {
+  return push('/login')
 }
 
 /** Auth module Action Creators */
@@ -38,11 +38,12 @@ export function login({username, password}) {
       dispatch(push('/'))
     })
     .catch((e) => {
-      let error = e.errors[0];
-      if(error.message.match(/not found/))
+      const error = e.errors[0]
+      if (error.message.match(/not found/)) {
         return Promise.reject({ _error: 'Login failed', username: 'Invalid username' })
-      else
+      } else {
         return Promise.reject({ _error: 'Login failed', password: 'Invalid password' })
+      }
     })
   }
 }
@@ -54,17 +55,17 @@ export function login({username, password}) {
  */
 export function getSession() {
   return (dispatch, getState) => {
-    //bail out early, if no token avoid calling the API
-    if(!getToken()){
+    // bail out early, if no token avoid calling the API
+    if (!getToken()) {
       return dispatch(goToLogin())
     }
     if (!getState().session) {
       return dispatch(AuthAPI.getSession())
       .catch((e) => {
-        //throw e;
+        // throw e;
         console.log('getSession failed', e)
-        clearToken();
-        dispatch(goToLogin());
+        clearToken()
+        dispatch(goToLogin())
       })
     }
   }
@@ -78,7 +79,7 @@ export function logout() {
   return (dispatch, getState) => {
     dispatch(AuthAPI.logout())
       .then(() => {
-        clearToken();
+        clearToken()
         dispatch(goToLogin())
       })
       .catch(errors => {
@@ -100,7 +101,7 @@ export function register(credentials) {
       dispatch(push('/'))
     })
     .catch((e) => {
-      console.log('Register failed', e);
+      console.log('Register failed', e)
       return Promise.reject({_error: 'Register failed', username: 'Username already in use' })
     })
   }

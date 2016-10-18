@@ -3,14 +3,6 @@ import { translate } from 'react-i18next'
 import { Link } from 'react-router'
 
 export class Header extends Component {
-  constructor(props){
-    super(props)
-    this.handleClick = this.handleClick.bind(this)
-  }
-  handleClick(e) {
-    e.preventDefault()
-    this.props.logout()
-  }
   render() {
     const { title, username, t } = this.props
     return (
@@ -18,11 +10,21 @@ export class Header extends Component {
         <h1>{t('appName')}:{title}</h1>
         {' '}
         <p>{t('content.welcome', {value: username})}</p>
-        <Link to="/">{t('home')}</Link>
+        <Link to='/'>{t('home')}</Link>
         {' '}
         <a href onClick={this.handleClick}>{t('logout')}</a>
       </header>
     )
+  }
+
+  handleClick(e) {
+    e.preventDefault()
+    this.props.logout()
+  }
+
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
   }
 }
 

@@ -5,9 +5,9 @@ import Home from '../../components/views/home'
 
 function setup() {
 
-  let renderer = TestUtils.createRenderer()
+  const renderer = TestUtils.createRenderer()
   renderer.render(<Home />)
-  let output = renderer.getRenderOutput()
+  const output = renderer.getRenderOutput()
 
   return {
     output,

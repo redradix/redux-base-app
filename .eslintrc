@@ -138,7 +138,7 @@
     "no-underscore-dangle": "off",
     "one-var": ["error", "never"],
     "padded-blocks": ["off", "never"],
-    "semi": ["error", "always"],
+    "semi": ["error", "never"],
     "semi-spacing": ["error", {
       "before": false,
       "after": true

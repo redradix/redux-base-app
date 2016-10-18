@@ -1,12 +1,12 @@
 import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import { LoginFormComponent } from '../../components/auth/login'
+import { LoginFormComponent } from '../../components/views/login'
 
 function setup() {
   const props = {
     handleSubmit: expect.createSpy(),
-    fields: {username: {}, password:{}},
+    fields: {username: {}, password: {}},
     t: expect.createSpy(),
     submitting: false
   }
@@ -21,7 +21,7 @@ function setup() {
 
 describe('LoginForm component', () => {
   it('should display login button', () => {
-    const { buttons, component } = setup()
+    const { buttons } = setup()
     expect(buttons[0]).toExist()
   })
 
