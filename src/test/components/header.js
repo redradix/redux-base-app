@@ -1,17 +1,19 @@
 import expect from 'expect'
 import React from 'react'
 import TestUtils from 'react-addons-test-utils'
-import {Header} from '../../components/views/header'
+import { Header } from '../../components/views/header'
 
 function setup() {
-  let props = {
+  const props = {
+    title: 'Test running',
+    username: 'testuser',
     t: expect.createSpy(),
     logout: expect.createSpy()
   }
 
-  let renderer = TestUtils.createRenderer()
+  const renderer = TestUtils.createRenderer()
   renderer.render(<Header {...props} />)
-  let output = renderer.getRenderOutput()
+  const output = renderer.getRenderOutput()
 
   return {
     props,
@@ -26,7 +28,7 @@ describe('Header', () => {
 
     expect(output.type).toBe('header')
 
-    let [ h1, a ] = output.props.children
+    const [ h1 ] = output.props.children
 
     expect(h1.type).toBe('h1')
   })
