@@ -1,0 +1,6 @@
+{
+  "samePassword": "Passwords do not match",
+  "email": "Invalid email address",
+  "strongPassword": "Password does not meet security requirements",
+  "required": "Required"
+}

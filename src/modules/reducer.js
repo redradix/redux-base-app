@@ -1,14 +1,31 @@
-import { combineReducers } from 'redux';
-import auth from './auth/';
-import {reducer as formReducer} from 'redux-form';
-import { routeReducer } from 'react-router-redux';
+import { combineReducers } from 'redux'
+import {reducer as formReducer} from 'redux-form'
+import {routerReducer as routing} from 'react-router-redux'
+import ui, {init as initUI} from 'modules/ui'
+import filters, {init as initFilters} from 'modules/filters'
+import entities, {init as initEntities} from 'modules/entities'
+import communication, {init as initCommunication} from 'modules/communication'
+import pagination, {init as initPagination} from 'modules/pagination'
+import config, {init as initConfig} from 'modules/config'
+
+export const initializers = {
+  ui: initUI,
+  filters: initFilters,
+  entities: initEntities,
+  communication: initCommunication,
+  pagination: initPagination,
+  config: initConfig
+}
 
 const rootReducer = combineReducers({
-  auth,
-  // A reducer function that keeps track of the router state. You must to add this reducer to your app reducers when creating the store. If you do not provide a custom selectRouterState function, the piece of state must be named routing.
-  routing: routeReducer,
+  ui,
+  filters,
+  entities,
+  communication,
+  pagination,
+  config,
+  routing,
   form: formReducer
-});
+})
 
-export default rootReducer;
-// A reducer function that keeps track of the router state. You must to add this reducer to your app reducers when creating the store. If you do not provide a custom selectRouterState function, the piece of state must be named routing.
+export default rootReducer

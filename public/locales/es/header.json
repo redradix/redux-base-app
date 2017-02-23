@@ -1,7 +1,0 @@
-{
-  "content": {
-    "welcome": "Bienvenido a esta app de prueba, {{value}}"
-  },
-  "logout": "Salir",
-  "home": "Inicio"
-}

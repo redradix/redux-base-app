@@ -1,0 +1,64 @@
+{
+  "app": {
+    "title": "Redradix Base app"
+  },
+  "common": {
+    "labels": {
+      "goal": "Goal",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
+  },
+  "my-account": {
+    "title": "My Account",
+    "labels": {
+      "logout": "Sign out"
+    },
+    "info": {
+      "labels": {
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "role": "Group",
+        "currentPassword": "Current password",
+        "password": "Password",
+        "passwordConfirmation": "Confirm new password",
+        "team": "Team by default",
+        "region": "Region by default",
+        "area": "Area by default",
+        "territory": "Territory by default"
+      }
+    },
+    "change-password": {
+      "title": "Change Password",
+      "success": "All the changes have been saved",
+      "labels": {
+        "currentPassword": "Password *",
+        "password": "New password",
+        "passwordConfirmation": "Repeat new password"
+      },
+      "footnote": "* Es necesario que la contraseña tenga 8 o más caracteres, letras mayúsculas y minúsculas y al menos un número."
+    },
+    "users": {
+      "title": "Users",
+      "back": "Back to users",
+      "new": {
+        "title": "New User",
+        "confirm": "Create user",
+        "success": "All the changes have been saved"
+      },
+      "edit": {
+        "title": "Edit User",
+        "confirm": "Update info",
+        "success": "All the changes have been saved"
+      },
+      "delete": {
+        "title": "Delete User",
+        "message": "This action is irreversible. Do you want to proceed?"
+      }
+    }
+  },
+  "footer": {
+    "date": "February 2017"
+  }
+}
