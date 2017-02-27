@@ -27,6 +27,22 @@ const defaultFilters = {
       defaultFilters
     }]
   })
+  fetchMock.get(`${process.env.REACT_APP_API_URL}api/user/list2`,  {
+    type: 'list',
+    data: [{
+      id: 0,
+      name: 'miguel',
+      surname: 'martin',
+      email: 'miguel@redradix.com',
+      role: 'admin'
+    }, {
+      id: 1,
+      name: 'aaron',
+      surname: 'contreras',
+      email: 'aaron@redradix.com',
+      role: 'user'
+    }]
+  })
   // fetchMock.delete(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: []})
   fetchMock.post(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibWlndWVsIiwic3VybmFtZSI6Im1hcnRpbiIsImVtYWlsIjoiYUBhLmNvbSIsImlhdCI6MTQ4NzcwMTEyOCwiZXhwIjoxNDg3NzI5OTI4fQ.SUUccKC13c_gdlxUf5FN1o4xeIxF9lyWSJNn3N0PNiw'}})
   .catch((unmatchedUrl, options) => {
