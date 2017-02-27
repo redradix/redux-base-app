@@ -12,10 +12,11 @@ import { normalize } from 'normalizr'
  * @return {object} An action ready to be dispatched
  */
 export function merge(data, schema) {
-  const normalized = normalize(data, schema)
+  // NOTE: Disregard normalizr's results, keep entities alone
+  const { entities } = normalize(data, schema)
   return {
     type: types.MERGE,
-    payload: { domains: { normalized } }
+    payload: { domains: { normalized: entities } }
   }
 }
 
