@@ -5,6 +5,25 @@ import { mergeEntity } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { DOMAIN, ENDPOINT, getUserList } from './'
 
+import { merge } from 'modules/entities'
+import { schema } from 'normalizr'
+
+// FIXME: `DOMAIN` should be passed as the schema key, but it is undefined
+// due to a circular dependency between this file and ./index.js
+const userSchema = new schema.Entity('users')
+// const userSchema = new schema.Entity(DOMAIN)
+
+export function fetchUsersReborn() {
+  return dispatch => {
+    dispatch(commAttempt(DOMAIN))
+    return get(`${ENDPOINT}/list2`)
+    .then(users => {
+      dispatch(merge(users, [userSchema]))
+      dispatch(commSuccess(DOMAIN))
+    }, err => dispatch(commError(DOMAIN, err)))
+  }
+}
+
 export function fetchUsers() {
   return dispatch => {
     dispatch(commAttempt(DOMAIN))
