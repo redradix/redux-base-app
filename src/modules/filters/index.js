@@ -3,7 +3,6 @@ import { omit, merge } from 'lodash'
 export * from './actions'
 export * from './selectors'
 import { generateReducer } from 'core/utils'
-window.merge = merge
 
 const ACTIONS = {
   // Merge all elements on the requested domain
