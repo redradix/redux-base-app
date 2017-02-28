@@ -1,4 +1,3 @@
-import { normalize } from 'normalizr'
 import * as actions from './action-types'
 
 /**
@@ -8,11 +7,4 @@ import * as actions from './action-types'
  * @param {object} schema Schema to be used for normalization
  * @return {object} An action ready to be dispatched
  */
-export function merge(data, schema) {
-  // NOTE: Disregard normalizr's results, keep entities alone
-  const { entities } = normalize(data, schema)
-  return {
-    type: actions.MERGE,
-    payload: entities
-  }
-}
+export const merge = entities => ({ type: actions.MERGE, payload: entities })
