@@ -1,9 +1,19 @@
-node_modules
-public/js
-public/main.html
-npm-debug.log
-.env
+# See https://help.github.com/ignore-files/ for more about ignoring files.
 
-# OS-specific files
+# dependencies
+/node_modules
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+*.swap
 .DS_Store
-*.swp
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
