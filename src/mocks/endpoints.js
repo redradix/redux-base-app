@@ -1,16 +1,6 @@
 import fetchMock from 'fetch-mock'
 import realFetch from 'isomorphic-fetch'
 
-const defaultFilters = {
-  bu: 'all',
-  franchise: 'all',
-  product: 'all',
-  team: 'all',
-  region: 'all',
-  area: 'all',
-  territory: 'all'
-}
-
 /* eslint indent: 0 */
 // NOTE: This was commented to deploy the application with mock data.
 // TODO: Remove after api endpoints are working properly
