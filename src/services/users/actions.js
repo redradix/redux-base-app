@@ -16,7 +16,7 @@ const userSchema = new schema.Entity('users')
 export function fetchUsers() {
   return dispatch => {
     dispatch(commAttempt(DOMAIN))
-    return get(`${ENDPOINT}/list2`)
+    return get(`${ENDPOINT}/list`)
     .then(users => {
       dispatch(merge(users, [userSchema]))
       dispatch(commSuccess(DOMAIN))

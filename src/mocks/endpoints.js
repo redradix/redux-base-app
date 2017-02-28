@@ -20,16 +20,6 @@ const defaultFilters = {
   fetchMock.get(`${process.env.REACT_APP_API_URL}api/user/list`,  {
     type: 'list',
     data: [{
-      user: { name: 'miguel', surname: 'martin', email: 'miguel@redradix.com', role: 'admin' },
-      defaultFilters
-    }, {
-      user: { name: 'aaron', surname: 'contreras', email: 'aaron@redradix.com', role: 'user' },
-      defaultFilters
-    }]
-  })
-  fetchMock.get(`${process.env.REACT_APP_API_URL}api/user/list2`,  {
-    type: 'list',
-    data: [{
       id: 0,
       name: 'miguel',
       surname: 'martin',

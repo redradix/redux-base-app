@@ -16,12 +16,11 @@ UsersListContext.propTypes = {
   onDelete: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
-      user: PropTypes.shape({
-        email: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        surname: PropTypes.string.isRequired,
-        role: PropTypes.string.isRequired
-      }).isRequired
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      surname: PropTypes.string.isRequired,
+      role: PropTypes.string.isRequired
     })
   ).isRequired
 }
