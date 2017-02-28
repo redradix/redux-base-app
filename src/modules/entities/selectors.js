@@ -1,16 +1,20 @@
+import { createSelector } from 'reselect'
 import { moduleName } from './constants'
 
-export const getEntityIds = (s, schema) => {
-  const state = s[moduleName] || {}
-  return Object.keys(state[schema])
-}
+export const getEntities = (state, schema) => state[moduleName][schema] || {}
 
-export const getEntityList = (s, schema) => {
-  const state = s[moduleName] || {}
-  return Object.keys(state[schema]).map(id => state[schema][id])
-}
+export const getEntityIds = createSelector(
+  getEntities,
+  entities => Object.keys(entities)
+)
 
-export const getEntity = (s, schema, id) => {
-  const state = s[moduleName] || {}
-  return state[schema] ? state[schema][id] : void 0
-}
+export const getEntityList = createSelector(
+  getEntities,
+  entities => Object.keys(entities).map(id => entities[id])
+)
+
+export const getEntitiy = createSelector(
+  getEntities,
+  (state, schema, id) => id,
+  (entities, id) => entities[id]
+)
