@@ -1,14 +1,19 @@
+import { generateReducer } from 'core/utils'
 import * as actions from './action-types'
+export * from './constants'
 export * from './actions'
 export * from './selectors'
-import { omit } from 'lodash'
-import { generateReducer } from 'core/utils'
 
-const ACTIONS = {
-  [actions.MERGE]: (state, {payload: {domains}}) => Object.assign({}, state, domains),
-  [actions.UNSET]: (state, {payload: {domain, keys}}) => ({...state, [domain]: omit(state[domain], keys)}),
-  [actions.UNSET_ALL]: (state, {payload: {domain}}) => omit(state, domain),
-  [actions.CLEAR]: (state) => omit({}, state)
-}
+/**
+ * @overview Entities module's initial state and reducer
+ * @version 0.1.0
+ * @author Aaron Contreras <aaron@redradix.com>
+ */
 
-export default generateReducer(ACTIONS)
+const initialState = {}
+
+const reducer = generateReducer({
+  [actions.MERGE]: (state, { payload }) => Object.assign({}, state, payload)
+}, initialState)
+
+export default reducer

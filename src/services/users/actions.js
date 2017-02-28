@@ -13,23 +13,12 @@ import { schema } from 'normalizr'
 const userSchema = new schema.Entity('users')
 // const userSchema = new schema.Entity(DOMAIN)
 
-export function fetchUsersReborn() {
+export function fetchUsers() {
   return dispatch => {
     dispatch(commAttempt(DOMAIN))
     return get(`${ENDPOINT}/list2`)
     .then(users => {
       dispatch(merge(users, [userSchema]))
-      dispatch(commSuccess(DOMAIN))
-    }, err => dispatch(commError(DOMAIN, err)))
-  }
-}
-
-export function fetchUsers() {
-  return dispatch => {
-    dispatch(commAttempt(DOMAIN))
-    return get(`${ENDPOINT}/list`)
-    .then(users => {
-      dispatch(mergeEntity(DOMAIN, users))
       dispatch(commSuccess(DOMAIN))
     }, err => dispatch(commError(DOMAIN, err)))
   }
