@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { moduleName } from './constants'
 
-export const getEntities = (state, schema) => state[moduleName][schema] || {}
+export const getEntities = (state, domain) => state[moduleName][domain] || {}
 
 export const getEntityIds = createSelector(
   getEntities,
@@ -15,6 +15,6 @@ export const getEntityList = createSelector(
 
 export const getEntitiy = createSelector(
   getEntities,
-  (state, schema, id) => id,
+  (state, domain, id) => id,
   (entities, id) => entities[id]
 )
