@@ -205,5 +205,6 @@
         "render"
       ]
     }]
-  }
+  },
+  "extends": "react-app"
 }

@@ -45,7 +45,7 @@ export function deleteDomainFilters(domain, keys) {
 }
 
 export function deleteDomainFilter(domain, key) {
-  return deleteFiltersElements(domain, {key})
+  return deleteDomainFilters(domain, {key})
 }
 
 

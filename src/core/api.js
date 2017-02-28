@@ -95,7 +95,7 @@ const defaultOptions = {
 
 const fetchEndpoint = (endpoint, request = {}) => {
   const config = applyHeaders(request, true)
-  return makeRequest(process.env.API_URL + endpoint, config)
+  return makeRequest(process.env.REACT_APP_API_URL + endpoint, config)
   .then(response => response.data)
 }
 

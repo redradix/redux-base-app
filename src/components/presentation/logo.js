@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 import { IndexLink } from 'react-router'
+import logo from 'assets/images/redradix.png'
 
 const Logo = ({ color }) => (
   <IndexLink to='/' className='global-logo'>
-    <img alt='Redradix' src={color ? '/images/logoRedradix.svg' : '/images/logoRedradix.svg'} />
+    <img alt='Redradix' src={color ? logo : logo} />
   </IndexLink>
 )
 

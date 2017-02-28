@@ -16,6 +16,16 @@ export default function configureStore(initialState) {
     if (window.devToolsExtension) {
       middleware = compose(middleware, window.devToolsExtension())
     }
+  }
+  // In order to decouple state structure from modules we assign the annidation of each module from here
+  initModules(initializers)
+  const store = createStore(
+    reducer,
+    initialState,
+    middleware
+  )
+
+  if (process.env.NODE_ENV === 'development') {
     if (module.hot) {
       module.hot.accept('modules/reducer', () => {
         const nextReducer = require('modules/reducer')
@@ -23,11 +33,6 @@ export default function configureStore(initialState) {
       })
     }
   }
-  // In order to decouple state structure from modules we assign the annidation of each module from here
-  initModules(initializers)
-  return createStore(
-    reducer,
-    initialState,
-    middleware
-  )
+
+  return store
 }

@@ -10,8 +10,6 @@
   "repository": "",
   "main": "index.js",
   "dependencies": {
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
     "classnames": "2.2.5",
     "i18next": "4.1.0",
     "isomorphic-fetch": "2.2.1",
@@ -19,7 +17,9 @@
     "moment": "2.17.0",
     "normalizr": "3.1.0",
     "numeral": "2.0.4",
+    "react": "^15.4.2",
     "react-datepicker": "0.39.0",
+    "react-dom": "^15.4.2",
     "react-hammerjs": "0.5.0",
     "react-onclickoutside": "5.8.3",
     "react-redux": "4.4.6",
@@ -35,7 +35,6 @@
     "ua-parser-js": "0.7.12"
   },
   "devDependencies": {
-    "react-scripts": "0.9.2",
     "@kadira/storybook": "2.21.0",
     "babel-core": "6.18.2",
     "babel-eslint": "7.1.1",
@@ -58,7 +57,9 @@
     "json-loader": "0.5.4",
     "mocha": "3.2.0",
     "react-addons-test-utils": "15.4.0",
+    "react-scripts": "0.9.2",
     "react-transform-hmr": "1.0.4",
+    "sw-precache": "^5.0.0",
     "webpack": "1.13.3",
     "webpack-dev-middleware": "1.8.4",
     "webpack-dev-server": "1.16.2",
@@ -66,9 +67,9 @@
     "why-did-you-update": "0.0.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "NODE_PATH=./src/ HTTPS=true react-scripts start",
+    "build": "NODE_PATH=./src/ HTTPS=true react-scripts build && sw-precache --config=sw-precache-config.js",
+    "test": "NODE_PATH=./src/ HTTPS=true react-scripts test",
     "eject": "react-scripts eject"
   },
   "keywords": [
@@ -78,5 +79,8 @@
     "redux"
   ],
   "author": "Redradix",
-  "license": "ISC"
+  "license": "ISC",
+  "eslintConfig": {
+    "extends": "react-app"
+  }
 }

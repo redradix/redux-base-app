@@ -10,9 +10,9 @@ class Button extends Component {
     onClick(e)
   }
   render() {
-    const { children, type, style, size, loading, icon } = this.props
+    const { children, type, styling, size, loading, icon } = this.props
     const className = this.props.className || cx('button',
-      `button-${type}`, `button-${style}`, `button-${size}`,
+      `button-${type}`, `button-${styling}`, `button-${size}`,
       { 'button-loading': loading }
     )
     return (
@@ -28,7 +28,7 @@ class Button extends Component {
 Button.defaultProps = {
   children: '',
   type: 'primary',
-  style: 'normal',
+  styling: 'normal',
   size: 'small',
   loading: false
 }
@@ -37,7 +37,7 @@ Button.propTypes = {
   className: PropTypes.string, // overrides type, style and size
   children: PropTypes.string,
   type: PropTypes.string.isRequired,
-  style: PropTypes.string.isRequired,
+  styling: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
   icon: PropTypes.string,
   loading: PropTypes.bool.isRequired,

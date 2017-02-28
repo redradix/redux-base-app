@@ -2,20 +2,16 @@
     // Use IntelliSense to find out which attributes exist for node debugging
     // Use hover for the description of the existing attributes
     // For further information visit https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Launch Program",
-            "type": "node2",
-            "request": "launch",
-            "program": "${workspaceRoot}/server/index.js",
-            "cwd": "${workspaceRoot}"
-        },
-        {
-            "name": "Attach to Process",
-            "type": "node2",
-            "request": "attach",
-            "port": 9229
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [{
+    "name": "Chrome",
+    "type": "chrome",
+    "request": "launch",
+    "url": "http://localhost:3000",
+    "webRoot": "${workspaceRoot}/src",
+    "userDataDir": "${workspaceRoot}/.vscode/chrome",
+    "sourceMapPathOverrides": {
+      "webpack:///src/*": "${webRoot}/*"
+    }
+  }]
 }

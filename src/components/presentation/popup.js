@@ -16,10 +16,10 @@ class Popup extends Component {
         </Heading>
         <p>{message}</p>
         <div className='actions'>
-          <Button type='secondary' style='flat' size='small' onClick={onCancel}>
+          <Button type='secondary' styling='flat' size='small' onClick={onCancel}>
             {cancelLabel}
           </Button>
-          <Button type='primary' style='flat' size='small' onClick={onConfirm}>
+          <Button type='primary' styling='flat' size='small' onClick={onConfirm}>
             {confirmLabel}
           </Button>
         </div>
