@@ -10,7 +10,8 @@ export const getEntityIds = createSelector(
 
 export const getEntityList = createSelector(
   getEntities,
-  entities => Object.keys(entities).map(id => entities[id])
+  (state, domain, ids) => ids ? ids : getEntityIds(state, domain),
+  (entities, ids) => ids.map(id => entities[id])
 )
 
 export const getEntitiy = createSelector(
