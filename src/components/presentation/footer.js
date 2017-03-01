@@ -7,7 +7,7 @@ class Footer extends Component {
     return (
       <footer className='global-footer'>
         <div className='wrapper'>
-          <img alt='Redradix base app' src={logo/>
+          <img alt='Redradix base app' src={logo}/>
           <p className='note'>{t('footer.date')}</p>
         </div>
       </footer>
