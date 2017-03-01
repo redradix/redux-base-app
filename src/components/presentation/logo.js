@@ -1,19 +1,17 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import { IndexLink } from 'react-router'
 import logo from 'assets/images/redradix.png'
 
-const Logo = ({ color }) => (
+const style = { height: '35px' }
+
+const Logo = () => (
   <IndexLink to='/' className='global-logo'>
-    <img alt='Redradix' src={color ? logo : logo} />
+    <img alt='Redradix' src={logo} style={style} />
   </IndexLink>
 )
 
-Logo.defaultProps = {
-  color: false
-}
+Logo.defaultProps = {}
 
-Logo.propTypes = {
-  color: PropTypes.bool.isRequired
-}
+Logo.propTypes = {}
 
 export default Logo
