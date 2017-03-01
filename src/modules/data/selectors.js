@@ -1,3 +1,3 @@
-import { moduleName } from './action-types'
+import { moduleName } from './constants'
 
 export const get = (state, key) => state[moduleName][key]
