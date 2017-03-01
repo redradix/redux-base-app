@@ -1,29 +1,10 @@
-import * as types from './action-types'
+import * as actions from './action-types'
 
-export function mergeEntities(domains) {
-  return {
-    type: types.MERGE,
-    payload: {domains}
-  }
-}
-
-export function mergeEntity(domain, entity) {
-  return mergeEntities({[domain]: entity})
-}
-
-export function unsetEntities(domain, keys) {
-  return {
-    type: types.UNSET,
-    payload: {domain, keys}
-  }
-}
-
-export function unsetEntity(domain, key) {
-  return unsetEntities(domain, [key])
-}
-
-export function clearAllEntities() {
-  return {
-    type: types.CLEAR
-  }
-}
+/**
+ * Normalize entities and merge them into the state
+ *
+ * @param {array} data Array from which entities will be extracted
+ * @param {object} schema Schema to be used for normalization
+ * @return {object} An action ready to be dispatched
+ */
+export const merge = entities => ({ type: actions.MERGE, payload: entities })

@@ -36,6 +36,10 @@ const configureRoutes = (store) => {
     .then(() => App)
   }
 
+  function fetchUsersHook() {
+    return store.dispatch(fetchUsers())
+  }
+
   return (
     <Router history={history}>
       <Route path='/login' component={Login} onEnter={alreadyLogged} />
@@ -43,7 +47,7 @@ const configureRoutes = (store) => {
         <IndexRoute component={Dashboard} />
         <Route path='my-account' component={MyAccount}>
           <IndexRoute component={AccountInfo} />
-          <Route path='users' onEnter={() => store.dispatch(fetchUsers())}>
+          <Route path='users' onEnter={fetchUsersHook}>
             <IndexRoute component={UsersList} />
             <Route path='new' component={UserForm} />
             <Route path='edit/:email' component={UserForm} />

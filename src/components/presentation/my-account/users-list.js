@@ -5,8 +5,8 @@ import UsersListItem from 'components/presentation/my-account/users-list-item'
 import { t } from 'core/i18n'
 
 function sortUsers(a, b) {
-  const aFullName = (`${a.user.name} ${a.user.surname}`).toLowerCase()
-  const bFullName = (`${b.user.name} ${b.user.surname}`).toLowerCase()
+  const aFullName = (`${a.name} ${a.surname}`).toLowerCase()
+  const bFullName = (`${b.name} ${b.surname}`).toLowerCase()
   if (aFullName > bFullName) return 1
   if (bFullName > aFullName) return  -1
   return 0
@@ -23,7 +23,7 @@ class UsersList extends Component {
             {t('my-account.users.new.title')}
           </a>
         </div>
-        {users.sort(sortUsers).map(({ user }) => (
+        {users.sort(sortUsers).map(user => (
           <UsersListItem key={user.email} {...user} onDelete={onDelete} />
         ))}
       </div>
@@ -44,12 +44,11 @@ UsersList.propTypes = {
   onDelete: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
-      user: PropTypes.shape({
-        email: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        surname: PropTypes.string.isRequired,
-        role: PropTypes.string.isRequired
-      }).isRequired
+      id: PropTypes.number.isRequired,
+      email: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      surname: PropTypes.string.isRequired,
+      role: PropTypes.string.isRequired
     })
   ).isRequired
 }

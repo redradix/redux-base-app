@@ -5,12 +5,22 @@ import { mergeEntity } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { DOMAIN, ENDPOINT, getUserList } from './'
 
+import { merge } from 'modules/entities'
+import { schema, normalize } from 'normalizr'
+
+// FIXME: `DOMAIN` should be passed as the schema key, but it is undefined
+// due to a circular dependency between this file and ./index.js
+const userSchema = new schema.Entity('users')
+// const userSchema = new schema.Entity(DOMAIN)
+
 export function fetchUsers() {
   return dispatch => {
     dispatch(commAttempt(DOMAIN))
     return get(`${ENDPOINT}/list`)
     .then(users => {
-      dispatch(mergeEntity(DOMAIN, users))
+      // NOTE: Disregard normalizr's results, keep entities alone
+      const { entities } = normalize(users, [userSchema])
+      dispatch(merge(entities))
       dispatch(commSuccess(DOMAIN))
     }, err => dispatch(commError(DOMAIN, err)))
   }
