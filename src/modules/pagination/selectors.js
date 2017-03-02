@@ -3,7 +3,7 @@ import { moduleName } from './constants'
 
 const empty = { pages: {} }
 
-export const getPagination = (state, domain) => state[moduleName][domain] || empty
+export const getPagination = (state, domain) => Object.assign({}, empty, state[moduleName][domain])
 
 export const getPage = (state, domain, pageNumber) =>
   getPagination(state, domain).pages[pageNumber]
