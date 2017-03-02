@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Heading from 'components/presentation/heading'
 import Loading from 'components/presentation/loading'
 import UsersListItem from 'components/presentation/my-account/users-list-item'
+import UsersListNav from 'components/presentation/my-account/users-list-nav'
 import { t } from 'core/i18n'
 
 class UsersList extends Component {
@@ -22,10 +23,11 @@ class UsersList extends Component {
     )
   }
   render() {
-    const { isReady } = this.props
+    const { isReady, fetchUsers, currentPage, totalUsers } = this.props
     return (
       <div className='account-contents wrapper'>
         {isReady ? this.renderUsersList() : <Loading />}
+        <UsersListNav fetchPage={fetchUsers} pageNumber={currentPage} total={totalUsers} />
       </div>
     )
   }
@@ -33,6 +35,9 @@ class UsersList extends Component {
 
 UsersList.propTypes = {
   isReady: PropTypes.bool,
+  fetchUsers: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalUsers: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
