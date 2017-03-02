@@ -13,6 +13,36 @@ const users = [{
   surname: 'contreras',
   email: 'aaron@redradix.com',
   role: 'user'
+}, {
+  id: 2,
+  name: 'julian',
+  surname: 'toledo',
+  email: 'julian@redradix.com',
+  role: 'user'
+}, {
+  id: 3,
+  name: 'carlos',
+  surname: 'de la orden',
+  email: 'carlos@redradix.com',
+  role: 'user'
+}, {
+  id: 4,
+  name: 'victor',
+  surname: '',
+  email: 'victor@redradix.com',
+  role: 'user'
+}, {
+  id: 5,
+  name: 'luis',
+  surname: 'gil',
+  email: 'luis@redradix.com',
+  role: 'user'
+}, {
+  id: 6,
+  name: 'diana',
+  surname: 'gutiérrez',
+  email: 'diana@redradix.com',
+  role: 'user'
 }]
 
 /* eslint indent: 0 */
