@@ -61,9 +61,13 @@ const size = 3
     const end = start + size
     return {
       type: 'list',
-      data: users.slice(start, end),
-      total: users.length,
-      size
+      data: {
+        users: users.slice(start, end),
+        pagination: {
+          size,
+          total: users.length
+        }
+      }
     }
   })
   // fetchMock.delete(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: []})
