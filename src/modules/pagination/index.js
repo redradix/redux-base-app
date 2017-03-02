@@ -24,9 +24,15 @@ function setPageNumber(state, action) {
   return Object.assign({}, state, { [domain]: { ...state[domain], pageNumber: payload }})
 }
 
+function setTotal(state, action) {
+  const { domain, payload } = action
+  return Object.assign({}, state, { [domain]: { ...state[domain], total: payload }})
+}
+
 const reducer = generateReducer({
   [actions.SET_PAGE]: setPage,
-  [actions.SET_PAGE_NUMBER]: setPageNumber
+  [actions.SET_PAGE_NUMBER]: setPageNumber,
+  [actions.SET_TOTAL]: setTotal
 }, initialState)
 
 export default reducer

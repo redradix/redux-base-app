@@ -11,3 +11,9 @@ export const setPageNumber = (domain, pageNumber) => ({
   type: actions.SET_PAGE_NUMBER,
   payload: pageNumber
 })
+
+export const setTotal = (domain, total) => ({
+  domain,
+  type: actions.SET_TOTAL,
+  payload: total
+})
