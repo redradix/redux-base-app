@@ -1,11 +1,11 @@
 import { LOCALSTORAGE_TOKEN_KEY } from 'core/config'
 import { browserHistory } from 'react-router'
 import { SubmissionError } from 'redux-form'
-import { get, post, del } from 'core/api'
+import { apiPost } from 'core/api'
+import { get, post, del } from 'resources/session'
 import { getSession, getToken } from './selectors'
-import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { setUIElement, deleteUIElements } from 'modules/ui'
-import {DOMAIN, ENDPOINT} from './'
+import { DOMAIN } from './'
 import { fetchData } from 'services/app'
 
 // UTILS
@@ -36,14 +36,11 @@ export function fetchSession() {
       return Promise.reject()
     }
     if (!getSession(getState())) {
-      dispatch(commAttempt(DOMAIN))
-      return get(ENDPOINT)
+      return get(dispatch)
       .then(session => {
         dispatch(setUIElement(DOMAIN, 'session', session))
-        dispatch(commSuccess(DOMAIN))
         return session
       }, e => {
-        dispatch(commError(DOMAIN, e))
         clearToken()
         goToLogin()
         return Promise.reject(e)
@@ -64,9 +61,9 @@ export function fetchSession() {
  * @param  {String} options.password Password
  * @return {Function}                Thunk
  */
-export function login({ email, password }) {
+export function login(data) {
   return (dispatch) => {
-    return post(ENDPOINT, {email, password}, {secure: false})
+    return post(data)
     .then(response => {
       saveToken(response.token)
       return dispatch(fetchSession())
@@ -74,18 +71,6 @@ export function login({ email, password }) {
         browserHistory.push('/')
         return session
       })
-    }, e => {
-      const error = e.errors !== undefined ? e.errors[0] : e
-      if (error.message.match(/Failed to fetch/)) {
-        throw new SubmissionError({ _error: 'Login failed: Conection error', application: 'dfdfdsf' })
-      }
-      if (error.field === 'application' || error.field === undefined) {
-        throw new SubmissionError({ _error: error.message })
-      }
-      if (error.field) {
-        throw new SubmissionError({ _error: 'Login failed', [error.field]: error.message })
-      }
-      throw new SubmissionError({ _error: 'Login failed: Try again later'})
     })
   }
 }
@@ -96,7 +81,7 @@ export function login({ email, password }) {
  */
 export function logout() {
   return (dispatch) => {
-    return del(ENDPOINT)
+    return del()
     .then(() => {
       clearToken()
       return new Promise(resolve => {
@@ -116,7 +101,7 @@ export function logout() {
  */
 export function setPassword(data) {
   return (dispatch) => {
-    return post('api/changePassword', data)
+    return apiPost('api/changePassword', data)
     .then(() => {
       dispatch(setUIElement('myAccount', 'password', true))
       setTimeout(() => dispatch(deleteUIElements('myAccount', ['password'])), 3000)
