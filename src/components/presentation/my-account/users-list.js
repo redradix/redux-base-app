@@ -4,14 +4,6 @@ import Loading from 'components/presentation/loading'
 import UsersListItem from 'components/presentation/my-account/users-list-item'
 import { t } from 'core/i18n'
 
-function sortUsers(a, b) {
-  const aFullName = (`${a.name} ${a.surname}`).toLowerCase()
-  const bFullName = (`${b.name} ${b.surname}`).toLowerCase()
-  if (aFullName > bFullName) return 1
-  if (bFullName > aFullName) return  -1
-  return 0
-}
-
 class UsersList extends Component {
   renderUsersList() {
     const { users, onDelete } = this.props
@@ -23,7 +15,7 @@ class UsersList extends Component {
             {t('my-account.users.new.title')}
           </a>
         </div>
-        {users.sort(sortUsers).map(user => (
+        {users.map(user => (
           <UsersListItem key={user.email} {...user} onDelete={onDelete} />
         ))}
       </div>
