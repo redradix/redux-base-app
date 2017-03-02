@@ -5,10 +5,8 @@ import { get, post, del } from 'core/api'
 import { getSession, getToken } from './selectors'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { setUIElement, deleteUIElements } from 'modules/ui'
-import { setDomainFilters } from 'modules/filters'
 import {DOMAIN, ENDPOINT} from './'
-import {DOMAIN as APP_DOMAIN, fetchData} from 'services/app'
-
+import { fetchData } from 'services/app'
 
 // UTILS
 function clearToken() {
@@ -30,7 +28,7 @@ export function goToLogin() {
  * if a JSON Web Token is present
  * @return {Function} Async action (thunk)
  */
-export function fetchSession(urlFilters) {
+export function fetchSession() {
   return (dispatch, getState) => {
     // bail out early, if no token avoid calling the API
     if (!getToken()) {
@@ -42,7 +40,6 @@ export function fetchSession(urlFilters) {
       return get(ENDPOINT)
       .then(session => {
         dispatch(setUIElement(DOMAIN, 'session', session))
-        dispatch(setDomainFilters(APP_DOMAIN, {...session.defaultFilters, ...urlFilters}))
         dispatch(commSuccess(DOMAIN))
         return session
       }, e => {
