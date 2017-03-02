@@ -11,6 +11,12 @@ class UsersListContext extends Component {
   }
 }
 
+UsersListContext.defaultProps = {
+  isReady: false,
+  currentPage: 0,
+  totalUsers: 0
+}
+
 UsersListContext.propTypes = {
   isReady: PropTypes.bool,
   fetchUsers: PropTypes.func.isRequired,
