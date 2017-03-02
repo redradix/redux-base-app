@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import UsersList from 'components/presentation/my-account/users-list'
-import { isUserListReady, getUserList, deleteUser, fetchUsers, getCurrentPage, getTotalUsers } from 'services/users'
+import { isUserListReady, getUserListPage, deleteUser, fetchUsers, getCurrentPage, getTotalUsers } from 'services/users'
 
 class UsersListContext extends Component {
   render() {
@@ -29,10 +29,11 @@ UsersListContext.propTypes = {
 }
 
 const mapStateToProps = (state) => {
+  const currentPage = getCurrentPage(state)
   return {
-    currentPage: getCurrentPage(state),
+    currentPage,
     totalUsers: getTotalUsers(state),
-    users: getUserList(state),
+    users: getUserListPage(state, currentPage),
     isReady: isUserListReady(state)
   }
 }
