@@ -1,38 +1,17 @@
 import { remove } from 'lodash'
-import { get, post } from 'core/api'
+import { post } from 'core/api'
+import { get } from 'resources/users'
 import { setUIElement, deleteUIElements } from 'modules/ui'
 import { mergeEntity } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { DOMAIN, ENDPOINT, getUserList } from './'
 
-import { merge } from 'modules/entities'
-import { schema, normalize } from 'normalizr'
-
-// FIXME: `DOMAIN` should be passed as the schema key, but it is undefined
-// due to a circular dependency between this file and ./index.js
-const userSchema = new schema.Entity('users')
-// const userSchema = new schema.Entity(DOMAIN)
-
-import { getPage, setPage, setPageNumber, setTotal } from 'modules/pagination'
+import { setPageNumber } from 'modules/pagination'
 
 export function fetchUsers(pageNumber = 0) {
   return (dispatch, getState) => {
     dispatch(setPageNumber(DOMAIN, pageNumber))
-    const state = getState()
-    const page = getPage(state, DOMAIN, pageNumber)
-    if (!page) {
-      // fetch page
-      dispatch(commAttempt(DOMAIN))
-      return get(`${ENDPOINT}/list?page=${pageNumber}`)
-        .then(({ users, pagination: { total } }) => {
-          const { entities, result } = normalize(users, [userSchema])
-          dispatch(merge(entities))
-          dispatch(setPage(DOMAIN, pageNumber, result))
-          dispatch(setTotal(DOMAIN, total))
-          dispatch(commSuccess(DOMAIN))
-        }, err => dispatch(commError(DOMAIN, err)))
-    }
-    return true
+    return get(dispatch, getState)
   }
 }
 
