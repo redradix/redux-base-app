@@ -1,56 +1,16 @@
-import { generateReducer } from 'core/utils'
 import { merge } from 'lodash'
-// Action types
-export const ATTEMPT = '#COMMUNICATION/ATTEMPT'
-export const SUCCESS = '#COMMUNICATION/SUCCESS'
-export const ERROR = '#COMMUNICATION/ERROR'
+import { generateReducer } from 'core/utils'
+import * as actions from './action-types'
+export * from './constants'
+export * from './actions'
+export * from './selectors'
 
-// Selectors
-let PATH
-export const init = (p) => {
-  PATH = p
-}
+const initialState = {}
 
-export const getCommState = (state, domain, defaultValue) => {
-  return state[PATH][domain] ? state[PATH][domain].isReady : defaultValue
-}
+const reducer = generateReducer({
+  [actions.ATTEMPT]: (state, {meta: {domain}}) => ({...state, [domain]: merge({}, state[domain], {isReady: false})}),
+  [actions.SUCCESS]: (state, {meta: {domain}}) => ({...state, [domain]: merge({}, state[domain], {isReady: true})}),
+  [actions.ERROR]: (state, {meta: {domain}, payload: {error}}) => ({...state, [domain]: merge({}, state[domain], {isReady: false, error})})
+}, initialState)
 
-// Actions
-export function commAttempt(domain) {
-  return {
-    type: ATTEMPT,
-    meta: {
-      domain
-    }
-  }
-}
-
-export function commSuccess(domain) {
-  return {
-    type: SUCCESS,
-    meta: {
-      domain
-    }
-  }
-}
-
-export function commError(domain, error) {
-  return {
-    type: ERROR,
-    payload: {
-      error
-    },
-    error: true,
-    meta: {
-      domain
-    }
-  }
-}
-
-const ACTIONS = {
-  [ATTEMPT]: (state, {meta: {domain}}) => ({...state, [domain]: merge({}, state[domain], {isReady: false})}),
-  [SUCCESS]: (state, {meta: {domain}}) => ({...state, [domain]: merge({}, state[domain], {isReady: true})}),
-  [ERROR]: (state, {meta: {domain}, payload: {error}}) => ({...state, [domain]: merge({}, state[domain], {isReady: false, error})})
-}
-
-export default generateReducer(ACTIONS)
+export default reducer
