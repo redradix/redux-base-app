@@ -26,8 +26,8 @@ class UsersList extends Component {
     const { isReady, fetchUsers, currentPage, totalUsers } = this.props
     return (
       <div className='account-contents wrapper'>
-        {isReady ? this.renderUsersList() : <Loading />}
         <UsersListNav fetchPage={fetchUsers} pageNumber={currentPage} total={totalUsers} />
+        {isReady ? this.renderUsersList() : <Loading />}
       </div>
     )
   }
