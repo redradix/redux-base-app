@@ -1,13 +1,10 @@
-// import { APP_NAME } from 'core/config'
+import { moduleName } from './constants'
 
-// const MOD_PREFIX = `${APP_NAME}#UI`
-const MOD_PREFIX = 'UI'
-
-export const MERGE = `${MOD_PREFIX}/MERGE`
-export const TOGGLE = `${MOD_PREFIX}/TOGGLE`
-export const TOGGLE_IN_KEY = `${MOD_PREFIX}/TOGGLE_IN_KEY`
-export const MERGE_ELEMENTS_IN_KEY = `${MOD_PREFIX}/MERGE_ELEMENTS_IN_KEY`
-export const DELETE_ELEMENTS_IN_KEY = `${MOD_PREFIX}/DELETE_ELEMENTS_IN_KEY`
-export const DELETE = `${MOD_PREFIX}/DELETE`
-export const CLEAR_DOMAIN = `${MOD_PREFIX}/CLEAR_DOMAIN`
-export const RESET_UI = `${MOD_PREFIX}/RESET_UI`
+export const MERGE = `${moduleName}/MERGE`
+export const TOGGLE = `${moduleName}/TOGGLE`
+export const TOGGLE_IN_KEY = `${moduleName}/TOGGLE_IN_KEY`
+export const MERGE_ELEMENTS_IN_KEY = `${moduleName}/MERGE_ELEMENTS_IN_KEY`
+export const DELETE_ELEMENTS_IN_KEY = `${moduleName}/DELETE_ELEMENTS_IN_KEY`
+export const DELETE = `${moduleName}/DELETE`
+export const CLEAR_DOMAIN = `${moduleName}/CLEAR_DOMAIN`
+export const RESET_UI = `${moduleName}/RESET_UI`

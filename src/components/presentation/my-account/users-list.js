@@ -2,15 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import Heading from 'components/presentation/heading'
 import Loading from 'components/presentation/loading'
 import UsersListItem from 'components/presentation/my-account/users-list-item'
+import UsersListNav from 'components/presentation/my-account/users-list-nav'
 import { t } from 'core/i18n'
-
-function sortUsers(a, b) {
-  const aFullName = (`${a.name} ${a.surname}`).toLowerCase()
-  const bFullName = (`${b.name} ${b.surname}`).toLowerCase()
-  if (aFullName > bFullName) return 1
-  if (bFullName > aFullName) return  -1
-  return 0
-}
 
 class UsersList extends Component {
   renderUsersList() {
@@ -23,16 +16,17 @@ class UsersList extends Component {
             {t('my-account.users.new.title')}
           </a>
         </div>
-        {users.sort(sortUsers).map(user => (
+        {users.map(user => (
           <UsersListItem key={user.email} {...user} onDelete={onDelete} />
         ))}
       </div>
     )
   }
   render() {
-    const { isReady } = this.props
+    const { isReady, fetchUsers, currentPage, totalUsers } = this.props
     return (
       <div className='account-contents wrapper'>
+        <UsersListNav fetchPage={fetchUsers} pageNumber={currentPage} total={totalUsers} />
         {isReady ? this.renderUsersList() : <Loading />}
       </div>
     )
@@ -41,6 +35,9 @@ class UsersList extends Component {
 
 UsersList.propTypes = {
   isReady: PropTypes.bool,
+  fetchUsers: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalUsers: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({

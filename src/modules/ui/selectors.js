@@ -1,9 +1,6 @@
 import { pick } from 'lodash'
-let PATH
-export const init = (p) => {
-  PATH = p
-}
+import { moduleName } from './constants'
 
-export const getUIElements = (state, domain, keys) => state[PATH][domain] && pick(state[PATH][domain], keys)
-export const getUIElement = (state, domain, key, defaultValue) => (state[PATH][domain] && state[PATH][domain][key]) || defaultValue
-export const getUIDomain = (state, domain) => state[PATH][domain] || {}
+export const getUIElements = (state, domain, keys) => state[moduleName][domain] && pick(state[moduleName][domain], keys)
+export const getUIElement = (state, domain, key, defaultValue) => (state[moduleName][domain] && state[moduleName][domain][key]) || defaultValue
+export const getUIDomain = (state, domain) => state[moduleName][domain] || {}

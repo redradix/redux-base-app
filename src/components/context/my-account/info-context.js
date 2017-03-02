@@ -21,11 +21,7 @@ InfoContext.propTypes = {
   name: PropTypes.string.isRequired,
   surname: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
-  team: PropTypes.string.isRequired,
-  region: PropTypes.string.isRequired,
-  area: PropTypes.string.isRequired,
-  territory: PropTypes.string.isRequired
+  role: PropTypes.string.isRequired
 }
 
 function mapStateToProps(state) {

@@ -1,8 +1,5 @@
-let PATH
-export const init = p => {
-  PATH = p
-}
+import { moduleName } from './constants'
 
 export const getConfigData = (state, domain) => {
-  return state[PATH][domain]
+  return state[moduleName][domain]
 }

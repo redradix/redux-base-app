@@ -1,33 +1,19 @@
-import * as types from './action-types'
+import * as actions from './action-types'
 
-/*
-Domain: Refers to a given visualization: list view
-entities: All entities used on this visualization: {campaigns: {
-  ids: [1,2,3,4],
-  pageSize: 4,
-  currentPage: 3
-}}
-*/
-export function merge(domain, entities) {
-  return {
-    type: types.MERGE,
-    payload: {
-      entities,
-      domain
-    }
-  }
-}
+export const setPage = (domain, pageNumber, ids) => ({
+  domain,
+  type: actions.SET_PAGE,
+  payload: { [pageNumber]: ids }
+})
 
-export function unset(domain) {
-  return {
-    type: types.UNSET,
-    payload: {domain}
-  }
-}
+export const setPageNumber = (domain, pageNumber) => ({
+  domain,
+  type: actions.SET_PAGE_NUMBER,
+  payload: pageNumber
+})
 
-
-export function clear() {
-  return {
-    type: types.CLEAR
-  }
-}
+export const setTotal = (domain, total) => ({
+  domain,
+  type: actions.SET_TOTAL,
+  payload: total
+})

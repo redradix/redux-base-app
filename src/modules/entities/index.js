@@ -1,4 +1,5 @@
 import { generateReducer } from 'core/utils'
+import { merge } from 'lodash'
 import * as actions from './action-types'
 export * from './constants'
 export * from './actions'
@@ -13,7 +14,8 @@ export * from './selectors'
 const initialState = {}
 
 const reducer = generateReducer({
-  [actions.MERGE]: (state, { payload }) => Object.assign({}, state, payload)
+  [actions.REPLACE]: (state, { payload }) => Object.assign({}, state, payload),
+  [actions.MERGE]: (state, { payload }) => merge({}, state, payload)
 }, initialState)
 
 export default reducer

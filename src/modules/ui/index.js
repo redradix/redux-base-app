@@ -1,5 +1,6 @@
 import * as actions from './action-types'
 import { omit, merge } from 'lodash'
+export * from './constants'
 export * from './actions'
 export * from './selectors'
 import { generateReducer } from 'core/utils'

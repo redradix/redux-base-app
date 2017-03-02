@@ -1,6 +1,15 @@
-let PATH
-export const init = (p) => {
-  PATH = p
-}
+// import { createSelector } from 'reselect'
+import { moduleName } from './constants'
 
-export const getDomainPagination = (state, domain) => state[PATH][domain] || {}
+const empty = { pages: {} }
+
+export const getPagination = (state, domain) => Object.assign({}, empty, state[moduleName][domain])
+
+export const getPage = (state, domain, pageNumber) =>
+  getPagination(state, domain).pages[pageNumber]
+
+export const getPageNumber = (state, domain) =>
+  getPagination(state, domain).pageNumber
+
+export const getTotal = (state, domain) =>
+  getPagination(state, domain).total

@@ -10,13 +10,14 @@ class Button extends Component {
     onClick(e)
   }
   render() {
-    const { children, type, styling, size, loading, icon } = this.props
+    const { children, type, styling, size, loading, icon, disabled } = this.props
     const className = this.props.className || cx('button',
       `button-${type}`, `button-${styling}`, `button-${size}`,
       { 'button-loading': loading }
     )
     return (
-      <button className={className} onClick={this.handleClick}>
+      <button className={className} disabled={disabled}
+        onClick={disabled ? void 0 : this.handleClick}>
         {children ? <span>{children}</span> : null}
         {loading ? <span className='loading'/> : null}
         {icon ? <Icon type={icon}/> : null}
@@ -30,6 +31,7 @@ Button.defaultProps = {
   type: 'primary',
   styling: 'normal',
   size: 'small',
+  disabled: false,
   loading: false
 }
 
@@ -40,6 +42,7 @@ Button.propTypes = {
   styling: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
   icon: PropTypes.string,
+  disabled: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired
 }

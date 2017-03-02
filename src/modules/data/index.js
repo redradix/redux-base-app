@@ -1,5 +1,6 @@
 import { generateReducer } from 'core/utils'
 import * as actions from './action-types'
+export * from './constants'
 export * from './actions'
 export * from './selectors'
 

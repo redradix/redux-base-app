@@ -14,6 +14,10 @@ import 'mocks'
 const store = configureStore()
 const routes = createRoutes(configureRoutes(store, browserHistory))
 
+if (process.env.NODE_ENV === 'development') {
+  window.store = store
+}
+
 render(
   <Provider store={store}>
     <Router history={browserHistory} routes={routes} />

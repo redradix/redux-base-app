@@ -8,3 +8,5 @@ import * as actions from './action-types'
  * @return {object} An action ready to be dispatched
  */
 export const merge = entities => ({ type: actions.MERGE, payload: entities })
+
+export const replace = entities => ({ type: actions.REPLACE, payload: entities })

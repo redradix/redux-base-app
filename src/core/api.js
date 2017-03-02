@@ -108,6 +108,9 @@ export const post = (endpoint, data = {}, options = {}) => {
   return fetchEndpoint(endpoint, config)
 }
 
+// REVIEW: Right now, the only way to add url parameters to a get request is by
+// adding them directly to the endpoint. Wouldn't it be nice to receive them
+// here, just like in `post`?
 export const get = (endpoint, options = {}) => {
   const opts = Object.assign({}, defaultOptions, options)
   const config = applyHeaders({
