@@ -13,16 +13,25 @@ import { schema, normalize } from 'normalizr'
 const userSchema = new schema.Entity('users')
 // const userSchema = new schema.Entity(DOMAIN)
 
-export function fetchUsers() {
-  return dispatch => {
-    dispatch(commAttempt(DOMAIN))
-    return get(`${ENDPOINT}/list`)
-    .then(users => {
-      // NOTE: Disregard normalizr's results, keep entities alone
-      const { entities } = normalize(users, [userSchema])
-      dispatch(merge(entities))
-      dispatch(commSuccess(DOMAIN))
-    }, err => dispatch(commError(DOMAIN, err)))
+import { getPage, setPage, setPageNumber } from 'modules/pagination'
+
+export function fetchUsers(pageNumber = 0) {
+  return (dispatch, getState) => {
+    const state = getState()
+    const page = getPage(state, DOMAIN, pageNumber)
+    if (!page) {
+      // fetch page
+      dispatch(commAttempt(DOMAIN))
+      return get(`${ENDPOINT}/list?page=${pageNumber}`)
+        .then(users => {
+          const { entities, result } = normalize(users, [userSchema])
+          dispatch(merge(entities))
+          dispatch(setPage(DOMAIN, pageNumber, result))
+          dispatch(setPageNumber(DOMAIN, pageNumber))
+          dispatch(commSuccess(DOMAIN))
+        }, err => dispatch(commError(DOMAIN, err)))
+    }
+    return true
   }
 }
 
