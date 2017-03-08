@@ -18,12 +18,12 @@ class UsersListItem extends Component {
     this.setState({ popup: !popup })
   }
   handleDelete() {
-    const { email, onDelete } = this.props
+    const { user: { email }, onDelete } = this.props
     onDelete(email)
     .then(this.handleTogglePopup)
   }
   handleEdit = () => {
-    const { email } = this.props
+    const { user: { email } } = this.props
     browserHistory.push(`/my-account/users/edit/${encodeURIComponent(email)}`)
   }
   renderPopup() {
@@ -34,7 +34,7 @@ class UsersListItem extends Component {
     )
   }
   render() {
-    const { name, surname, role } = this.props
+    const { user: { name, surname, role } } = this.props
     const { popup } = this.state
     const className = cx('action-item', { 'has-popup': popup })
     return (
@@ -57,10 +57,12 @@ class UsersListItem extends Component {
 
 UsersListItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  surname: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    surname: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default UsersListItem
