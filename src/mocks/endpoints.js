@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock'
 import realFetch from 'isomorphic-fetch'
 
-const users = [{
+let users = [{
   id: 0,
   name: 'miguel',
   surname: 'martin',
@@ -69,6 +69,12 @@ const size = 3
         }
       }
     }
+  })
+  fetchMock.delete(`${process.env.REACT_APP_API_URL}api/user`, function(arg) {
+    console.log(arg)
+    const email = 'diana@redradix.com'
+    users = users.filter(u => u.email === email)
+    return {}
   })
   fetchMock.delete(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: []})
   fetchMock.post(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibWlndWVsIiwic3VybmFtZSI6Im1hcnRpbiIsImVtYWlsIjoiYUBhLmNvbSIsImlhdCI6MTQ4NzcwMTEyOCwiZXhwIjoxNDg3NzI5OTI4fQ.SUUccKC13c_gdlxUf5FN1o4xeIxF9lyWSJNn3N0PNiw'}})

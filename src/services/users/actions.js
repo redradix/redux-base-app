@@ -1,8 +1,7 @@
-import { remove } from 'lodash'
 import { post } from 'core/api'
-import { get } from 'resources/users'
+import { get, del } from 'resources/users'
 import { setUIElement, deleteUIElements } from 'modules/ui'
-import { mergeEntity } from 'modules/entities'
+import { replace } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { DOMAIN, ENDPOINT, getUserList } from './'
 
@@ -18,13 +17,13 @@ export function fetchUsers(pageNumber = 0) {
 export function deleteUser(email) {
   return (dispatch, getState) => {
     dispatch(commAttempt(DOMAIN))
-    return post(`${ENDPOINT}/remove`, { email })
+    return del(dispatch, getState, { email })
     .then(() => {
-      const users = getUserList(getState())
-      remove(users, ({ user }) => user.email === email)
-      dispatch(mergeEntity(DOMAIN, users))
-      dispatch(commSuccess(DOMAIN))
-    }, err => dispatch(commError(DOMAIN, err)))
+      const users = getUserList(getState()).reduce(
+        (acc, u) => u.email === email ? acc : Object.assign(acc, { [u.id]: u })
+      , {})
+      dispatch(replace({ users }))
+    })
   }
 }
 

@@ -1,5 +1,5 @@
 import { schema, normalize } from 'normalizr'
-import { get as getEndpoint } from 'core/api'
+import { get as getEndpoint, del as delEndpoint } from 'core/api'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { merge } from 'modules/entities'
 import { getPage, getPageNumber, setPage, setTotal } from 'modules/pagination'
@@ -26,4 +26,12 @@ export function get(dispatch, getState) {
       }, err => dispatch(commError(DOMAIN, err)))
   }
   return true
+}
+
+export function del(dispatch, getState, data) {
+  dispatch(commAttempt(DOMAIN))
+  return delEndpoint(ENDPOINT, data)
+  .then(() => {
+    dispatch(commSuccess(DOMAIN))
+  }, err => dispatch(commError(DOMAIN, err)))
 }
