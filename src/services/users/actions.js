@@ -14,13 +14,13 @@ export function fetchUsers(pageNumber = 0) {
   }
 }
 
-export function deleteUser(email) {
+export function deleteUser(id) {
   return (dispatch, getState) => {
     dispatch(commAttempt(DOMAIN))
-    return del(dispatch, getState, { email })
+    return del(dispatch, getState, { id })
     .then(() => {
       const users = getUserList(getState()).reduce(
-        (acc, u) => u.email === email ? acc : Object.assign(acc, { [u.id]: u })
+        (acc, u) => u.id === id ? acc : Object.assign(acc, { [u.id]: u })
       , {})
       dispatch(replace({ users }))
     })

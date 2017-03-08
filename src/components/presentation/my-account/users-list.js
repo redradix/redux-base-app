@@ -17,7 +17,7 @@ class UsersList extends Component {
           </a>
         </div>
         {users.map(user => (
-          <UsersListItem key={user.email} user={user} onDelete={onDelete} />
+          <UsersListItem key={user.id} user={user} onDelete={onDelete} />
         ))}
       </div>
     )

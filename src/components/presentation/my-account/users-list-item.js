@@ -18,8 +18,8 @@ class UsersListItem extends Component {
     this.setState({ popup: !popup })
   }
   handleDelete() {
-    const { user: { email }, onDelete } = this.props
-    onDelete(email)
+    const { user: { id }, onDelete } = this.props
+    onDelete(id)
     .then(this.handleTogglePopup)
   }
   handleEdit = () => {
@@ -34,7 +34,7 @@ class UsersListItem extends Component {
     )
   }
   render() {
-    const { user: { name, surname, role } } = this.props
+    const { user: { id, name, surname, role } } = this.props
     const { popup } = this.state
     const className = cx('action-item', { 'has-popup': popup })
     return (
@@ -58,6 +58,7 @@ class UsersListItem extends Component {
 UsersListItem.propTypes = {
   onDelete: PropTypes.func.isRequired,
   user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     email: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     surname: PropTypes.string.isRequired,
