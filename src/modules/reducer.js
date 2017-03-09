@@ -8,7 +8,10 @@ import communicationReducer, { moduleName as communicationPath } from 'modules/c
 import paginationReducer, { moduleName as paginationPath } from 'modules/pagination'
 import configReducer, { moduleName as configPath } from 'modules/config'
 
+import uiRebornReducer, { moduleName as uiRebornPath } from 'modules/ui-reborn'
+
 const rootReducer = combineReducers({
+  [uiRebornPath]: uiRebornReducer,
   [dataPath]: dataReducer,
   [entitiesPath]: entitiesReducer,
   [paginationPath]: paginationReducer,
