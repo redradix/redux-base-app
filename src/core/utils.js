@@ -1,10 +1,7 @@
 import UaParser from 'ua-parser-js'
-import {omitBy, isNil, mapValues} from 'lodash'
+import {omitBy} from 'lodash'
 
 const userAgent = new UaParser().getResult()
-
-// Used as id for entities with no id where there is only one entity
-export const THEONE = 'theOne'
 
 // All modules use this generator to get its reducer function
 export function generateReducer(ACTIONS, initialState = {}) {
@@ -58,7 +55,7 @@ export function getScreenSize() {
 }
 
 export function getDateFormat() {
-  // TODO: Improve when more markets available
+  // TODO: Improve
   return 'DD/MM/YYYY'
 }
 
@@ -92,16 +89,30 @@ export function offset(elem) {
   const doc = elem.ownerDocument
   const docElem = doc.documentElement
   const win = doc.defaultView
-
   return {
     top: rect.top + win.pageYOffset - docElem.clientTop,
     left: rect.left + win.pageXOffset - docElem.clientLeft
   }
 }
 
-export const convertFromUrlParamToHumanReadable = (obj) => {
-  return mapValues(omitBy(obj, isNil), f => {
-    if (f === f.toUpperCase()) return f
-    return f.replace(/([A-Z]|&)/g, ' $1').trim()
-  })
+export function composeAsync(...hooks) {
+  return (nextState, replace, cb) => {
+    const r = hooks.reduce((acc, hook) => {
+      return acc.then(() => hook(nextState, replace))
+    }, Promise.resolve())
+    r.then(cb)
+    .catch(() => {
+      // It is supposed the exceptions are handle in an upper or lower level
+    })
+  }
+}
+
+export function composeAsyncParalell(...hooks) {
+  return (nextState, replace, cb) => {
+    return Promise.all(hooks)
+    .then(cb)
+    .catch(() => {
+      // It is supposed the exceptions are handle in an upper or lower level
+    })
+  }
 }

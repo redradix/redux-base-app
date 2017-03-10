@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 
 class Dashboard extends Component {
   render() {
@@ -8,12 +8,7 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.defaultProps = {
-  isFixed: false
-}
-
 Dashboard.propTypes = {
-  isFixed: PropTypes.bool.isRequired
 }
 
 export default Dashboard
