@@ -21,7 +21,7 @@ function requireAuth(nextState, replace) {
       state: { nextPathname: nextState.location.pathname }
     })
     // Need to throw exception to stop the possible chain
-    throw Error('Not logged')
+    // throw Error('Not logged')
   }
 }
 
@@ -32,7 +32,7 @@ function alreadyLogged(nextState, replace) {
       state: {nextPathname: nextState.location.pathname}
     })
     // Need to throw exception to stop the possible chain
-    throw Error('Already logged')
+    // throw Error('Already logged')
   }
 }
 

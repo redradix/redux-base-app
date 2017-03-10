@@ -70,7 +70,7 @@ const size = 3
       }
     }
   })
-  // fetchMock.delete(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: []})
+  fetchMock.delete(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: []})
   fetchMock.post(`${process.env.REACT_APP_API_URL}api/session`, {type: 'session', data: {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibWlndWVsIiwic3VybmFtZSI6Im1hcnRpbiIsImVtYWlsIjoiYUBhLmNvbSIsImlhdCI6MTQ4NzcwMTEyOCwiZXhwIjoxNDg3NzI5OTI4fQ.SUUccKC13c_gdlxUf5FN1o4xeIxF9lyWSJNn3N0PNiw'}})
   .catch((unmatchedUrl, options) => {
     return realFetch(unmatchedUrl, options)

@@ -85,8 +85,8 @@ export function logout() {
     .then(() => {
       clearToken()
       return new Promise(resolve => {
-        dispatch(deleteUIElements(DOMAIN, ['session']))
         goToLogin()
+        dispatch(deleteUIElements(DOMAIN, ['session']))
         resolve()
       })
     }, e => {

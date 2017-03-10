@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Redux project",
+  "homepage": "https://redradix.github.io/redux-base-app",
   "engines": {
     "node": "6.7.0",
     "npm": "3.10.3"
@@ -48,11 +49,12 @@
     "chai-enzyme": "0.6.1",
     "dotenv": "4.0.0",
     "enzyme": "2.6.0",
-    "eslint": "3.10.2",
+    "eslint": "3.16.1",
     "eslint-loader": "1.6.1",
     "eslint-plugin-babel": "4.0.0",
     "eslint-plugin-react": "6.7.1",
     "fetch-mock": "5.8.1",
+    "gh-pages": "^0.12.0",
     "jsdom": "9.9.1",
     "json-loader": "0.5.4",
     "mocha": "3.2.0",
@@ -69,7 +71,9 @@
   "scripts": {
     "start": "NODE_PATH=./src/ HTTPS=true react-scripts start",
     "build": "NODE_PATH=./src/ HTTPS=true react-scripts build && sw-precache --config=sw-precache-config.js",
-    "test": "NODE_PATH=./src/ HTTPS=true react-scripts test"
+    "test": "NODE_PATH=./src/ HTTPS=true react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "keywords": [
     "base",
