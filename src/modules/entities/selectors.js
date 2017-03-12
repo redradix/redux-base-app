@@ -14,7 +14,7 @@ export const getEntityList = createSelector(
   (entities, ids) => ids.map(id => entities[id])
 )
 
-export const getEntitiy = createSelector(
+export const getEntity = createSelector(
   getEntities,
   (state, domain, id) => id,
   (entities, id) => entities[id]
