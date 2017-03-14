@@ -29,6 +29,7 @@
     "react-select": "1.0.0-rc.2",
     "recompose": "0.21.0",
     "redux": "3.6.0",
+    "redux-devtools-extension": "2.13.0",
     "redux-form": "6.2.0",
     "redux-thunk": "2.1.0",
     "reselect": "2.5.4",
