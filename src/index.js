@@ -10,12 +10,14 @@ import 'core/i18n'
 import 'core/numeral'
 import configureStore from 'core/store/configure-store'
 import 'mocks'
+import Immutable from 'immutable'
 
 const store = configureStore()
 const routes = createRoutes(configureRoutes(store, browserHistory))
 
 if (process.env.NODE_ENV === 'development') {
   window.store = store
+  window.Immutable = Immutable
 }
 
 render(
