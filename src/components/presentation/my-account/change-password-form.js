@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { reduxForm } from 'redux-form'
-import { createValidator, required, samePassword } from 'core/validation'
+import { createValidator, required, samePassword } from 'utils/validation'
 import ConfirmationMessage from 'components/presentation/confirmation-message'
 import Input from 'components/presentation/forms/input'
 import { t } from 'core/i18n'

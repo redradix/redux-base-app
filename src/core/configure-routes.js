@@ -9,7 +9,7 @@ import UsersList from 'components/context/my-account/users-list-context'
 import UserForm from 'components/context/my-account/user-form-context'
 import { loggedIn, fetchSession } from 'services/session'
 import { fetchUsers } from 'services/users'
-import {composeAsync} from 'core/utils'
+import {composeAsync} from 'utils/utils'
 
 const LOGGED_URL = ''
 const NOT_LOGGED_URL = '/login'

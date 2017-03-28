@@ -1,4 +1,4 @@
-import { generateReducer } from 'core/utils'
+import { generateReducer } from 'utils/utils'
 import { merge } from 'lodash'
 import * as actions from './action-types'
 export * from './constants'

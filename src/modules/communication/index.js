@@ -1,5 +1,5 @@
 import { merge } from 'lodash'
-import { generateReducer } from 'core/utils'
+import { generateReducer } from 'utils/utils'
 import * as actions from './action-types'
 export * from './constants'
 export * from './actions'

@@ -1,4 +1,4 @@
-import { generateReducer} from 'core/utils'
+import { generateReducer} from 'utils/utils'
 import { SET_CONFIG }  from './action-types'
 export * from './constants'
 export * from './actions'
