@@ -12,6 +12,7 @@
   "main": "index.js",
   "dependencies": {
     "classnames": "2.2.5",
+    "fastclick": "1.0.6",
     "i18next": "4.1.0",
     "immutable": "3.8.1",
     "isomorphic-fetch": "2.2.1",
