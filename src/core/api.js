@@ -1,5 +1,6 @@
-import { LOCALSTORAGE_TOKEN_KEY } from './config'
 import 'isomorphic-fetch'
+
+export const LOCALSTORAGE_TOKEN_KEY = 'redradix-token'
 
 const getToken = () => localStorage.getItem(LOCALSTORAGE_TOKEN_KEY)
 const defaultParse = jsonBody => jsonBody.data

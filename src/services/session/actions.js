@@ -1,4 +1,4 @@
-import { LOCALSTORAGE_TOKEN_KEY } from 'core/config'
+import { LOCALSTORAGE_TOKEN_KEY } from 'core/api'
 import { browserHistory } from 'react-router'
 import { SubmissionError } from 'redux-form'
 import { apiPost } from 'core/api'

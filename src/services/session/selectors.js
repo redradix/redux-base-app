@@ -1,5 +1,5 @@
 import {getUIElement} from 'modules/ui'
-import { LOCALSTORAGE_TOKEN_KEY } from 'core/config'
+import { LOCALSTORAGE_TOKEN_KEY } from 'core/api'
 import {DOMAIN} from './'
 
 export function getSession(state) {
