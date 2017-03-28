@@ -1,4 +1,5 @@
 import React, { PropTypes, Component } from 'react'
+import confirmationPopup from 'modules/confirm/components/confirmation-popup'
 import Heading from 'components/presentation/heading'
 import Button from 'components/presentation/button'
 import Icon from 'components/presentation/icon'
@@ -42,5 +43,7 @@ Popup.propTypes = {
   cancelLabel: PropTypes.string.isRequired,
   icon: PropTypes.string
 }
+
+Popup = confirmationPopup()(Popup)
 
 export default Popup
