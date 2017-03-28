@@ -26,6 +26,7 @@ const confirmationPopup = (options) => (WrappedComponent) => {
       dispatch(cancel(actionName))
     }
     render() {
+      // eslint-disable-next-line no-unused-vars
       const { dispatch, needsConfirmation, action, actionName, ...rest } = this.props
       if (!needsConfirmation) return null
       return (

@@ -26,6 +26,7 @@ const confirmationTrigger = (actionName, actionCreator, options) => (WrappedComp
       triggerConfirmation(name, action)
     }
     render() {
+      // eslint-disable-next-line no-unused-vars
       const { triggerConfirmation, ...rest } = this.props
       return <WrappedComponent {...rest} onClick={this.handleClick} />
     }

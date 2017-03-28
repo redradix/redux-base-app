@@ -58,6 +58,7 @@ const clickable = (options) => (WrappedComponent) => {
     }
     render() {
       // NOTE: Property `disabled` is passed through
+      // eslint-disable-next-line no-unused-vars
       const { onClick, onDoubleClick, ...rest } = this.props
       return (<WrappedComponent {...rest} onClick={this.handleClick} />)
     }
