@@ -44,7 +44,6 @@ UsersListItem.defaultProps = {
 }
 
 UsersListItem.propTypes = {
-  onDelete: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     email: PropTypes.string.isRequired,

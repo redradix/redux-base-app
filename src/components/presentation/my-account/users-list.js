@@ -7,7 +7,7 @@ import { t } from 'core/i18n'
 
 class UsersList extends Component {
   renderUsersList() {
-    const { users, onDelete } = this.props
+    const { users } = this.props
     return (
       <div className='users-list'>
         <div className='user-list-header'>
@@ -17,7 +17,7 @@ class UsersList extends Component {
           </a>
         </div>
         {users.map(user => (
-          <UsersListItem key={user.id} user={user} onDelete={onDelete} />
+          <UsersListItem key={user.id} user={user} />
         ))}
       </div>
     )
@@ -38,7 +38,6 @@ UsersList.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   totalUsers: PropTypes.number.isRequired,
-  onDelete: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,

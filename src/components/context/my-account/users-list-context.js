@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import UsersList from 'components/presentation/my-account/users-list'
-import { isUserListReady, getUserListPage, deleteUser, fetchUsers, getCurrentPage, getTotalUsers } from 'services/users'
+import { isUserListReady, getUserListPage, fetchUsers, getCurrentPage, getTotalUsers } from 'services/users'
 
 class UsersListContext extends Component {
   render() {
@@ -22,7 +22,6 @@ UsersListContext.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   totalUsers: PropTypes.number.isRequired,
-  onDelete: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -44,7 +43,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = { fetchUsers, onDelete: deleteUser }
+const mapDispatchToProps = { fetchUsers }
 
 UsersListContext = connect(mapStateToProps, mapDispatchToProps)(UsersListContext)
 
