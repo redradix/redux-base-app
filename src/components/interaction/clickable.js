@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { getDisplayName } from 'utils/react'
+import 'utils/fastclick'
 
 const defaultOptions = {
   preventDefault: true, stopPropagation: true, dbClickWindow: 300
