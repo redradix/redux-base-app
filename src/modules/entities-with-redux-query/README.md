@@ -38,3 +38,15 @@ diff --git a/src/modules/reducer.js b/src/modules/reducer.js
 -import entitiesReducer from 'modules/entities'
 +import entitiesReducer from 'modules/entities-with-redux-query'
 ```
+
+With this, we can also add `redux-query`'s middleware to our store:
+
+```js
+/* configure-store.js */
+import { queryMiddleware } from 'redux-query'
+import { getQueries, getEntities } from 'modules/entities-with-redux-query'
+const store = createStore(
+    reducer,
+    applyMiddleware(queryMiddleware(getQueries, getEntities))
+)
+```
