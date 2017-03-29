@@ -27,3 +27,14 @@ import { getEntities } from 'modules/entities'
 export { getEntities } from 'modules/entities'
 export const getQueries = (state) => getEntities(state, 'queries')
 ```
+
+Updating our root reducer to use the new entities reducer is as simple as changing the import route:
+
+```diff
+diff --git a/src/modules/reducer.js b/src/modules/reducer.js
+--- a/src/modules/reducer.js
++++ b/src/modules/reducer.js
+@@ -2 +2 @@ import { combineReducers } from 'redux'
+-import entitiesReducer from 'modules/entities'
++import entitiesReducer from 'modules/entities-with-redux-query'
+```
