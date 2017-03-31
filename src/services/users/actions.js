@@ -5,11 +5,11 @@ import { replace } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { DOMAIN, ENDPOINT, getUserList } from './'
 
-import { setPageNumber } from 'modules/pagination'
+import { setPageNumber as setPageN } from 'modules/pagination'
 
 export function fetchUsers(pageNumber = 0) {
   return (dispatch, getState) => {
-    dispatch(setPageNumber(DOMAIN, pageNumber))
+    dispatch(setPageN(DOMAIN, pageNumber))
     return get(dispatch, getState)
   }
 }
@@ -49,4 +49,8 @@ export function updateUser(data) {
       setTimeout(() => dispatch(deleteUIElements('myAccount', ['user'])), 3000)
     }, err => dispatch(commError(DOMAIN, err)))
   }
+}
+
+export function setPageNumber(pageNumber) {
+  return setPageN(DOMAIN, pageNumber)
 }
