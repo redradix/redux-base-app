@@ -10,6 +10,14 @@ The main problem is that `redux-query` comes with a built-in entities reducer wh
 
 Here at redradix, we love our entities module, so we are building this as an enhancement over it which can work with `redux-query`. We will be documenting our development of this module as some of the decisions taken are not plainly obvious.
 
+## Appendix A - Using `fetch` to perform network requests
+
+`redux-query` comes by default with a [SuperAgent](https://github.com/visionmedia/superagent) adapter, whereas this application was using [the Fetch standard](https://fetch.spec.whatwg.org/)<sup>1</sup> to handle network requests.
+
+At the time of this writing, the latter does not support network request abortion yet. Discussion can be found in issues [#27](https://github.com/whatwg/fetch/issues/27) and [#447](https://github.com/whatwg/fetch/issues/447). However, our current mocks rely on this, so I took some time to implement a new adapter for `redux-query` just for the fun of it.
+
+<sup>1</sup> We actually use the [matthew-andrews/isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch), which is built on top of [github/fetch](https://github.com/github/fetch/) polyfill, which implements a subset of the standard.
+
 ## Step 1 - Composing our entities reducer with `redux-query`'s query reducer
 
 ```js
