@@ -16,6 +16,7 @@ async function buildResponse(response) {
   return { resStatus, resBody, resText, resHeaders }
 }
 
+// REVIEW: Make this a factory accepting options to deep merge. See core/api
 const fetchNetworkAdapter = (url, method, { body, headers, credentials } = {}) => {
   const options = { method, body, headers, credentials }
   const request = window.fetch.bind(window.fetch, url, options)
