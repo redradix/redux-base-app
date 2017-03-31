@@ -7,8 +7,8 @@ import { merge, replace } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { getPageNumber, setPage, setTotal } from 'modules/pagination'
 import { DOMAIN, ENDPOINT, getUserList, userSchema } from './'
-
 import { setPageNumber as setPageN } from 'modules/pagination'
+import { push } from 'react-router-redux'
 
 export const storeUser = ({ data }) => (dispatch) => {
   const entities = { users: { [data.id]: data } }
@@ -68,4 +68,8 @@ export function updateUser(data) {
 
 export function setPageNumber(pageNumber) {
   return setPageN(DOMAIN, pageNumber)
+}
+
+export function goToEdit(id) {
+  return push(`/my-account/users/edit/${id}`)
 }

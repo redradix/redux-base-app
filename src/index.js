@@ -4,7 +4,8 @@ import 'assets/stylesheets/styles.css'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { browserHistory, createRoutes, Router } from 'react-router'
+import { syncHistoryWithStore } from 'react-router-redux'
+import { browserHistory, Router } from 'react-router'
 import configureRoutes from 'core/configure-routes'
 import configureStore from 'core/configure-store'
 import 'core/i18n'
@@ -13,7 +14,8 @@ import 'mocks'
 import Immutable from 'immutable'
 
 const store = configureStore()
-const routes = createRoutes(configureRoutes(store, browserHistory))
+const history = syncHistoryWithStore(browserHistory, store)
+const routes = configureRoutes(store)
 
 if (process.env.NODE_ENV === 'development') {
   window.store = store
@@ -22,7 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 
 render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
+    <Router history={history} routes={routes} />
   </Provider>,
   document.getElementById('root')
 )

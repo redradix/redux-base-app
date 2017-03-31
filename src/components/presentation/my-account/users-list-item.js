@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
 import cx from 'classnames'
 import { needsConfirmation } from 'modules/confirm'
+import { goToEdit } from 'services/users'
 import Heading from 'components/presentation/heading'
 import DeleteButton from 'components/presentation/delete-button'
 import Button from 'components/presentation/button'
@@ -13,8 +13,8 @@ import { t } from 'core/i18n'
 // must add a css class whenever the confirmation popup is shown
 class UsersListItem extends Component {
   handleEdit = () => {
-    const { user: { id } } = this.props
-    browserHistory.push(`/my-account/users/edit/${encodeURIComponent(id)}`)
+    const { user: { id }, goToEdit } = this.props
+    goToEdit(id)
   }
   render() {
     const { user: { id, name, surname, role }, hasPopup } = this.props
@@ -51,7 +51,8 @@ UsersListItem.propTypes = {
     surname: PropTypes.string.isRequired,
     role: PropTypes.string.isRequired
   }).isRequired,
-  hasPopup: PropTypes.bool.isRequired
+  hasPopup: PropTypes.bool.isRequired,
+  goToEdit: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state, { user: { id } }) => {
@@ -60,6 +61,10 @@ const mapStateToProps = (state, { user: { id } }) => {
   }
 }
 
-UsersListItem = connect(mapStateToProps)(UsersListItem)
+const mapDispatchToProps = {
+  goToEdit
+}
+
+UsersListItem = connect(mapStateToProps, mapDispatchToProps)(UsersListItem)
 
 export default UsersListItem
