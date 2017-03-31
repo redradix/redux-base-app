@@ -1,5 +1,7 @@
 import 'isomorphic-fetch'
 
+// REVIEW: Why are we parsing response bodies and errors. Isn't it app-specific?
+
 export const LOCALSTORAGE_TOKEN_KEY = 'redradix-token'
 
 const getToken = () => localStorage.getItem(LOCALSTORAGE_TOKEN_KEY)
