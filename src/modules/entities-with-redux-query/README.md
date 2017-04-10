@@ -58,3 +58,36 @@ const store = createStore(
     applyMiddleware(queryMiddleware(getQueries, getEntities))
 )
 ```
+
+However, moving forward without `redux-query`'s entities reducer has a huge trade-off, as its middleware will no longer be able to update our entities.
+
+## Step 2 - Syncing entities from `redux-query`'s requests
+
+In order to be able to store/update entities in our state when requests are completed, we need one of two things,
+
+* to have our entities reducer react to `redux-query`'s actions, or
+* to be able to dispatch actions from `redux-query`'s callback functions
+
+We may address the former approach in an appendix later on, but for now, we will proceed with the latter.
+
+From the three callback functions supported by `redux-query` (i.e. `transform`, `update` and `optimisticUpdate`), we decided to work exclusively with `transform` as it is called as soon as the request ends and both other functions are to some extent coupled with how the library handles entities.
+
+Since it is a pretty common pattern to have components enhanced with `connectRequest` that are also enhanced with `connect`, we can simply pass bound action creators as props.
+
+```js
+const mapDispatchToProps = { actionCreator }
+
+const mapPropsToQuery = (props) => ({
+  url: `api/todos`,
+  // gets dispatched as soon as the requests completes
+  transform: props.actionCreator,
+  update: {} // required by redux-query
+})
+
+const enhance = compose(
+  connect(void 0, mapDispatchToProps),
+  connectRequest(mapPropsToQuery)
+)
+
+export default enhance(Component)
+```
