@@ -1,6 +1,6 @@
 import { normalize } from 'normalizr'
 import { post } from 'core/api'
-import { get, del } from 'resources/users'
+import { del } from 'resources/users'
 import { setUIElement, deleteUIElements } from 'modules/ui'
 import { merge, replace } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
@@ -8,13 +8,6 @@ import { getPageNumber, setPage, setTotal } from 'modules/pagination'
 import { DOMAIN, ENDPOINT, getUserList, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
-
-export function fetchUsers(pageNumber = 0) {
-  return (dispatch, getState) => {
-    dispatch(setPageN(DOMAIN, pageNumber))
-    return get(dispatch, getState)
-  }
-}
 
 export const storeUsers = ({ data }) => (dispatch, getState) => {
   const { users, pagination: { total } } = data
