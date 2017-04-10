@@ -23,10 +23,10 @@ class UsersList extends Component {
     )
   }
   render() {
-    const { isReady, fetchUsers, currentPage, totalUsers } = this.props
+    const { isReady, setPageNumber, currentPage, totalUsers } = this.props
     return (
       <div className='account-contents wrapper'>
-        <UsersListNav fetchPage={fetchUsers} pageNumber={currentPage} total={totalUsers} />
+        <UsersListNav setPageNumber={setPageNumber} pageNumber={currentPage} total={totalUsers} />
         {isReady ? this.renderUsersList() : <Loading />}
       </div>
     )
@@ -35,7 +35,7 @@ class UsersList extends Component {
 
 UsersList.propTypes = {
   isReady: PropTypes.bool,
-  fetchUsers: PropTypes.func.isRequired,
+  setPageNumber: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,
   totalUsers: PropTypes.number.isRequired,
   users: PropTypes.arrayOf(

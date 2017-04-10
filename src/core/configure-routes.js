@@ -8,7 +8,6 @@ import Info from 'components/context/my-account/info-context'
 import UsersList from 'components/context/my-account/users-list-context'
 import UserForm from 'components/context/my-account/user-form-context'
 import { loggedIn, fetchSession } from 'services/session'
-import { fetchUsers } from 'services/users'
 import {composeAsync} from 'utils/utils'
 
 const LOGGED_URL = ''
@@ -41,10 +40,6 @@ const configureRoutes = (store) => {
     return store.dispatch(fetchSession(nextState.params))
   }
 
-  function fetchUsersHook() {
-    return store.dispatch(fetchUsers())
-  }
-
   return (
     <div>
       <Route path='/login' component={Login} onEnter={alreadyLogged} />
@@ -52,7 +47,7 @@ const configureRoutes = (store) => {
         <IndexRoute component={Dashboard} />
         <Route path='my-account' component={Account}>
           <IndexRoute component={Info} />
-          <Route path='users' onEnter={fetchUsersHook}>
+          <Route path='users'>
             <IndexRoute component={UsersList} />
             <Route path='new' component={UserForm} />
             <Route path='edit/:email' component={UserForm} />
