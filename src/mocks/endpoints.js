@@ -53,6 +53,12 @@ const size = 3
 // if (process.env.NODE_ENV === 'development') {
   fetchMock.get(new RegExp('/api/data/initial'), {data: {}})
   fetchMock.get(new RegExp('/api/session'),  {type: 'session', data: {user: {name: 'miguel', surname: 'martin', email: 'a@a.com', role: 'admin'}}})
+  fetchMock.get(new RegExp('/api/users/\\d+'), function() {
+    return {
+      type: 'user',
+      data: users[0]
+    }
+  })
   fetchMock.get(new RegExp('/api/user/list'), function(url) {
     const [, search] = url.split('?')
     let page = 0
