@@ -6,7 +6,7 @@ import { DOMAIN } from './'
 
 export const isUserListReady = state => getCommState(state, DOMAIN, false)
 export const getUserList = state => getEntityList(state, DOMAIN)
-export const getUser = (state, email) => getUserList(state).find(({ user }) => user.email === email)
+export const getUser = (state, id) => getUserList(state).find((user) => user.id === id)
 
 export const getUserListPage = (state, pageNumber) => {
   const ids = getPage(state, 'users', pageNumber)
