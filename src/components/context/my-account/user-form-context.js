@@ -17,28 +17,12 @@ UserFormContext.propTypes = {
   createUser: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
   initialValues: PropTypes.shape({
-    user: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      surname: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      role: PropTypes.string.isRequired
-    }).isRequired,
-    defaultFilters: PropTypes.shape({
-      bu: PropTypes.string.isRequired,
-      franchise: PropTypes.string.isRequired,
-      product: PropTypes.string.isRequired,
-      team: PropTypes.string.isRequired,
-      region: PropTypes.string.isRequired,
-      area: PropTypes.string.isRequired,
-      territory: PropTypes.string.isRequired
-    }).isRequired
-  }),
-  data: PropTypes.shape({
-    teams: PropTypes.array.isRequired,
-    regions: PropTypes.array.isRequired,
-    areas: PropTypes.array.isRequired,
-    territories: PropTypes.array.isRequired
-  }).isRequired
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    surname: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired
+  })
 }
 
 function mapStateToProps(state, props) {

@@ -10,15 +10,15 @@ class UserFormLayout extends Component {
     mode === 'edit' ? updateUser(data) : createUser(data)
   }
   render() {
-    const { mode, data, initialValues, isUserCreated } = this.props
+    const { mode, initialValues, isUserCreated } = this.props
     // NOTE: Hack to get disabled password input to display some dots
-    if (mode === 'edit') initialValues.user.currentPassword = 'xxxxxxxx'
+    if (mode === 'edit') initialValues.currentPassword = 'xxxxxxxx'
     return (
       <div className='account-contents wrapper'>
         <BackButton href='/my-account/users' label={t('my-account.users.back')} />
         <Heading type='gamma'>{t(`my-account.users.${mode}.title`)}</Heading>
         <UserForm onSubmit={this.handleSubmit} success={isUserCreated}
-          data={data} initialValues={initialValues} mode={mode} />
+          initialValues={initialValues} mode={mode} />
       </div>
     )
   }
@@ -30,28 +30,12 @@ UserFormLayout.propTypes = {
   createUser: PropTypes.func.isRequired,
   updateUser: PropTypes.func.isRequired,
   initialValues: PropTypes.shape({
-    user: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      surname: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      role: PropTypes.string.isRequired
-    }).isRequired,
-    defaultFilters: PropTypes.shape({
-      bu: PropTypes.string.isRequired,
-      franchise: PropTypes.string.isRequired,
-      product: PropTypes.string.isRequired,
-      team: PropTypes.string.isRequired,
-      region: PropTypes.string.isRequired,
-      area: PropTypes.string.isRequired,
-      territory: PropTypes.string.isRequired
-    }).isRequired
-  }),
-  data: PropTypes.shape({
-    teams: PropTypes.array.isRequired,
-    regions: PropTypes.array.isRequired,
-    areas: PropTypes.array.isRequired,
-    territories: PropTypes.array.isRequired
-  }).isRequired
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    surname: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired
+  })
 }
 
 export default UserFormLayout
