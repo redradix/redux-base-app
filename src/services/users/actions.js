@@ -9,6 +9,12 @@ import { DOMAIN, ENDPOINT, getUserList, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
 
+export const storeUser = ({ data }) => (dispatch) => {
+  const entities = { users: { [data.id]: data } }
+  dispatch(merge(entities))
+  return entities
+}
+
 export const storeUsers = ({ data }) => (dispatch, getState) => {
   const { users, pagination: { total } } = data
   const { entities, result } = normalize(users, [userSchema])
