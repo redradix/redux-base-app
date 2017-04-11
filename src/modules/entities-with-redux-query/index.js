@@ -1,6 +1,7 @@
 import { queriesReducer } from 'redux-query'
 import entitiesReducer from 'modules/entities'
 export * from './constants'
+export * from './utils'
 export * from './selectors'
 
 /**
