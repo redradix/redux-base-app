@@ -40,7 +40,7 @@ UsersList.propTypes = {
   totalUsers: PropTypes.number.isRequired,
   users: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       email: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       surname: PropTypes.string.isRequired,

@@ -2,43 +2,43 @@ import fetchMock from 'fetch-mock'
 import realFetch from 'isomorphic-fetch'
 
 let users = [{
-  id: 0,
+  id: '0',
   name: 'miguel',
   surname: 'martin',
   email: 'miguel@redradix.com',
   role: 'admin'
 }, {
-  id: 1,
+  id: '1',
   name: 'aaron',
   surname: 'contreras',
   email: 'aaron@redradix.com',
   role: 'user'
 }, {
-  id: 2,
+  id: '2',
   name: 'julian',
   surname: 'toledo',
   email: 'julian@redradix.com',
   role: 'user'
 }, {
-  id: 3,
+  id: '3',
   name: 'carlos',
   surname: 'de la orden',
   email: 'carlos@redradix.com',
   role: 'user'
 }, {
-  id: 4,
+  id: '4',
   name: 'victor',
   surname: '',
   email: 'victor@redradix.com',
   role: 'user'
 }, {
-  id: 5,
+  id: '5',
   name: 'luis',
   surname: 'gil',
   email: 'luis@redradix.com',
   role: 'user'
 }, {
-  id: 6,
+  id: '6',
   name: 'diana',
   surname: 'gutiérrez',
   email: 'diana@redradix.com',
