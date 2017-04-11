@@ -50,7 +50,7 @@ const configureRoutes = (store) => {
           <Route path='users'>
             <IndexRoute component={UsersList} />
             <Route path='new' component={UserForm} />
-            <Route path='edit/:email' component={UserForm} />
+            <Route path='edit/:userId' component={UserForm} />
           </Route>
         </Route>
       </Route>

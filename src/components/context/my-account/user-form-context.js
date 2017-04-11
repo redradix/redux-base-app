@@ -1,7 +1,9 @@
 import React, {Component, PropTypes} from 'react'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { connectRequest } from 'redux-query'
 import UserForm from 'components/composition/my-account/user-form-layout'
-import { createUser, updateUser, getUser, isUserCreated } from 'services/users'
+import { storeUser, createUser, updateUser, getUser, isUserCreated } from 'services/users'
 
 class UserFormContext extends Component {
   render() {
@@ -26,16 +28,31 @@ UserFormContext.propTypes = {
 }
 
 function mapStateToProps(state, props) {
-  const email = props.params.email
+  const id = props.params.userId
   return {
-    mode: email ? 'edit' : 'new',
+    id,
+    mode: id ? 'edit' : 'new',
     isUserCreated: isUserCreated(state),
-    initialValues: email ? getUser(state, email) : void 0
+    initialValues: id ? getUser(state, id) : void 0
   }
 }
 
-const mapDispatchToProps = { createUser, updateUser }
+const mapDispatchToProps = { storeUser, createUser, updateUser }
 
-UserFormContext = connect(mapStateToProps, mapDispatchToProps)(UserFormContext)
+const mapPropsToQuery = function(props) {
+  if (props.initialValues) return
+  return {
+    url: `/api/users/${props.id}`,
+    transform: props.storeUser,
+    update: {} // Disregard redux-query update methods
+  }
+}
+
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  connectRequest(mapPropsToQuery)
+)
+
+UserFormContext = enhance(UserFormContext)
 
 export default UserFormContext

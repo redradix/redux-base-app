@@ -68,6 +68,11 @@ UserForm.propTypes = {
   success: PropTypes.bool
 }
 
-UserForm = reduxForm({ form: 'user', validate })(UserForm)
+UserForm = reduxForm({
+  form: 'user',
+  validate,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true
+})(UserForm)
 
 export default UserForm

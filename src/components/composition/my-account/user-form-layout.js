@@ -10,7 +10,7 @@ class UserFormLayout extends Component {
     mode === 'edit' ? updateUser(data) : createUser(data)
   }
   render() {
-    const { mode, initialValues, isUserCreated } = this.props
+    const { mode, initialValues = {}, isUserCreated } = this.props
     // NOTE: Hack to get disabled password input to display some dots
     if (mode === 'edit') initialValues.currentPassword = 'xxxxxxxx'
     return (

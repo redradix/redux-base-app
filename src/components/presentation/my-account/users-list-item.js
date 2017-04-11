@@ -13,8 +13,8 @@ import { t } from 'core/i18n'
 // must add a css class whenever the confirmation popup is shown
 class UsersListItem extends Component {
   handleEdit = () => {
-    const { user: { email } } = this.props
-    browserHistory.push(`/my-account/users/edit/${encodeURIComponent(email)}`)
+    const { user: { id } } = this.props
+    browserHistory.push(`/my-account/users/edit/${encodeURIComponent(id)}`)
   }
   render() {
     const { user: { id, name, surname, role }, hasPopup } = this.props
