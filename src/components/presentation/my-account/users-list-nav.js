@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import Button from 'components/presentation/button'
 
 class UsersListNav extends Component {
-  handleNext = () => this.props.fetchPage(this.props.pageNumber - 1)
-  handlePrev = () => this.props.fetchPage(this.props.pageNumber + 1)
+  handleNext = () => this.props.setPageNumber(this.props.pageNumber - 1)
+  handlePrev = () => this.props.setPageNumber(this.props.pageNumber + 1)
   render() {
     const { pageNumber, total } = this.props
     // FIXME: This should not go here
@@ -26,7 +26,7 @@ UsersListNav.defaultProps = {
 }
 
 UsersListNav.propTypes = {
-  fetchPage: PropTypes.func.isRequired,
+  setPageNumber: PropTypes.func.isRequired,
   pageNumber: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired
 }

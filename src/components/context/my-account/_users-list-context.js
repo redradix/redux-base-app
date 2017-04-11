@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { connectRequest } from 'redux-query'
 import UsersList from 'components/presentation/my-account/users-list'
-import { isUserListReady, getUserListPage, getCurrentPage, getTotalUsers, storeUsers, setPageNumber } from 'services/users'
+// import { isUserListReady, getUserListPage, fetchUsers, getCurrentPage, getTotalUsers } from 'services/users'
+import { isUserListReady, getUserListPage, getCurrentPage, getTotalUsers, setPageNumber } from 'services/users'
 
 class UsersListContext extends Component {
   render() {
@@ -21,8 +20,9 @@ UsersListContext.defaultProps = {
 
 UsersListContext.propTypes = {
   isReady: PropTypes.bool,
-  storeUsers: PropTypes.func.isRequired,
+  // fetchUsers: PropTypes.func.isRequired,
   setPageNumber: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired, // HACK!
   currentPage: PropTypes.number.isRequired,
   totalUsers: PropTypes.number.isRequired,
   users: PropTypes.arrayOf(
@@ -36,8 +36,14 @@ UsersListContext.propTypes = {
   ).isRequired
 }
 
+UsersListContext.contextTypes = {
+  store: PropTypes.object.isRequired
+}
+
 const mapStateToProps = (state) => {
   const currentPage = getCurrentPage(state)
+  // console.log('MAP STATE')
+  // console.log(currentPage)
   return {
     currentPage,
     totalUsers: getTotalUsers(state),
@@ -46,17 +52,25 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = { storeUsers, setPageNumber }
-
-const mapPropsToQuery = (props) => ({
-  url: `/api/user/list?page=${props.currentPage}`,
-  transform: props.storeUsers,
-  update: {} // Disregard redux-query update methods
+// NOTE: Bind action creators without losing dispatch
+import { bindActionCreators } from 'redux'
+const mapDispatchToProps = (dispatch) => ({
+  setPageNumber: bindActionCreators(setPageNumber, dispatch),
+  dispatch
 })
 
+// const mapDispatchToProps = { setPageNumber }
+// const mapDispatchToProps = { fetchUsers }
+
+// UsersListContext = connect(mapStateToProps, mapDispatchToProps)(UsersListContext)
+// UsersListContext = connect(mapStateToProps)(UsersListContext)
+
+import { compose } from 'redux'
+import { connectRequest } from 'redux-query'
+import { usersQuery } from 'services/users'
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
-  connectRequest(mapPropsToQuery)
+  connectRequest(usersQuery)
 )
 
 UsersListContext = enhance(UsersListContext)

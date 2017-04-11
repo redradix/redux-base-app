@@ -9,7 +9,7 @@ export const getPage = (state, domain, pageNumber) =>
   getPagination(state, domain).pages[pageNumber]
 
 export const getPageNumber = (state, domain) =>
-  getPagination(state, domain).pageNumber
+  getPagination(state, domain).pageNumber || 0
 
 export const getTotal = (state, domain) =>
   getPagination(state, domain).total

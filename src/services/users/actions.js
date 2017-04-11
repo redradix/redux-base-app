@@ -1,17 +1,23 @@
+import { normalize } from 'normalizr'
 import { post } from 'core/api'
-import { get, del } from 'resources/users'
+import { del } from 'resources/users'
 import { setUIElement, deleteUIElements } from 'modules/ui'
-import { replace } from 'modules/entities'
+import { merge, replace } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
-import { DOMAIN, ENDPOINT, getUserList } from './'
+import { getPageNumber, setPage, setTotal } from 'modules/pagination'
+import { DOMAIN, ENDPOINT, getUserList, userSchema } from './'
 
-import { setPageNumber } from 'modules/pagination'
+import { setPageNumber as setPageN } from 'modules/pagination'
 
-export function fetchUsers(pageNumber = 0) {
-  return (dispatch, getState) => {
-    dispatch(setPageNumber(DOMAIN, pageNumber))
-    return get(dispatch, getState)
-  }
+export const storeUsers = ({ data }) => (dispatch, getState) => {
+  const { users, pagination: { total } } = data
+  const { entities, result } = normalize(users, [userSchema])
+  const pageNumber = getPageNumber(getState(), DOMAIN)
+  dispatch(merge(entities))
+  dispatch(setPage(DOMAIN, pageNumber, result))
+  dispatch(setTotal(DOMAIN, total))
+  dispatch(commSuccess(DOMAIN))
+  return entities
 }
 
 export function deleteUser(id) {
@@ -49,4 +55,8 @@ export function updateUser(data) {
       setTimeout(() => dispatch(deleteUIElements('myAccount', ['user'])), 3000)
     }, err => dispatch(commError(DOMAIN, err)))
   }
+}
+
+export function setPageNumber(pageNumber) {
+  return setPageN(DOMAIN, pageNumber)
 }
