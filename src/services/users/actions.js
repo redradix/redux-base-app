@@ -17,6 +17,7 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
   dispatch(setPage(DOMAIN, pageNumber, result))
   dispatch(setTotal(DOMAIN, total))
   dispatch(commSuccess(DOMAIN))
+  return entities
 }
 
 export function deleteUser(id) {
