@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import {reducer as formReducer} from 'redux-form'
-import {routerReducer as routing} from 'react-router-redux'
+import { reducer as form } from 'redux-form'
+import { routerReducer as routing } from 'react-router-redux'
 import uiReducer, { moduleName as uiPath } from 'modules/ui'
 import entitiesReducer, { moduleName as entitiesPath } from 'modules/entities-with-redux-query'
 import dataReducer, { moduleName as dataPath } from 'modules/data'
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   [configPath]: configReducer,
   [communicationPath]: communicationReducer,
   routing,
-  form: formReducer
+  form
 })
 
 export default rootReducer
