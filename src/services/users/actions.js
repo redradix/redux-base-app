@@ -1,7 +1,7 @@
 import { normalize } from 'normalizr'
 import { post } from 'core/api'
 import { del } from 'resources/users'
-import { setIn, deleteIn } from 'modules/ui-reborn'
+import { setIn, deleteIn } from 'modules/ui'
 import { merge, replace } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { getPageNumber, setPage, setTotal } from 'modules/pagination'

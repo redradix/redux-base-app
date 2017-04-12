@@ -1,4 +1,4 @@
-import { getIn } from 'modules/ui-reborn'
+import { getIn } from 'modules/ui'
 import { LOCALSTORAGE_TOKEN_KEY } from 'core/api'
 import {DOMAIN} from './'
 

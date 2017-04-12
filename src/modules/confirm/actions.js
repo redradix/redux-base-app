@@ -1,4 +1,4 @@
-import { setIn, deleteIn } from 'modules/ui-reborn'
+import { setIn, deleteIn } from 'modules/ui'
 import { moduleName } from './constants'
 
 export const triggerConfirmation = (name, action) =>

@@ -1,6 +1,6 @@
 import { getCommState } from 'modules/communication'
 import { getEntityList } from 'modules/entities'
-import { getIn } from 'modules/ui-reborn'
+import { getIn } from 'modules/ui'
 import { getPage, getPageNumber, getTotal } from 'modules/pagination'
 import { DOMAIN } from './'
 

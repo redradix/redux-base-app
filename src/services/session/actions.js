@@ -4,7 +4,7 @@ import { SubmissionError } from 'redux-form'
 import { apiPost } from 'core/api'
 import { get, post, del } from 'resources/session'
 import { getSession, getToken } from './selectors'
-import { setIn, deleteIn } from 'modules/ui-reborn'
+import { setIn, deleteIn } from 'modules/ui'
 import { DOMAIN } from './'
 import { fetchData } from 'services/app'
 
