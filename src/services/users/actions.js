@@ -1,7 +1,7 @@
 import { normalize } from 'normalizr'
 import { post } from 'core/api'
 import { del } from 'resources/users'
-import { setUIElement, deleteUIElements } from 'modules/ui'
+import { setIn, deleteIn } from 'modules/ui-reborn'
 import { merge, replace } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { getPageNumber, setPage, setTotal } from 'modules/pagination'
@@ -45,8 +45,8 @@ export function createUser(data) {
     return post(`${ENDPOINT}/create`, data)
     .then(() => {
       dispatch(commSuccess(DOMAIN))
-      dispatch(setUIElement('myAccount', 'user', true))
-      setTimeout(() => dispatch(deleteUIElements('myAccount', ['user'])), 3000)
+      dispatch(setIn(['my-account', 'user'], true))
+      setTimeout(() => dispatch(deleteIn(['my-account', 'user'])), 3000)
     }, err => dispatch(commError(DOMAIN, err)))
   }
 }
@@ -57,8 +57,8 @@ export function updateUser(data) {
     return post(`${ENDPOINT}/update`, data)
     .then(() => {
       dispatch(commSuccess(DOMAIN))
-      dispatch(setUIElement('myAccount', 'user', true))
-      setTimeout(() => dispatch(deleteUIElements('myAccount', ['user'])), 3000)
+      dispatch(setIn(['my-account', 'user'], true))
+      setTimeout(() => dispatch(deleteIn(['my-account', 'user'])), 3000)
     }, err => dispatch(commError(DOMAIN, err)))
   }
 }

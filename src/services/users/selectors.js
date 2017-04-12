@@ -1,6 +1,6 @@
 import { getCommState } from 'modules/communication'
 import { getEntityList } from 'modules/entities'
-import { getUIElement } from 'modules/ui'
+import { getIn } from 'modules/ui-reborn'
 import { getPage, getPageNumber, getTotal } from 'modules/pagination'
 import { DOMAIN } from './'
 
@@ -15,4 +15,4 @@ export const getUserListPage = (state, pageNumber) => {
 export const getCurrentPage = state => getPageNumber(state, 'users')
 export const getTotalUsers = state => getTotal(state, 'users')
 
-export const isUserCreated = state => getUIElement(state, 'myAccount', 'user', false)
+export const isUserCreated = state => getIn(state, ['my-account', 'user'])

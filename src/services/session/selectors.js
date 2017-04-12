@@ -1,9 +1,9 @@
-import {getUIElement} from 'modules/ui'
+import { getIn } from 'modules/ui-reborn'
 import { LOCALSTORAGE_TOKEN_KEY } from 'core/api'
 import {DOMAIN} from './'
 
 export function getSession(state) {
-  return getUIElement(state, DOMAIN, 'session')
+  return getIn(state, [DOMAIN, 'session'])
 }
 
 export function getUser(state) {
@@ -32,5 +32,5 @@ export function loggedIn() {
 }
 
 export function isPasswordChanged(state) {
-  return getUIElement(state, 'myAccount', 'password', false)
+  return getIn(state, ['my-account', 'password']) || false
 }

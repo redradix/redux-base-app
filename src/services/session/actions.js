@@ -4,7 +4,7 @@ import { SubmissionError } from 'redux-form'
 import { apiPost } from 'core/api'
 import { get, post, del } from 'resources/session'
 import { getSession, getToken } from './selectors'
-import { setUIElement, deleteUIElements } from 'modules/ui'
+import { setIn, deleteIn } from 'modules/ui-reborn'
 import { DOMAIN } from './'
 import { fetchData } from 'services/app'
 
@@ -38,7 +38,7 @@ export function fetchSession() {
     if (!getSession(getState())) {
       return get(dispatch)
       .then(session => {
-        dispatch(setUIElement(DOMAIN, 'session', session))
+        dispatch(setIn([DOMAIN, 'session'], session))
         return session
       }, e => {
         clearToken()
@@ -86,7 +86,7 @@ export function logout() {
       clearToken()
       return new Promise(resolve => {
         goToLogin()
-        dispatch(deleteUIElements(DOMAIN, ['session']))
+        dispatch(deleteIn([DOMAIN, 'session']))
         resolve()
       })
     }, e => {
@@ -103,8 +103,8 @@ export function setPassword(data) {
   return (dispatch) => {
     return apiPost('api/changePassword', data)
     .then(() => {
-      dispatch(setUIElement('myAccount', 'password', true))
-      setTimeout(() => dispatch(deleteUIElements('myAccount', ['password'])), 3000)
+      dispatch(setIn(['my-account', 'password'], true))
+      setTimeout(() => dispatch(deleteIn(['my-account', 'password'])), 3000)
     })
     .catch((e) => {
       throw new SubmissionError({ _error: e })
