@@ -59,6 +59,12 @@ const size = 3
       data: users[0]
     }
   })
+  fetchMock.put(new RegExp('/api/users/\\d+'), function() {
+    return {
+      type: 'user',
+      data: users[0]
+    }
+  })
   fetchMock.get(new RegExp('/api/user/list'), function(url) {
     const [, search] = url.split('?')
     let page = 0
