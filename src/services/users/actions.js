@@ -1,4 +1,5 @@
 import { normalize } from 'normalizr'
+import { batch } from 'utils/batch'
 import { post } from 'core/api'
 import { del } from 'resources/users'
 import { setIn, deleteIn } from 'modules/ui'
@@ -19,10 +20,12 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
   const { users, pagination: { total } } = data
   const { entities, result } = normalize(users, [userSchema])
   const pageNumber = getPageNumber(getState(), DOMAIN)
-  dispatch(merge(entities))
-  dispatch(setPage(DOMAIN, pageNumber, result))
-  dispatch(setTotal(DOMAIN, total))
-  dispatch(commSuccess(DOMAIN))
+  dispatch(batch('STORE_USERS', [
+    merge(entities),
+    setPage(DOMAIN, pageNumber, result),
+    setTotal(DOMAIN, total),
+    commSuccess(DOMAIN)
+  ]))
   return entities
 }
 
