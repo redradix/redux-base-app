@@ -15,7 +15,7 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <script>
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && '%NODE_ENV%' === 'production') {
         window.addEventListener('load', function() {
           navigator.serviceWorker.register('/service-worker.js')
         })
