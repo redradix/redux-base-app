@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { batchEnhancer } from 'utils/batch'
 import { reducer as form } from 'redux-form'
 import { routerReducer as routing } from 'react-router-redux'
 import uiReducer, { moduleName as uiPath } from 'modules/ui'
@@ -8,7 +9,7 @@ import communicationReducer, { moduleName as communicationPath } from 'modules/c
 import paginationReducer, { moduleName as paginationPath } from 'modules/pagination'
 import configReducer, { moduleName as configPath } from 'modules/config'
 
-const rootReducer = combineReducers({
+let rootReducer = combineReducers({
   [dataPath]: dataReducer,
   [entitiesPath]: entitiesReducer,
   [paginationPath]: paginationReducer,
@@ -18,5 +19,7 @@ const rootReducer = combineReducers({
   routing,
   form
 })
+
+rootReducer = batchEnhancer(rootReducer)
 
 export default rootReducer
