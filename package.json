@@ -40,7 +40,6 @@
     "ua-parser-js": "0.7.12"
   },
   "devDependencies": {
-    "@kadira/storybook": "2.21.0",
     "babel-core": "6.18.2",
     "babel-eslint": "7.1.1",
     "babel-loader": "6.2.8",
@@ -73,7 +72,7 @@
     "why-did-you-update": "0.0.8"
   },
   "scripts": {
-    "start": "NODE_PATH=./src/ HTTPS=true react-scripts start",
+    "start": "NODE_PATH=./src/ react-scripts start",
     "build": "NODE_PATH=./src/ HTTPS=true react-scripts build && sw-precache --config=sw-precache-config.js",
     "test": "NODE_PATH=./src/ HTTPS=true react-scripts test",
     "predeploy": "npm run build",
