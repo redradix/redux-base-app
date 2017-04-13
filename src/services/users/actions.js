@@ -3,10 +3,10 @@ import { batch } from 'utils/batch'
 import { post } from 'core/api'
 import { del } from 'resources/users'
 import { setIn, deleteIn } from 'modules/ui'
-import { merge, replace } from 'modules/entities'
+import { merge, remove } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { getPageNumber, setPage, setTotal } from 'modules/pagination'
-import { DOMAIN, ENDPOINT, getUserList, userSchema } from './'
+import { DOMAIN, ENDPOINT, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
 
@@ -34,10 +34,7 @@ export function deleteUser(id) {
     dispatch(commAttempt(DOMAIN))
     return del(dispatch, getState, { id })
     .then(() => {
-      const users = getUserList(getState()).reduce(
-        (acc, u) => u.id === id ? acc : Object.assign(acc, { [u.id]: u })
-      , {})
-      dispatch(replace({ users }))
+      dispatch(remove(DOMAIN, id))
     })
   }
 }
