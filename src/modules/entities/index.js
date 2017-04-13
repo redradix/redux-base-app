@@ -14,7 +14,6 @@ export * from './selectors'
 const initialState = {}
 
 const reducer = generateReducer({
-  [actions.REPLACE]: (state, { payload }) => Object.assign({}, state, payload),
   [actions.REMOVE]: (state, { payload }) => {
     const newState = Object.assign({}, state)
     delete newState[payload.domain][payload.id]

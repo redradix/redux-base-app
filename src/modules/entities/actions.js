@@ -10,5 +10,3 @@ import * as actions from './action-types'
 export const merge = entities => ({ type: actions.MERGE, payload: entities })
 
 export const remove = (domain, id) => ({ type: actions.REMOVE, payload: { domain, id } })
-
-export const replace = entities => ({ type: actions.REPLACE, payload: entities })
