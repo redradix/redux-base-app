@@ -32,7 +32,7 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
 export function deleteUser(id) {
   return (dispatch, getState) => {
     dispatch(commAttempt(DOMAIN))
-    return del(dispatch, getState, { id })
+    return del(dispatch, getState, id)
     .then(() => {
       dispatch(remove(DOMAIN, id))
     })

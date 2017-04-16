@@ -82,10 +82,9 @@ const size = 3
       }
     }
   })
-  fetchMock.delete(new RegExp('/api/user'), function(arg) {
-    console.log(arg)
-    const email = 'diana@redradix.com'
-    users = users.filter(u => u.email === email)
+  fetchMock.delete(new RegExp('/api/user'), function(url) {
+    const id = url.split('/').pop()
+    users = users.filter(u => u.id !== id)
     return {}
   })
   fetchMock.delete(new RegExp('/api/session'), {type: 'session', data: []})

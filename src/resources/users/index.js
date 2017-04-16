@@ -28,9 +28,9 @@ export function get(dispatch, getState) {
   return true
 }
 
-export function del(dispatch, getState, data) {
+export function del(dispatch, getState, id) {
   dispatch(commAttempt(DOMAIN))
-  return delEndpoint(ENDPOINT, data)
+  return delEndpoint(`${ENDPOINT}/${id}`)
   .then(() => {
     dispatch(commSuccess(DOMAIN))
   }, err => dispatch(commError(DOMAIN, err)))
