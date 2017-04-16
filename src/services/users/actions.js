@@ -51,17 +51,18 @@ export function createUser(data) {
   }
 }
 
-export function updateUser(data) {
-  return dispatch => {
-    dispatch(commAttempt(DOMAIN))
-    return post(`${ENDPOINT}/update`, data)
-    .then(() => {
-      dispatch(commSuccess(DOMAIN))
+export const updateUser = (data) => (dispatch) =>
+  dispatch(mutateAsync({
+    url: `/api/users/${data.id}`,
+    options: { method: 'PUT' },
+    body: data,
+    transform: function(user) {
+      dispatch(storeUser(user))
       dispatch(setIn(['my-account', 'user'], true))
       setTimeout(() => dispatch(deleteIn(['my-account', 'user'])), 3000)
-    }, err => dispatch(commError(DOMAIN, err)))
-  }
-}
+    },
+    update: {} // Disregard redux-query update methods
+  }))
 
 export function setPageNumber(pageNumber) {
   return setPageN(DOMAIN, pageNumber)
