@@ -6,6 +6,12 @@ export const setPage = (domain, pageNumber, ids) => ({
   payload: { [pageNumber]: ids }
 })
 
+export const clearPage = (domain, pageNumber) => ({
+  domain,
+  type: actions.CLEAR_PAGE,
+  payload: pageNumber
+})
+
 export const setPageNumber = (domain, pageNumber) => ({
   domain,
   type: actions.SET_PAGE_NUMBER,
