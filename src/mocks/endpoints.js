@@ -47,16 +47,14 @@ let users = [{
 
 const size = 3
 
-/* eslint indent: 0 */
-// NOTE: This was commented to deploy the application with mock data.
-// TODO: Remove after api endpoints are working properly
-// if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   fetchMock.get(new RegExp('/api/data/initial'), {data: {}})
   fetchMock.get(new RegExp('/api/session'),  {type: 'session', data: {user: {name: 'miguel', surname: 'martin', email: 'a@a.com', role: 'admin'}}})
-  fetchMock.get(new RegExp('/api/users/\\d+'), function() {
+  fetchMock.get(new RegExp('/api/users/\\d+'), function(url) {
+    const id = url.split('/').pop()
     return {
       type: 'user',
-      data: users[0]
+      data: users.find(u => u.id === id)
     }
   })
   fetchMock.put(new RegExp('/api/users/\\d+'), function() {
@@ -92,4 +90,4 @@ const size = 3
   .catch((unmatchedUrl, options) => {
     return realFetch(unmatchedUrl, options)
   })
-// }
+}
