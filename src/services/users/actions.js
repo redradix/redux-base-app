@@ -1,7 +1,7 @@
 import { normalize } from 'normalizr'
+import { mutateAsync } from 'redux-query'
 import { batch } from 'utils/batch'
 import { post } from 'core/api'
-import { del } from 'resources/users'
 import { setIn, deleteIn } from 'modules/ui'
 import { merge, remove } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
@@ -29,15 +29,14 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
   return entities
 }
 
-export function deleteUser(id) {
-  return (dispatch, getState) => {
-    dispatch(commAttempt(DOMAIN))
-    return del(dispatch, getState, id)
-    .then(() => {
+export const deleteUser = (id) => (dispatch) =>
+  dispatch(mutateAsync({
+    url: `/api/user/${id}`,
+    options: { method: 'DELETE' },
+    transform: function() {
       dispatch(remove(DOMAIN, id))
-    })
-  }
-}
+    }
+  }))
 
 export function createUser(data) {
   return dispatch => {
