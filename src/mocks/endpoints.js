@@ -65,7 +65,7 @@ const size = 3
       data: users[0]
     }
   })
-  fetchMock.get(new RegExp('/api/user/list'), function(url) {
+  fetchMock.get(new RegExp('/api/users'), function(url) {
     const [, search] = url.split('?')
     let page = 0
     if (search) page = parseInt(search.split('=')[1], 10)
@@ -82,7 +82,7 @@ const size = 3
       }
     }
   })
-  fetchMock.delete(new RegExp('/api/user'), function(url) {
+  fetchMock.delete(new RegExp('/api/users/\\d+'), function(url) {
     const id = url.split('/').pop()
     users = users.filter(u => u.id !== id)
     return {}

@@ -31,7 +31,7 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
 
 export const deleteUser = (id) => (dispatch, getState) =>
   dispatch(mutateAsync({
-    url: `/api/user/${id}`,
+    url: `/api/users/${id}`,
     options: { method: 'DELETE' },
     transform: function() {
       dispatch(remove(DOMAIN, id))

@@ -49,8 +49,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = { storeUsers, setPageNumber }
 
 const mapPropsToQuery = (props) => ({
-  url: `/api/user/list?page=${props.currentPage}`,
-  queryKey: `user-list#${props.currentPage}`,
+  url: `/api/users?page=${props.currentPage}`,
+  queryKey: `users-list#${props.currentPage}`,
   transform: props.storeUsers,
   update: {} // Disregard redux-query update methods
 })
