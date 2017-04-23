@@ -5,7 +5,7 @@ import { post } from 'core/api'
 import { setIn, deleteIn } from 'modules/ui'
 import { merge, remove } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
-import { getPageNumber, setPage, clearPage, setTotal } from 'modules/pagination'
+import { getPageNumber, setPage, clearFromPageOnwards, setTotal } from 'modules/pagination'
 import { DOMAIN, ENDPOINT, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
@@ -35,7 +35,7 @@ export const deleteUser = (id) => (dispatch, getState) =>
     options: { method: 'DELETE' },
     transform: function() {
       dispatch(remove(DOMAIN, id))
-      dispatch(clearPage(DOMAIN, getPageNumber(getState(), DOMAIN)))
+      dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
     }
   }))
 
