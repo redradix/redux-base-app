@@ -15,6 +15,10 @@ class UsersList extends Component {
           <a href='/my-account/users/new' className='button button-secondary button-large'>
             {t('my-account.users.new.title')}
           </a>
+          <a className='button button-secondary button-large' style={{ cursor: 'pointer' }}
+            onClick={this.props.forceRequest} >
+            Refresh
+          </a>
         </div>
         {users.map(user => (
           <UsersListItem key={user.id} user={user} />
@@ -34,6 +38,7 @@ class UsersList extends Component {
 }
 
 UsersList.propTypes = {
+  forceRequest: PropTypes.func.isRequired,
   isReady: PropTypes.bool,
   setPageNumber: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,

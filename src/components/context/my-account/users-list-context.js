@@ -20,6 +20,7 @@ UsersListContext.defaultProps = {
 }
 
 UsersListContext.propTypes = {
+  forceRequest: PropTypes.func.isRequired,
   isReady: PropTypes.bool,
   storeUsers: PropTypes.func.isRequired,
   setPageNumber: PropTypes.func.isRequired,
