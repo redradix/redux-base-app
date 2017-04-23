@@ -5,7 +5,7 @@ import { post } from 'core/api'
 import { setIn, deleteIn } from 'modules/ui'
 import { merge, remove } from 'modules/entities'
 import { commAttempt, commError, commSuccess } from 'modules/communication'
-import { getPageNumber, setPage, setTotal } from 'modules/pagination'
+import { getPageNumber, setPage, clearPage, setTotal } from 'modules/pagination'
 import { DOMAIN, ENDPOINT, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
@@ -29,12 +29,13 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
   return entities
 }
 
-export const deleteUser = (id) => (dispatch) =>
+export const deleteUser = (id) => (dispatch, getState) =>
   dispatch(mutateAsync({
     url: `/api/user/${id}`,
     options: { method: 'DELETE' },
     transform: function() {
       dispatch(remove(DOMAIN, id))
+      dispatch(clearPage(DOMAIN, getPageNumber(getState(), DOMAIN)))
     }
   }))
 

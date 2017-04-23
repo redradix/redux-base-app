@@ -14,7 +14,8 @@ export const getUserList = state => getEntityList(state, DOMAIN)
 export const getUser = (state, id) => getUserList(state).find((user) => user.id === id)
 
 export const getUserListPage = (state, pageNumber) => {
-  const ids = getPage(state, 'users', pageNumber)
+  // NOTE: Give a default value because otherwise all users are returned
+  const ids = getPage(state, 'users', pageNumber) || []
   return getEntityList(state, 'users', ids)
 }
 export const getCurrentPage = state => getPageNumber(state, 'users')
