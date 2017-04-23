@@ -12,6 +12,12 @@ export const clearPage = (domain, pageNumber) => ({
   payload: pageNumber
 })
 
+export const clearFromPageOnwards = (domain, pageNumber) => ({
+  domain,
+  type: actions.CLEAR_PAGE_AND_ONWARDS,
+  payload: pageNumber
+})
+
 export const setPageNumber = (domain, pageNumber) => ({
   domain,
   type: actions.SET_PAGE_NUMBER,
