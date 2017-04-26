@@ -51,6 +51,7 @@ if (process.env.NODE_ENV === 'development') {
   fetchMock.get(new RegExp('/api/data/initial'), {data: {}})
   fetchMock.get(new RegExp('/api/session'),  {type: 'session', data: {user: {name: 'miguel', surname: 'martin', email: 'a@a.com', role: 'admin'}}})
   fetchMock.get(new RegExp('/api/users/\\d+'), function(url) {
+    if (url instanceof Request) url = url.url
     const id = url.split('/').pop()
     return {
       type: 'user',
@@ -64,6 +65,7 @@ if (process.env.NODE_ENV === 'development') {
     }
   })
   fetchMock.get(new RegExp('/api/users'), function(url) {
+    if (url instanceof Request) url = url.url
     const [, search] = url.split('?')
     let page = 0
     if (search) page = parseInt(search.split('=')[1], 10)
@@ -81,6 +83,7 @@ if (process.env.NODE_ENV === 'development') {
     }
   })
   fetchMock.delete(new RegExp('/api/users/\\d+'), function(url) {
+    if (url instanceof Request) url = url.url
     const id = url.split('/').pop()
     users = users.filter(u => u.id !== id)
     return {}
