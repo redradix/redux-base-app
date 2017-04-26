@@ -29,7 +29,7 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
   return entities
 }
 
-export const deleteUser = (id) => (dispatch, getState) =>
+export const deleteUser = (id, callback) => (dispatch, getState) =>
   dispatch(mutateAsync({
     url: `/api/users/${id}`,
     options: { method: 'DELETE' },
@@ -39,6 +39,7 @@ export const deleteUser = (id) => (dispatch, getState) =>
       dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
     }
   }))
+  .then(callback)
 
 export function createUser(data) {
   return dispatch => {
