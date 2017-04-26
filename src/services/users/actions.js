@@ -35,7 +35,6 @@ export const deleteUser = (id, callback) => (dispatch, getState) =>
     options: { method: 'DELETE' },
     transform: function() {
       dispatch(remove(DOMAIN, id))
-      // REVIEW: Not working. See amplitude/redux-query#65
       dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
     }
   }))
