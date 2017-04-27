@@ -4,6 +4,7 @@ import Loading from 'components/presentation/loading'
 import UsersListItem from 'components/presentation/my-account/users-list-item'
 import UsersListNav from 'components/presentation/my-account/users-list-nav'
 import { t } from 'core/i18n'
+import { Link } from 'react-router'
 
 class UsersList extends Component {
   renderUsersList() {
@@ -12,9 +13,9 @@ class UsersList extends Component {
       <div className='users-list'>
         <div className='user-list-header'>
           <Heading type='gamma'>{t('my-account.users.title')}</Heading>
-          <a href='/my-account/users/new' className='button button-secondary button-large'>
+          <Link to='/my-account/users/new' className='button button-secondary button-large'>
             {t('my-account.users.new.title')}
-          </a>
+          </Link>
         </div>
         {users.map(user => (
           <UsersListItem key={user.id} user={user} />
