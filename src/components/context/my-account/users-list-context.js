@@ -51,7 +51,7 @@ const mapDispatchToProps = { storeUsers, setPageNumber }
 
 const mapPropsToQuery = (props) => ({
   url: '/api/users',
-  force: !props.users || !props.users.length,
+  force: !props.users.length || void 0, // Set to undefined rather than false
   body: { page: props.currentPage },
   queryKey: `users-list#${props.currentPage}`,
   transform: props.storeUsers,
