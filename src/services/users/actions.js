@@ -1,10 +1,8 @@
 import { normalize } from 'normalizr'
 import { mutateAsync } from 'redux-query'
 import { batch } from 'utils/batch'
-import { post } from 'core/api'
 import { setIn, deleteIn } from 'modules/ui'
 import { merge, remove } from 'modules/entities'
-import { commAttempt, commError, commSuccess } from 'modules/communication'
 import { getPageNumber, setPage, clearFromPageOnwards, setTotal } from 'modules/pagination'
 import { DOMAIN, ENDPOINT, userSchema } from './'
 
@@ -23,8 +21,7 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
   dispatch(batch('STORE_USERS', [
     merge(entities),
     setPage(DOMAIN, pageNumber, result),
-    setTotal(DOMAIN, total),
-    commSuccess(DOMAIN)
+    setTotal(DOMAIN, total)
   ]))
   return entities
 }
@@ -40,17 +37,19 @@ export const deleteUser = (id, callback) => (dispatch, getState) =>
   }))
   .then(callback)
 
-export function createUser(data) {
-  return dispatch => {
-    dispatch(commAttempt(DOMAIN))
-    return post(`${ENDPOINT}/create`, data)
-    .then(() => {
-      dispatch(commSuccess(DOMAIN))
+export const createUser = (data) => (dispatch) => dispatch(
+  mutateAsync({
+    url: `${ENDPOINT}`,
+    options: { method: 'POST' },
+    body: data,
+    transform: function(user) {
+      dispatch(storeUser(user))
       dispatch(setIn(['my-account', 'user'], true))
       setTimeout(() => dispatch(deleteIn(['my-account', 'user'])), 3000)
-    }, err => dispatch(commError(DOMAIN, err)))
-  }
-}
+    },
+    update: {} // Disregard redux-query update methods
+  })
+)
 
 export const updateUser = (data) => (dispatch) =>
   dispatch(mutateAsync({
