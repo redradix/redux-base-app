@@ -1,5 +1,5 @@
 import { LOCALSTORAGE_TOKEN_KEY } from 'core/api'
-import { browserHistory } from 'react-router'
+import { push } from 'react-router-redux'
 import { SubmissionError } from 'redux-form'
 import { apiPost } from 'core/api'
 import { get, post, del } from 'resources/session'
@@ -17,11 +17,11 @@ function saveToken(token) {
   localStorage.setItem(LOCALSTORAGE_TOKEN_KEY, token)
 }
 
-export function goToLogin() {
-  return browserHistory.push('/login')
-}
-
 /** Auth module Action Creators **/
+
+export function goToLogin() {
+  return push('/login')
+}
 
 /**
  * Async action that fetches the current user session
@@ -32,7 +32,7 @@ export function fetchSession() {
   return (dispatch, getState) => {
     // bail out early, if no token avoid calling the API
     if (!getToken()) {
-      goToLogin()
+      dispatch(goToLogin())
       return Promise.reject()
     }
     if (!getSession(getState())) {
@@ -42,7 +42,7 @@ export function fetchSession() {
         return session
       }, e => {
         clearToken()
-        goToLogin()
+        dispatch(goToLogin())
         return Promise.reject(e)
       })
       .then(session => {
@@ -68,7 +68,7 @@ export function login(data) {
       saveToken(response.token)
       return dispatch(fetchSession())
       .then(session => {
-        browserHistory.push('/')
+        dispatch(push('/'))
         return session
       })
     })
@@ -85,7 +85,7 @@ export function logout() {
     .then(() => {
       clearToken()
       return new Promise(resolve => {
-        goToLogin()
+        dispatch(goToLogin())
         dispatch(deleteIn([DOMAIN, 'session']))
         resolve()
       })

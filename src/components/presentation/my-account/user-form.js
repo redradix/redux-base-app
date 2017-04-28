@@ -5,6 +5,7 @@ import ConfirmationMessage from 'components/presentation/confirmation-message'
 import Input from 'components/presentation/forms/input'
 import Select from 'components/presentation/forms/select'
 import { t } from 'core/i18n'
+import { Link } from 'react-router'
 
 const roles = ['user', 'admin']
 
@@ -50,9 +51,9 @@ class UserForm extends Component {
         </div>
         {success ? <ConfirmationMessage text={t(`my-account.users.${mode}.success`)} /> : null}
         <div className='actions'>
-          <a href='/my-account/users' className='button button-flat dark button-large'>
+          <Link to='/my-account/users' className='button button-flat dark button-large'>
             {t('common.labels.cancel')}
-          </a>
+          </Link>
           <button type='submit' className='button button-primary button-large'>
             {t(`my-account.users.${mode}.confirm`)}
           </button>
