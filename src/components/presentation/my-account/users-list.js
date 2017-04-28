@@ -20,7 +20,6 @@ class UsersList extends Component {
           <Link to='/my-account/users/new' className='button button-secondary button-large'>
             {t('my-account.users.new.title')}
           </Link>
-          </a>
         </div>
         {users.map(user => (
           <UsersListItem key={user.id} user={user} onDeleteSuccess={forceRequest} />
