@@ -26,18 +26,19 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
   return entities
 }
 
-export const deleteUser = (id, callback) => (dispatch, getState) =>
-  dispatch(mutateAsync({
+export const deleteUser = (id, callback) => (dispatch, getState) => dispatch(
+  mutateAsync({
     url: `${ENDPOINT}${id}`,
     options: { method: 'DELETE' }
-  }))
-  .then(function() {
-    // NOTE: When server responds with 204 (no content), redux-query will not
-    // call either of the callback functions, transform and update
-    dispatch(remove(DOMAIN, id))
-    dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
-    callback()
   })
+)
+.then(function() {
+  // NOTE: When server responds with 204 (no content), redux-query will not
+  // call either of the callback functions, transform and update
+  dispatch(remove(DOMAIN, id))
+  dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
+  callback()
+})
 
 export const createUser = (data) => (dispatch) => dispatch(
   mutateAsync({
@@ -53,8 +54,8 @@ export const createUser = (data) => (dispatch) => dispatch(
   })
 )
 
-export const updateUser = (data) => (dispatch) =>
-  dispatch(mutateAsync({
+export const updateUser = (data) => (dispatch) => dispatch(
+  mutateAsync({
     url: `${ENDPOINT}${data.id}`,
     options: { method: 'PUT' },
     body: data,
@@ -64,7 +65,8 @@ export const updateUser = (data) => (dispatch) =>
       setTimeout(() => dispatch(deleteIn(['my-account', 'user'])), 3000)
     },
     update: {} // Disregard redux-query update methods
-  }))
+  })
+)
 
 export function setPageNumber(pageNumber) {
   return setPageN(DOMAIN, pageNumber)
