@@ -29,13 +29,15 @@ export const storeUsers = ({ data }) => (dispatch, getState) => {
 export const deleteUser = (id, callback) => (dispatch, getState) =>
   dispatch(mutateAsync({
     url: `${ENDPOINT}${id}`,
-    options: { method: 'DELETE' },
-    transform: function() {
-      dispatch(remove(DOMAIN, id))
-      dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
-    }
+    options: { method: 'DELETE' }
   }))
-  .then(callback)
+  .then(function() {
+    // NOTE: When server responds with 204 (no content), redux-query will not
+    // call either of the callback functions, transform and update
+    dispatch(remove(DOMAIN, id))
+    dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
+    callback()
+  })
 
 export const createUser = (data) => (dispatch) => dispatch(
   mutateAsync({
