@@ -1,3 +1,4 @@
+import { omit } from 'lodash'
 import { generateReducer } from 'utils/utils'
 import * as actions from './action-types'
 export * from './constants'
@@ -19,6 +20,30 @@ function setPage(state, action) {
   return Object.assign({}, state, { [domain]: { ...state[domain], pages }})
 }
 
+function clearPage(state, action) {
+  const { domain, payload } = action
+  const pages = state[domain] ? Object.assign({}, state[domain].pages) : {}
+  delete pages[payload]
+  return Object.assign({}, state, { [domain]: { ...state[domain], pages }})
+}
+
+function clearFromPageOnwards(state, action) {
+  const { domain, payload } = action
+  const domainState = state[domain]
+  if (!domainState || !domainState.pages) return state
+
+  const pages = Object.keys(domainState.pages).sort()
+  const index = pages.indexOf(payload)
+  pages.splice(pages.length - index)
+
+  return Object.assign({}, state, {
+    [domain]: {
+      ...domainState,
+      pages: omit(domainState.pages, pages)
+    }
+  })
+}
+
 function setPageNumber(state, action) {
   const { domain, payload } = action
   return Object.assign({}, state, { [domain]: { ...state[domain], pageNumber: payload }})
@@ -31,6 +56,8 @@ function setTotal(state, action) {
 
 const reducer = generateReducer({
   [actions.SET_PAGE]: setPage,
+  [actions.CLEAR_PAGE]: clearPage,
+  [actions.CLEAR_PAGE_AND_ONWARDS]: clearFromPageOnwards,
   [actions.SET_PAGE_NUMBER]: setPageNumber,
   [actions.SET_TOTAL]: setTotal
 }, initialState)

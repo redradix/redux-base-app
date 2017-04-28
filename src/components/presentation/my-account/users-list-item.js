@@ -17,7 +17,7 @@ class UsersListItem extends Component {
     goToEdit(id)
   }
   render() {
-    const { user: { id, name, surname, role }, hasPopup } = this.props
+    const { user: { id, name, surname, role }, hasPopup, onDeleteSuccess } = this.props
     const className = cx('action-item', { 'has-popup': hasPopup })
     return (
       <div className='user-list-item'>
@@ -31,7 +31,8 @@ class UsersListItem extends Component {
             <Popup actionName={`deleteUser(${id})`} icon='trash'
               title={t('my-account.users.delete.title')}
               message={t('my-account.users.delete.message')} />
-            <DeleteButton className='soft-button highlight' icon='trash' id={id} />
+            <DeleteButton className='soft-button highlight' icon='trash' id={id}
+              onDeleteSuccess={onDeleteSuccess} />
           </div>
         </div>
       </div>
@@ -44,6 +45,7 @@ UsersListItem.defaultProps = {
 }
 
 UsersListItem.propTypes = {
+  onDeleteSuccess: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,

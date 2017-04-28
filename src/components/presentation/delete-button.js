@@ -15,12 +15,14 @@ class DeleteButton extends Component {
 }
 
 DeleteButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  onDeleteSuccess: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired
 }
 
 const enhance = compose(
   confirmationTrigger(id => `deleteUser(${id})`, deleteUser),
-  clickable({ params: 'id' })
+  clickable({ params: ['id', 'onDeleteSuccess'] })
 )
 
 DeleteButton = enhance(DeleteButton)
