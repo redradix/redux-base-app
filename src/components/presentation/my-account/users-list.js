@@ -7,7 +7,7 @@ import { t } from 'core/i18n'
 
 class UsersList extends Component {
   renderUsersList() {
-    const { users } = this.props
+    const { users, forceRequest } = this.props
     return (
       <div className='users-list'>
         <div className='user-list-header'>
@@ -15,9 +15,13 @@ class UsersList extends Component {
           <a href='/my-account/users/new' className='button button-secondary button-large'>
             {t('my-account.users.new.title')}
           </a>
+          <a className='button button-secondary button-large' style={{ cursor: 'pointer' }}
+            onClick={forceRequest} >
+            Refresh
+          </a>
         </div>
         {users.map(user => (
-          <UsersListItem key={user.id} user={user} />
+          <UsersListItem key={user.id} user={user} onDeleteSuccess={forceRequest} />
         ))}
       </div>
     )
@@ -34,6 +38,7 @@ class UsersList extends Component {
 }
 
 UsersList.propTypes = {
+  forceRequest: PropTypes.func.isRequired,
   isReady: PropTypes.bool,
   setPageNumber: PropTypes.func.isRequired,
   currentPage: PropTypes.number.isRequired,

@@ -3,7 +3,7 @@ import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { connectRequest } from 'redux-query'
 import UsersList from 'components/presentation/my-account/users-list'
-import { isUserListReady, getUserListPage, getCurrentPage, getTotalUsers, storeUsers, setPageNumber } from 'services/users'
+import { isUserPageReady, getUserListPage, getCurrentPage, getTotalUsers, storeUsers, setPageNumber } from 'services/users'
 
 class UsersListContext extends Component {
   render() {
@@ -20,6 +20,7 @@ UsersListContext.defaultProps = {
 }
 
 UsersListContext.propTypes = {
+  forceRequest: PropTypes.func.isRequired,
   isReady: PropTypes.bool,
   storeUsers: PropTypes.func.isRequired,
   setPageNumber: PropTypes.func.isRequired,
@@ -42,14 +43,17 @@ const mapStateToProps = (state) => {
     currentPage,
     totalUsers: getTotalUsers(state),
     users: getUserListPage(state, currentPage),
-    isReady: isUserListReady(state)
+    isReady: isUserPageReady(state, currentPage)
   }
 }
 
 const mapDispatchToProps = { storeUsers, setPageNumber }
 
 const mapPropsToQuery = (props) => ({
-  url: `/api/user/list?page=${props.currentPage}`,
+  url: '/api/users',
+  force: !props.users.length || void 0, // Set to undefined rather than false
+  body: { page: props.currentPage },
+  queryKey: `users-list#${props.currentPage}`,
   transform: props.storeUsers,
   update: {} // Disregard redux-query update methods
 })

@@ -18,6 +18,8 @@ At the time of this writing, the latter does not support network request abortio
 
 <sup>1</sup> We actually use the [matthew-andrews/isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch), which is built on top of [github/fetch](https://github.com/github/fetch/) polyfill, which implements a subset of the standard.
 
+This adapter is now distributed as a [npm package](https://www.npmjs.com/package/fetch-adapter)!
+
 ## Step 1 - Composing our entities reducer with `redux-query`'s query reducer
 
 ```js
