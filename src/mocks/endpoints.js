@@ -88,9 +88,23 @@ if (process.env.NODE_ENV === 'development') {
     users = users.filter(u => u.id !== id)
     return {}
   })
+  fetchMock.post(new RegExp('/api/users/?$'), createUser)
   fetchMock.delete(new RegExp('/api/session'), {type: 'session', data: []})
   fetchMock.post(new RegExp('/api/session'), {type: 'session', data: {token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibWlndWVsIiwic3VybmFtZSI6Im1hcnRpbiIsImVtYWlsIjoiYUBhLmNvbSIsImlhdCI6MTQ4NzcwMTEyOCwiZXhwIjoxNDg3NzI5OTI4fQ.SUUccKC13c_gdlxUf5FN1o4xeIxF9lyWSJNn3N0PNiw'}})
   .catch((unmatchedUrl, options) => {
     return realFetch(unmatchedUrl, options)
   })
+}
+
+async function createUser(request) {
+  const { body } = await parseRequest(request)
+  const user = Object.assign({ id: `${users.length}` }, body)
+  users.push(user)
+  return { type: 'user', data: user }
+}
+
+async function parseRequest(request) {
+  const url = request.url
+  const body = await request.json()
+  return { url, body }
 }
