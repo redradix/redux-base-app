@@ -58,12 +58,7 @@ if (process.env.NODE_ENV === 'development') {
       data: users.find(u => u.id === id)
     }
   })
-  fetchMock.put(new RegExp('/api/users/\\d+'), function() {
-    return {
-      type: 'user',
-      data: users[0]
-    }
-  })
+  fetchMock.put(new RegExp('/api/users/\\d+/?$'), updateUser)
   fetchMock.get(new RegExp('/api/users'), function(url) {
     if (url instanceof Request) url = url.url
     const [, search] = url.split('?')
@@ -94,6 +89,15 @@ if (process.env.NODE_ENV === 'development') {
   .catch((unmatchedUrl, options) => {
     return realFetch(unmatchedUrl, options)
   })
+}
+
+async function updateUser(request) {
+  const { url, body } = await parseRequest(request)
+  const parts = url.split('/')
+  const id = parts.pop() || parts.pop() // trailing /
+  const index = users.findIndex(u => u.id === id)
+  users[index] = Object.assign(users[index], body) // NOTE: Don't mind updating id
+  return { type: 'user', data: users[0] }
 }
 
 async function createUser(request) {
