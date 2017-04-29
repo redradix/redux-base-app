@@ -13,7 +13,7 @@
   "dependencies": {
     "classnames": "2.2.5",
     "fastclick": "1.0.6",
-    "fetch-adapter": "0.1.0",
+    "fetch-adapter": "0.2.0",
     "i18next": "4.1.0",
     "immutable": "3.8.1",
     "isomorphic-fetch": "2.2.1",
