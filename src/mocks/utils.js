@@ -12,3 +12,5 @@ export function parseUrl(request) {
 
   return { url, queryString }
 }
+
+export const timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
