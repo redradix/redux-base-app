@@ -1,4 +1,4 @@
-import { omit } from 'lodash'
+import { pick } from 'lodash'
 import { generateReducer } from 'utils/utils'
 import * as actions from './action-types'
 export * from './constants'
@@ -42,13 +42,13 @@ function clearFromPageOnwards(state, action) {
   if (!domainState || !domainState.pages) return state
 
   const pages = Object.keys(domainState.pages).sort()
-  const index = pages.indexOf(payload)
-  pages.splice(pages.length - index)
+  const index = pages.indexOf(`${payload}`) // NOTE: Object property (string)
+  pages.splice(index)
 
   return Object.assign({}, state, {
     [domain]: {
       ...domainState,
-      pages: omit(domainState.pages, pages)
+      pages: pick(domainState.pages, pages)
     }
   })
 }
