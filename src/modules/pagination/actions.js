@@ -6,6 +6,12 @@ export const setPage = (domain, pageNumber, ids) => ({
   payload: { [pageNumber]: ids }
 })
 
+export const setCurrentPage = (domain, ids) => ({
+  domain,
+  type: actions.SET_CURRENT_PAGE,
+  payload: ids
+})
+
 export const clearPage = (domain, pageNumber) => ({
   domain,
   type: actions.CLEAR_PAGE,

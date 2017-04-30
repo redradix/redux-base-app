@@ -20,6 +20,15 @@ function setPage(state, action) {
   return Object.assign({}, state, { [domain]: { ...state[domain], pages }})
 }
 
+function setCurrentPage(state, action) {
+  const { domain, payload } = action
+  const domainState = state[domain] || { pages: {} }
+  const pageNumber = domainState.pageNumber || 0
+  const pages = Object.assign({}, domainState.pages, { [pageNumber]: payload })
+
+  return Object.assign({}, state, { [domain]: { ...domainState, pages }})
+}
+
 function clearPage(state, action) {
   const { domain, payload } = action
   const pages = state[domain] ? Object.assign({}, state[domain].pages) : {}
@@ -56,6 +65,7 @@ function setTotal(state, action) {
 
 const reducer = generateReducer({
   [actions.SET_PAGE]: setPage,
+  [actions.SET_CURRENT_PAGE]: setCurrentPage,
   [actions.CLEAR_PAGE]: clearPage,
   [actions.CLEAR_PAGE_AND_ONWARDS]: clearFromPageOnwards,
   [actions.SET_PAGE_NUMBER]: setPageNumber,
