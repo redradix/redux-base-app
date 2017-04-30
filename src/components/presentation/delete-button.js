@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { compose } from 'redux'
 import { deleteUser } from 'services/users'
-import Button from 'components/presentation/button'
 import clickable from 'components/interaction/clickable'
 import confirmationTrigger from 'modules/confirm/components/confirmation-trigger'
 
@@ -9,7 +8,9 @@ class DeleteButton extends Component {
   render() {
     const { onClick } = this.props
     return (
-      <Button className='soft-button highlight' icon='trash' onClick={onClick} />
+      <a className='soft-button highlight' onClick={onClick}>
+        <span className='icon icon-trash' aria-hidden />
+      </a>
     )
   }
 }

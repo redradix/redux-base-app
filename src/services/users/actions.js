@@ -7,7 +7,6 @@ import { getPageNumber, setCurrentPage, clearFromPageOnwards, setTotal } from 'm
 import { DOMAIN, ENDPOINT, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
-import { push } from 'react-router-redux'
 
 export const storeUser = ({ data }) => (dispatch) => {
   const entities = { users: { [data.id]: data } }
@@ -70,8 +69,4 @@ export const updateUser = (data) => (dispatch) => dispatch(
 
 export function setPageNumber(pageNumber) {
   return setPageN(DOMAIN, pageNumber)
-}
-
-export function goToEdit(id) {
-  return push(`/my-account/users/edit/${id}`)
 }
