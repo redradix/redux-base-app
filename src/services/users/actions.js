@@ -3,7 +3,7 @@ import { mutateAsync } from 'redux-query'
 import { batch } from 'utils/batch'
 import { setIn, deleteIn } from 'modules/ui'
 import { merge, remove } from 'modules/entities'
-import { getPageNumber, setPage, clearFromPageOnwards, setTotal } from 'modules/pagination'
+import { getPageNumber, setCurrentPage, clearFromPageOnwards, setTotal } from 'modules/pagination'
 import { DOMAIN, ENDPOINT, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
@@ -15,13 +15,12 @@ export const storeUser = ({ data }) => (dispatch) => {
   return entities
 }
 
-export const storeUsers = ({ data }) => (dispatch, getState) => {
+export const storeUsers = ({ data }) => (dispatch) => {
   const { users, pagination: { total } } = data
   const { entities, result } = normalize(users, [userSchema])
-  const pageNumber = getPageNumber(getState(), DOMAIN)
   dispatch(batch('STORE_USERS', [
     merge(entities),
-    setPage(DOMAIN, pageNumber, result),
+    setCurrentPage(DOMAIN, result),
     setTotal(DOMAIN, total)
   ]))
   return entities
