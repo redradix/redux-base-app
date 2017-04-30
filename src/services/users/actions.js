@@ -3,7 +3,7 @@ import { mutateAsync } from 'redux-query'
 import { batch } from 'utils/batch'
 import { setIn, deleteIn } from 'modules/ui'
 import { merge, remove } from 'modules/entities'
-import { getPageNumber, setCurrentPage, clearFromPageOnwards, setTotal } from 'modules/pagination'
+import { getPageNumber, setCurrentPage, clearFromPageOnwards, getTotal, setTotal } from 'modules/pagination'
 import { DOMAIN, ENDPOINT, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
@@ -30,6 +30,7 @@ export const deleteUser = (id, callback) => (dispatch, getState) => dispatch(
   // NOTE: When server responds with 204 (no content), redux-query will not
   // call either of the callback functions, transform and update
   dispatch(remove(DOMAIN, id))
+  dispatch(setTotal(DOMAIN, getTotal(getState(), DOMAIN) - 1))
   dispatch(clearFromPageOnwards(DOMAIN, getPageNumber(getState(), DOMAIN)))
   callback()
 })
