@@ -8,21 +8,16 @@ import { DOMAIN, ENDPOINT, userSchema } from './'
 
 import { setPageNumber as setPageN } from 'modules/pagination'
 
-export const storeUser = ({ data }) => (dispatch) => {
-  const entities = { users: { [data.id]: data } }
-  dispatch(merge(entities))
-  return entities
-}
+export const storeUser = ({ data }) => merge({ users: { [data.id]: data } })
 
-export const storeUsers = ({ data }) => (dispatch) => {
+export function storeUsers({ data }) {
   const { users, pagination: { total } } = data
   const { entities, result } = normalize(users, [userSchema])
-  dispatch(batch('STORE_USERS', [
+  return batch('STORE_USERS',
     merge(entities),
     setCurrentPage(DOMAIN, result),
     setTotal(DOMAIN, total)
-  ]))
-  return entities
+  )
 }
 
 export const deleteUser = (id, callback) => (dispatch, getState) => dispatch(
