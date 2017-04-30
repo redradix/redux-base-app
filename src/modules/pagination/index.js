@@ -45,9 +45,13 @@ function clearFromPageOnwards(state, action) {
   const index = pages.indexOf(`${payload}`) // NOTE: Object property (string)
   pages.splice(index)
 
+  let pageNumber = domainState.pageNumber || 0
+  if (pageNumber >= payload) pageNumber = Number(pages[pages.length - 1])
+
   return Object.assign({}, state, {
     [domain]: {
       ...domainState,
+      pageNumber,
       pages: pick(domainState.pages, pages)
     }
   })
