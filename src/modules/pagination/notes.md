@@ -1,3 +1,14 @@
+Right now, the pagination API is very low level:
+
+* `setPage`
+* `setCurrentPage`
+* `clearPage`
+* `clearFromPageOnwards`
+* `setPageNumber`
+* `setTotal`
+
+We can actually make some of these changes reacting to actions from the entities module (remove, add...)
+
 Pagination domains will be every visualization (page) that uses entities
 
 pagination: {
