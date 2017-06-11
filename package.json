@@ -16,6 +16,7 @@
     "fetch-adapter": "0.2.0",
     "i18next": "4.1.0",
     "immutable": "3.8.1",
+    "invariant": "2.2.2",
     "isomorphic-fetch": "2.2.1",
     "lodash": "4.17.2",
     "moment": "2.17.0",
