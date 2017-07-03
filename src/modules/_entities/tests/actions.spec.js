@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import * as actions from '../_action-types'
-import { merge } from '../_actions'
+import * as actions from '../action-types'
+import { merge } from '../actions'
 
 const state = {
   todos: {

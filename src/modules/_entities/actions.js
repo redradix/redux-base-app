@@ -1,6 +1,6 @@
 import invariant from 'invariant'
 import { isPlainObject } from 'lodash'
-import * as actions from './_action-types'
+import * as actions from './action-types'
 
 const isSchemaDictionary = (schemaDictionary) =>
   isPlainObject(schemaDictionary) && Object.keys(schemaDictionary).reduce(

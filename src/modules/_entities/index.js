@@ -1,7 +1,7 @@
-import * as actions from './_action-types'
+import * as actions from './action-types'
 export * from './constants'
-export * from './_actions'
-export * from './_selectors'
+export * from './actions'
+export * from './selectors'
 
 /**
  * @overview Entities module's initial state and reducer

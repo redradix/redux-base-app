@@ -1,7 +1,7 @@
 import { expect } from 'chai'
-import reducer from '../_index'
-import * as actions from '../_action-types'
-import { merge } from '../_actions'
+import reducer from '../index'
+import * as actions from '../action-types'
+import { merge } from '../actions'
 
 const state = {
   todos: {

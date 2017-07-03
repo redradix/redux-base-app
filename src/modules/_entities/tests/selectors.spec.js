@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import { pick } from 'lodash'
 import { moduleName } from '../constants'
-import { get } from '../_selectors'
+import { get } from '../selectors'
 
 const state = {
   [moduleName]: {
