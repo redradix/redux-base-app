@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import reducer from '../index'
 import * as actions from '../action-types'
-import { merge } from '../actions'
+import { merge, remove } from '../actions'
 
 const state = {
   todos: {
@@ -62,6 +62,82 @@ describe('Reducer', function() {
       newState = reducer(state, action)
 
       expect(state.todos[1]).to.equal(newState.todos[1])
+    })
+
+  })
+
+  describe(`${actions.CLEAR} action -- Clear all entities' state`, function() {
+
+    it('Returns entities\' initial state', function() {
+      const action = remove()
+      const newState = reducer(state, action)
+
+      expect(newState).to.deep.equal({})
+      expect(newState).to.deep.equal(reducer())
+    })
+
+  })
+
+  describe(`${actions.REMOVE_SCHEMAS} action -- Remove schemas state`, function() {
+
+    it('Removes schemas from the state', function() {
+      const action = remove('todos')
+      const newState = reducer(state, action)
+
+      expect(state).to.have.a.property('todos')
+      expect(state).to.have.a.property('things')
+      expect(newState).to.not.have.a.property('todos')
+      expect(newState).to.have.a.property('things')
+    })
+
+    it('Ignores missing schemas', function() {
+      const action = remove('schema')
+      expect(() => reducer(state, action)).to.not.throw()
+    })
+
+    xit('Does not perform mutations on the state unless strictly necessary (help wanted!)', function() {
+      const action = remove('schema')
+
+      const newState = reducer(state, action)
+      expect(newState).to.equal(state)
+    })
+
+  })
+
+  describe(`${actions.REMOVE_ENTITIES} action -- Remove schemas state`, function() {
+
+    it('Removes entities from the state', function() {
+      const action = remove('todos', 1)
+      const newState = reducer(state, action)
+
+      expect(state.todos).to.have.a.property(1)
+      expect(state.todos).to.have.a.property(2)
+      expect(newState.todos).to.not.have.a.property(1)
+      expect(newState.todos).to.have.a.property(2)
+    })
+
+    it('Ignores missing entities', function() {
+      const action = remove('todos', 3)
+      expect(() => reducer(state, action)).to.not.throw()
+
+      const newState = reducer(state, action)
+      expect(newState).to.deep.equal(state)
+    })
+
+    xit('Does not perform mutations on the state unless strictly necessary (help wanted!)', function() {
+      const action = remove('todos', 3)
+      const newState = reducer(state, action)
+      expect(newState).to.equal(state)
+      action = remove('schema', 1)
+      newState = reducer(state, action)
+      expect(newState).to.equal(state)
+    })
+
+    it('Missing schemas are added empty', function() {
+      const action = remove('schema', 1)
+      const newState = reducer(state, action)
+      expect(newState).to.have.a.property('schema')
+      expect(newState.schema).to.not.have.a.property(1)
     })
 
   })

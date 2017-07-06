@@ -1,3 +1,4 @@
+import { omit } from 'lodash'
 import * as actions from './action-types'
 export * from './constants'
 export * from './actions'
@@ -34,11 +35,19 @@ function mergeSchemas(state, schemaDictionary) {
   }, Object.assign({}, state))
 }
 
-function reducer(state = initialState, action) {
+function reducer(state = initialState, action = {}) {
   const { type, payload } = action
   switch (type) {
   case actions.MERGE:
     return mergeSchemas(state, payload)
+  case actions.REMOVE_SCHEMAS:
+    return omit(state, payload)
+  case actions.REMOVE_ENTITIES:
+    return Object.assign({}, state, {
+      [payload.schema]: omit(state[payload.schema], payload.entities)
+    })
+  case actions.CLEAR:
+    return initialState
   default:
     return state
   }
