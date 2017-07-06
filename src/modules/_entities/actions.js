@@ -2,33 +2,33 @@ import invariant from 'invariant'
 import { isPlainObject } from 'lodash'
 import * as actions from './action-types'
 
-const isSchemaDictionary = (schemaDictionary) =>
-  isPlainObject(schemaDictionary) && Object.keys(schemaDictionary).reduce(
-    (acc, sc) => acc && isPlainObject(schemaDictionary[sc])
+const isSchemaDictionary = (domainDictionary) =>
+  isPlainObject(domainDictionary) && Object.keys(domainDictionary).reduce(
+    (acc, sc) => acc && isPlainObject(domainDictionary[sc])
   , true)
 
-export function merge(schema, id, body) {
+export function merge(domain, id, body) {
   let entities = {}
   if (arguments.length === 1) {
-    invariant(isSchemaDictionary(schema),
-      'If a single argument is provided, it must be a dictionary of schemas'
+    invariant(isSchemaDictionary(domain),
+      'If a single argument is provided, it must be a dictionary of domains'
     )
-    entities = schema
+    entities = domain
   } else if (arguments.length > 1) {
-    invariant(typeof schema === 'string',
+    invariant(typeof domain === 'string',
       `Schema must be a string when passing ${arguments.length} arguments`
     )
     if (arguments.length === 2) {
       invariant(isPlainObject(id),
         'Id must be an object when passing 2 arguments'
       )
-      entities = { [schema]: id }
+      entities = { [domain]: id }
     } else {
       invariant((typeof id === 'string' || typeof id === 'number') &&
         isPlainObject(body),
         'Id must be an object when passing 2 arguments'
       )
-      entities = { [schema]: { [id]: body } }
+      entities = { [domain]: { [id]: body } }
     }
   }
 
@@ -38,21 +38,21 @@ export function merge(schema, id, body) {
   }
 }
 
-export function remove(schema, id) {
+export function remove(domain, id) {
   if (arguments.length === 0) return { type: actions.CLEAR }
 
   if (arguments.length === 1) {
-    invariant(typeof schema === 'string' || Array.isArray(schema),
+    invariant(typeof domain === 'string' || Array.isArray(domain),
       'Schema must be a string or an array of strings'
     )
 
     return {
-      type: actions.REMOVE_SCHEMAS,
-      payload: typeof schema === 'string' ? [schema] : schema
+      type: actions.REMOVE_DOMAINS,
+      payload: typeof domain === 'string' ? [domain] : domain
     }
   }
 
-  invariant(typeof schema === 'string',
+  invariant(typeof domain === 'string',
     'Schema must be a string when passing two arguments'
   )
 
@@ -64,7 +64,7 @@ export function remove(schema, id) {
   return {
     type: actions.REMOVE_ENTITIES,
     payload: {
-      schema,
+      domain,
       entities: Array.isArray(id) ? id : [id]
     }
   }

@@ -1,5 +1,6 @@
+import { moduleName } from './constants'
 
-export const MERGE = 'MERGE'
-export const REMOVE_SCHEMAS = 'REMOVE_SCHEMAS'
-export const REMOVE_ENTITIES = 'REMOVE_ENTITIES'
-export const CLEAR = 'CLEAR'
+export const MERGE = `${moduleName}/MERGE`
+export const REMOVE_DOMAINS = `${moduleName}/REMOVE_DOMAINS`
+export const REMOVE_ENTITIES = `${moduleName}/REMOVE_ENTITIES`
+export const CLEAR = `${moduleName}/CLEAR`

@@ -1,52 +1,77 @@
-# [RFC] Entities module
+# Entities module
 
-This is a _work in progress_ for the API definition of the entities module.
+**Work in progress**
+
+* Selectors
+  * [x] `get`
+* Action creators:
+  * [x] `merge`
+  * [ ] `replace`
+  * [ ] `update`
+  * [x] `delete`
+    * [ ] `delete(domain, testFn)`
+
+
+## Terminology
+
+* **domain** (`domain`): A _String_ referring to all entities of a same kind
+* **entity** (`entity`): An _Object_ containing arbitrary properties
+* **entity id** (`id`) A _Number_ or _String_ that unequivocally identifies an entity within a domain
+* **entity dictionary** (`entityDictionary`): An _Object_ whose keys are entity ids and whose values are entities
+* **domain dictionary** (`domainDictionary`): An _Object_ whose keys are domains and whose values are entity dictionaries
+
+```js
+const domain = 'todos'
+const entity = { id: 1, title: 'Do something', completed: true }
+const entityDictionary = { [entity.id]: entity }
+const domainDictionary = { [domain]: entityDictionary }
+```
+
 
 ## API
 
-### Selectors
+### Actions
 
-#### `get(state, [schema, [id]])`
-
-Retrieve entities from the application state. This selector accepts up to two arguments besides the entire state:
-
-* `[schema]` (_String_ or _Array_):
-  The schema (or schemas) to be retrieved. If not provided, an schema dictionary will be returned.
-
-* `[id]` (_String_ or _Array_ or _Function_):
-  The id (or a list of ids) of entities to be retrieved, or a function used to test whether or not each entity should be included. If not provided, the entire schema (entity dictionary) will be returned.
-
-Usage:
-
-```js
-get(state)                                    // all entities
-
-get(state, 'todos')                           // all todos
-get(state, ['todos', 'users'])                // all todos and users
-
-get(state, 'todos', 1)                        // a single todo
-get(state, 'todos', [1, 2])                   // some todos
-get(state, 'todos', (todo) => todo.completed) // all completed todos
-```
+| Action                     | Payload               | Result |
+|----------------------------|-----------------------|--------|
+| `entities/MERGE`           | `domainDictionary`    | Merges `domainDictionary` into the state, entity by entity
+| `entities/REMOVE_DOMAINS`  | `...domains`          | Removes entity dictionaries corresponding to `...domains` from the state
+| `entities/REMOVE_ENTITIES` | `domain` and `...ids` | Removes entities corresponding to `...ids` from `domain`'s entity dictionary'
+| `entities/CLEAR`           |                       | Clears all state
 
 ### Action creators
 
-#### `merge(schema, [id, [body]])`
+#### `merge`
 
-Merges one or more entities, updating existing ones or creating new ones when necessary. This method accepts up to three arguments:
+Merge domain dictionaries, entity dictionaries or individual entities into the state.
 
-* `schema` (_Object_ or _String_):
-  If an object is passed, each property in it is expected to be an entity dictionary. If a string is passed, it will be used as the schema upon which the entities are to be merged.
+* Merges all entities included in the action payload, leaving other entities unmodified
+* Adds domains and entities not already present in the state
 
-* `[id]` (_Object_ or _String_):
-  If an object is passed, each property in it is expected to be an entity body. If a string is passed, it will be used as the id of the entity to be merged. If this argument is passed, a string must be provided as `schema`.
+##### `merge([domainDictionary])`
 
-* `[body]` (_Object_):
-  The entity body to be merged. If this argument is passed, a string must be provided as `id`.
+Merge a domain dictionary.
+
+* If called with no arguments, returns an empty entities/MERGE action
+* Returns a `entities/MERGE` action containing the domain dictionary
+
+##### `merge(domain, entityDictionary)`
+
+Merge an entity dictionary.
+
+* Returns a `entities/MERGE` action containing the entity dictionary
+
+##### `merge(domain, entityId, entityBody)`
+
+Merge a single entity.
+
+* Returns a entities/MERGE action containing the entity
 
 Usage:
 
 ```js
+import { merge } from 'modules/entities'
+
 merge({ todos: { 1: { title: 'Foo' }, 2: { title: 'Bar' } } })
 
 merge('todos', { 3: { title: 'Baz' }, 4: { title: 'Qux' } })
@@ -54,44 +79,93 @@ merge('todos', { 3: { title: 'Baz' }, 4: { title: 'Qux' } })
 merge('todos', 1, { completed: true })
 ```
 
-#### `replace(schema, [id, [body]])`
+#### `remove`
 
-Merges one or more entities, creating new ones when necessary. This method accepts up to three arguments:
+Remove entire domains or entities from the state.
 
-* `schema` (_Object_ or _String_):
-  If an object is passed, each property in it is expected to be an entity dictionary. These will replace the current ones entirely.
-  If a string is passed, it will be used as the schema upon which the entities are to be replaced.
+##### `remove([...domains])`
 
-* `[id]` (_Object_ or _String_):
-  If an object is passed, each property in it is expected to be an entity body. These will replace the current ones entirely. If a string is passed, it will be used as the id of the entity to be merged. If this argument is passed, a string must be provided as `schema`.
+Remove entire domains.
 
-* `[body]` (_Object_):
-  The entity body to be replaced. If this argument is passed, a string must be provided as `id`.
+* If called with no arguments, returns a `entities/CLEAR` action
+* Returns a `entities/REMOVE_DOMAINS` action for the given domains
+* Domains not present in the state are ignored
+
+##### `remove(domain, ids)`
+
+Remove entities.
+
+* Returns a `entities/REMOVE_ENTITIES` action for the given entities
+* Entities not present in the state are ignored
+* Empty entity dictionaries are added for domains not already present in the state
 
 Usage:
 
 ```js
-replace({ todos: { 1: { title: 'Foo', completed: true }, 2: { title: 'Bar' } } })
+import { remove } from 'modules/entities'
 
-replace('todos', { 3: { title: 'Baz' }, 4: { title: 'Qux' } })
+remove()                                  // all entities' state
 
-replace('todos', 1, { title: 'Foo' })
+remove('todos')                           // all todos
+remove(['todos', 'users'])                // all todos and users
+
+remove('todos', 1)                        // a single todo
+remove('todos', [1, 2])                   // some todos
+remove('todos', (todo) => todo.completed) // all completed todos
 ```
 
-#### `update(schema, [id], updater)`
+### Selectors
 
-Update one or more entities or schemas. This method accepts up to two arguments:
+#### `get`
 
-* `schema` (_String_):
-  The schema whose entries are to be updated.
+Retrieve domain dictionaries, entity dictionaries or individual entities from the state.
 
-* `[id]` (_String_ or _Array_ or _Function_):
-  The id or ids to be deleted.
+##### `get(state, [...domains])`
 
-* `updater` (_Function_):
-  The updater function. It will be passed each selected entity and it must return its updated version.
+Retrieve domain dictionaries.
+
+* If only passed the application state, returns the entire domain dictionary
+* If passed an array of domains, returns a dictionary mapping them to their entity dictionaries
+* Empty entity dictionaries are returned for domains not present in the state
+
+
+##### `get(state, domain, [...ids|predicate])`
+
+Retrieve entity dictionaries.
+
+* If only passed a domain, returns its entity dictionary
+* If passed an array of ids, returns a dictionary mapping them to the corresponding entities in the domain
+* Ids not present in the domain will not be included in the resulting dictionary
+* If passed a predicate function, returns a dictionary of all entities satisfying it
+* An empty dictionary is returned if the domain is missing from the state
+
+##### `get(state, domain, id)`
+
+Retrieve individual entities.
+
+* If passed a single id, returns the corresponding entity in the domain
+* Undefined is returned if either the domain or the entity are not present in the state
 
 Usage:
+
+```js
+import { get } from 'modules/entities'
+
+get(state)                                    // all domains
+get(state, ['todos', 'users'])                // some domains
+
+get(state, 'todos')                           // all todos
+get(state, 'todos', [1, 2])                   // some todos
+get(state, 'todos', (todo) => todo.completed) // all completed todos
+
+get(state, 'todos', 1)                        // a single todo
+```
+
+
+## Future work
+
+* Use memoized selectors
+* Add `update` action creator. Usage:
 
 ```js
 const completeTodo = (todo) => ({ ...todo, completed: true })
@@ -103,25 +177,12 @@ update('todos', [1, 2], completeTodo) // complete some todos
 update('todos', (todo) => !todo.completed, completeTodo) // complete all todos not yet completed
 ```
 
-#### `remove([schema, [id]])`
-
-Remove one or more entities or schemas. This method accepts up to two arguments:
-
-* `[schema]` (_String_ or _Array_):
-  The schema (or schemas) to be deleted.
-
-* `[id]` (_String_ or _Array_ or _Function_):
-  The id or ids to be deleted. If this argument is passed, a string must be provided as `schema`.
-
-Usage:
+* Add `replace` action creator (like `merge` but replacing, huh). Usage:
 
 ```js
-remove()                                  // all entities
+replace({ todos: { 1: { title: 'Foo', completed: true }, 2: { title: 'Bar' } } })
 
-remove('todos')                           // all todos
-remove(['todos', 'users'])                // all todos and users
+replace('todos', { 3: { title: 'Baz' }, 4: { title: 'Qux' } })
 
-remove('todos', 1)                        // a single todo
-remove('todos', [1, 2])                   // some todos
-remove('todos', (todo) => todo.completed) // all completed todos
+replace('todos', 1, { title: 'Foo' })
 ```

@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import reducer from '../index'
 import * as actions from '../action-types'
 import { merge, remove } from '../actions'
@@ -15,131 +14,125 @@ const state = {
 }
 
 describe('Reducer', function() {
-
-  describe(`${actions.MERGE} action -- Merges entities into the state`, function() {
-
-    it(`Returns the same state (===) for empty ${actions.MERGE} actions`, function() {
+  describe(`${actions.MERGE} action - Merge domains and entities into the state`, function() {
+    it(`Returns the same state for empty ${actions.MERGE} actions`, function() {
       const action = merge()
-      expect(() => reducer(state, action)).to.not.throw()
-      const newState = reducer(state, action)
-      expect(newState).to.equal(state)
+      expect(() => reducer(state, action)).not.toThrow()
+      const nextState = reducer(state, action)
+      expect(nextState).toBe(state)
     })
 
-    it('Merges all entities included in the action payload, leaving other entities and schemas unmodified', function() {
+    it('Merges all entities included in the action payload, leaving other entities unmodified', function() {
       const action = merge('todos', 2, { completed: true })
-      const newState = reducer(state, action)
+      const nextState = reducer(state, action)
 
-      expect(newState).to.not.equal(state)
+      expect(nextState).not.toBe(state)
 
-      expect(newState.todos).to.not.equal(state.todos)
-      expect(newState.things).to.equal(state.things)
+      expect(nextState.todos).not.toBe(state.todos)
+      expect(nextState.things).toBe(state.things)
 
-      expect(newState.todos[1]).to.equal(state.todos[1])
-      expect(newState.todos[2]).to.not.equal(state.todos[2])
-      expect(newState.todos[2].completed).to.be.true
+      expect(nextState.todos[1]).toBe(state.todos[1])
+      expect(nextState.todos[2]).not.toBe(state.todos[2])
+      expect(nextState.todos[2].completed).toBe(true)
     })
 
-    it('Creates schemas and entities if they did not exist in the previous state', function() {
+    it('Adds domains and entities not already present in the state', function() {
       const todo = { id: 3, title: 'Do nothing' }
-      // const action = merge('todos', 3, todo)
       const action = merge({ todos: { 3: todo }, stuff: {} })
-      const newState = reducer(state, action)
+      const nextState = reducer(state, action)
 
-      expect(state.stuff).to.be.undefined
-      expect(newState).to.have.a.property('stuff')
-      expect(state.todos[3]).to.be.undefined
-      expect(newState.todos).to.have.a.property(3)
-      expect(newState.todos[3]).to.equal(todo)
+      expect(state).not.toHaveProperty('stuff')
+      expect(nextState).toHaveProperty('stuff')
+      expect(nextState.stuff).toBeEmptyObject()
+      expect(state).not.toHaveProperty('todos.3')
+      expect(nextState).toHaveProperty('todos.3')
+      expect(nextState.todos[3]).toBe(todo)
     })
 
-    xit('Does not perform mutations on schemas or entities unless necessary (help wanted!)', function() {
+    xit('Does not perform mutations on domains or entities unless necessary (help wanted!)', function() {
       let action = merge('todos', {})
-      let newState = reducer(state, action)
+      let nextState = reducer(state, action)
 
-      expect(state.todos).to.equal(newState.todos)
+      expect(state.todos).toBe(nextState.todos)
 
       action = merge('todos', 1, {})
-      newState = reducer(state, action)
+      nextState = reducer(state, action)
 
-      expect(state.todos[1]).to.equal(newState.todos[1])
+      expect(state.todos[1]).toBe(nextState.todos[1])
     })
-
   })
 
-  describe(`${actions.CLEAR} action -- Clear all entities' state`, function() {
-
-    it('Returns entities\' initial state', function() {
+  describe(`${actions.CLEAR} action - Clear all entities' state`, function() {
+    it('Returns the initial state', function() {
       const action = remove()
-      const newState = reducer(state, action)
+      const nextState = reducer(state, action)
 
-      expect(newState).to.deep.equal({})
-      expect(newState).to.deep.equal(reducer())
+      expect(nextState).toEqual({})
+      expect(nextState).toEqual(reducer())
     })
-
   })
 
-  describe(`${actions.REMOVE_SCHEMAS} action -- Remove schemas state`, function() {
-
-    it('Removes schemas from the state', function() {
+  describe(`${actions.REMOVE_DOMAINS} action - Remove entity dictionaries`, function() {
+    it('Removes entity dictionaries of the domains included in the action payload', function() {
       const action = remove('todos')
-      const newState = reducer(state, action)
+      const nextState = reducer(state, action)
 
-      expect(state).to.have.a.property('todos')
-      expect(state).to.have.a.property('things')
-      expect(newState).to.not.have.a.property('todos')
-      expect(newState).to.have.a.property('things')
+      expect(state).toHaveProperty('todos')
+      expect(state).toHaveProperty('things')
+      expect(nextState).not.toHaveProperty('todos')
+      expect(nextState).toHaveProperty('things')
     })
 
-    it('Ignores missing schemas', function() {
-      const action = remove('schema')
-      expect(() => reducer(state, action)).to.not.throw()
+    it('Domains not present in the state are ignored', function() {
+      const action = remove('domain')
+      expect(() => reducer(state, action)).not.toThrow()
+      const nextState = reducer(state, action)
+      expect(state).not.toHaveProperty('domain')
+      expect(nextState).not.toHaveProperty('domain')
     })
 
     xit('Does not perform mutations on the state unless strictly necessary (help wanted!)', function() {
-      const action = remove('schema')
+      const action = remove('domain')
 
-      const newState = reducer(state, action)
-      expect(newState).to.equal(state)
+      const nextState = reducer(state, action)
+      expect(nextState).toBe(state)
     })
-
   })
 
-  describe(`${actions.REMOVE_ENTITIES} action -- Remove schemas state`, function() {
-
-    it('Removes entities from the state', function() {
+  describe(`${actions.REMOVE_ENTITIES} action - Remove domains state`, function() {
+    it('Removes all entities included in the action payload from the domain\'s entity dictionary', function() {
       const action = remove('todos', 1)
-      const newState = reducer(state, action)
+      const nextState = reducer(state, action)
 
-      expect(state.todos).to.have.a.property(1)
-      expect(state.todos).to.have.a.property(2)
-      expect(newState.todos).to.not.have.a.property(1)
-      expect(newState.todos).to.have.a.property(2)
+      expect(state.todos).toHaveProperty('1')
+      expect(state.todos).toHaveProperty('2')
+      expect(nextState.todos).not.toHaveProperty('1')
+      expect(nextState.todos).toHaveProperty('2')
     })
 
-    it('Ignores missing entities', function() {
+    it('Entities not present in the state are ignored', function() {
       const action = remove('todos', 3)
-      expect(() => reducer(state, action)).to.not.throw()
+      expect(() => reducer(state, action)).not.toThrow()
 
-      const newState = reducer(state, action)
-      expect(newState).to.deep.equal(state)
+      const nextState = reducer(state, action)
+      expect(nextState).toEqual(state)
+    })
+
+    it('Empty entity dictionaries are added for domains not already present in the state', function() {
+      const action = remove('domain', 1)
+      const nextState = reducer(state, action)
+      expect(nextState).toHaveProperty('domain')
+      expect(nextState.domain).not.toHaveProperty('1')
     })
 
     xit('Does not perform mutations on the state unless strictly necessary (help wanted!)', function() {
-      const action = remove('todos', 3)
-      const newState = reducer(state, action)
-      expect(newState).to.equal(state)
-      action = remove('schema', 1)
-      newState = reducer(state, action)
-      expect(newState).to.equal(state)
-    })
+      let action = remove('todos', 3)
+      let nextState = reducer(state, action)
+      expect(nextState).toBe(state)
 
-    it('Missing schemas are added empty', function() {
-      const action = remove('schema', 1)
-      const newState = reducer(state, action)
-      expect(newState).to.have.a.property('schema')
-      expect(newState.schema).to.not.have.a.property(1)
+      action = remove('domain', 1)
+      nextState = reducer(state, action)
+      expect(nextState).toBe(state)
     })
-
   })
-
 })

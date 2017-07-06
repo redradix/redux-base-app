@@ -1,5 +1,3 @@
-import { expect } from 'chai'
-import { pick } from 'lodash'
 import { moduleName } from '../constants'
 import { get } from '../selectors'
 
@@ -13,104 +11,95 @@ const state = {
     things: {
       1: { id: 1, name: 'Foo' },
       2: { id: 2, name: 'Bar' }
-    },
-    stuff: {
-      1: { id: 1, name: 'Baz' },
-      2: { id: 2, name: 'Qux' }
     }
   }
 }
 
 describe('Selectors', function() {
-
-  describe('get', function() {
-
-    describe('get(state, [...schemas]) - Retrieve an object of entity dictionaries', function() {
-
-      it('If only passed the application state, returns all entity dictionaries', function() {
+  describe('get - Retrieve domain dictionaries, entity dictionaries or individual entities from the state', function() {
+    describe('get(state, [...domains]) - Retrieve domain dictionaries', function() {
+      it('If only passed the application state, returns the entire domain dictionary', function() {
         const result = get(state)
-        expect(result).to.equal(state[moduleName])
+        expect(result).toBe(state[moduleName])
       })
 
-      it('If passed an array of schemas, returns an object of their entity dictionaries', function() {
+      it('If passed an array of domains, returns a dictionary mapping them to their entity dictionaries', function() {
         const result = get(state, ['todos', 'things'])
-        expect(result).to.deep.equal(pick(state[moduleName], ['todos', 'things']))
+        expect(result).toHaveProperty('todos')
+        expect(result).toHaveProperty('things')
+        expect(result.todos).toBe(state[moduleName].todos)
+        expect(result.things).toBe(state[moduleName].things)
       })
 
-      it('Missing schemas are treated as they were empty', function() {
-        let result = get(state, ['missing'])
-        const missingState = { missing: {} }
-        expect(result).to.deep.equal(missingState)
-        result = get(state, ['todos', 'things', 'missing'])
-        const newState = Object.assign(pick(state[moduleName], ['todos', 'things']), missingState)
-        expect(result).to.deep.equal(newState)
+      it('Empty entity dictionaries are returned for domains not present in the state', function() {
+        const result = get(state, ['todos', 'missing'])
+        expect(result).toHaveProperty('todos')
+        expect(result).toHaveProperty('missing')
+        expect(result.todos).toBe(state[moduleName].todos)
+        expect(result.missing).toBeEmptyObject()
       })
-
-      it('If passed more than two arguments, the 2nd is enforced to be a string', function() {
-        expect(() => get(state, ['todos'], 'extra argument')).to.throw()
-      })
-
     })
 
-    describe('get(state, schema, [...ids|predicate]) - Retrieve a dictionary of entities', function() {
-
-      it('If only passed an schema, returns its entity dictionary', function() {
-        const result = get(state, 'todos')
-        expect(result).to.equal(state[moduleName].todos)
+    describe('get(state, domain, [...ids|predicate]) - Retrieve entity dictionaries', function() {
+      it('If only passed a domain, returns its entity dictionary', function() {
+        const entityDictionary = get(state, 'todos')
+        expect(entityDictionary).toBe(state[moduleName].todos)
       })
 
-      it('If the schema does not exist, returns an empty object (regardless of the remaining arguments)', function() {
-        let result = get(state, 'missing')
-        expect(result).to.deep.equal({})
-        result = get(state, 'missing', [1, 2])
-        expect(result).to.deep.equal({})
-        result = get(state, 'missing', () => true)
-        expect(result).to.deep.equal({})
+      it('If passed more than two arguments, second is enforced to be a single domain', function() {
+        expect(() => get(state, ['todos'], undefined)).toThrow()
       })
 
-      it('If passed an array of ids, returns a dictionary of their corresponding entities\' bodies', function() {
-        const result = get(state, 'todos', [1, 2])
-        expect(result).to.deep.equal(pick(state[moduleName].todos, [1, 2]))
+      it('If passed an array of ids, returns a dictionary mapping them to the corresponding entities in the domain', function() {
+        const entityDictionary = get(state, 'todos', [1, 2])
+        expect(entityDictionary).toHaveProperty('1')
+        expect(entityDictionary).toHaveProperty('2')
+        expect(entityDictionary[1]).toBe(state[moduleName].todos[1])
+        expect(entityDictionary[2]).toBe(state[moduleName].todos[2])
       })
 
-      it('Ids not found in the schema will not be included in the resulting dictionary', function() {
-        let result = get(state, 'todos', [0])
-        expect(result).to.deep.equal({})
-        result = get(state, 'todos', [0, 1, 2])
-        expect(result).to.deep.equal(pick(state[moduleName].todos, [1, 2]))
+      it('Ids not present in the domain will not be included in the resulting dictionary', function() {
+        const entityDictionary = get(state, 'todos', [1, 0])
+        expect(entityDictionary).toHaveProperty('1')
+        expect(entityDictionary).not.toHaveProperty('0')
       })
 
-      it('If passed a predicate function, returns a dictionary with all entities that satisfy it', function() {
-        const result = get(state, 'todos', (todo) => todo.completed)
-        expect(result).to.deep.equal(pick(state[moduleName].todos, [1]))
+      it('If passed a predicate function, returns a dictionary of all entities satisfying it', function() {
+        let entityDictionary = get(state, 'todos', (todo) => !todo.completed)
+        expect(entityDictionary).toHaveProperty('2')
+        expect(entityDictionary).toHaveProperty('3')
+        expect(entityDictionary[2]).toBe(state[moduleName].todos[2])
+        expect(entityDictionary[3]).toBe(state[moduleName].todos[3])
+
+        entityDictionary = get(state, 'todos', () => false)
+        expect(entityDictionary).toBeEmptyObject()
       })
 
-      it('If no entity satisfies the condition, returns an empty object', function() {
-        const result = get(state, 'todos', () => false)
-        expect(result).to.deep.equal({})
-      })
+      it('An empty dictionary is returned if the domain is missing from the state', function() {
+        let entityDictionary = get(state, 'missing')
+        expect(entityDictionary).toBeEmptyObject()
 
+        entityDictionary = get(state, 'missing', [1, 2])
+        expect(entityDictionary).toBeEmptyObject()
+
+        entityDictionary = get(state, 'missing', () => true)
+        expect(entityDictionary).toBeEmptyObject()
+      })
     })
 
-    describe('get(state, schema, id) - Retrieve an entity body', function() {
-
-      it('If passed a single id, returns the corresponding entity\'s body', function() {
-        const result = get(state, 'todos', 1)
-        expect(result).to.equal(state[moduleName].todos[1])
+    describe('get(state, domain, id) - Retrieve individual entities', function() {
+      it('If passed a single id, returns the corresponding entity in the domain', function() {
+        const entity = get(state, 'todos', 1)
+        expect(entity).toBe(state[moduleName].todos[1])
       })
 
-      it('If the schema does not exist, returns undefined', function() {
-        const result = get(state, 'missing', 1)
-        expect(result).to.equal(void 0)
-      })
+      it('Undefined is returned if either the domain or the entity are not present in the state', function() {
+        let entity = get(state, 'missing', 1)
+        expect(entity).toBe(undefined)
 
-      it('If the id does not correspond to an entity, returns undefined', function() {
-        const result = get(state, 'todos', 0)
-        expect(result).to.equal(void 0)
+        entity = get(state, 'todos', 0)
+        expect(entity).toBe(undefined)
       })
-
     })
-
   })
-
 })

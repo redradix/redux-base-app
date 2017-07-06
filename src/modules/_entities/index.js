@@ -12,14 +12,14 @@ export * from './selectors'
 
 const initialState = {}
 
-function mergeSchemas(state, schemaDictionary) {
-  const schemas = Object.keys(schemaDictionary)
-  if (!schemas.length) return state
+function mergeSchemas(state, domainDictionary) {
+  const domains = Object.keys(domainDictionary)
+  if (!domains.length) return state
 
-  return schemas.reduce((acc, schema) => {
-    let entityDictionary = schemaDictionary[schema]
+  return domains.reduce((acc, domain) => {
+    let entityDictionary = domainDictionary[domain]
 
-    if (acc[schema]) {
+    if (acc[domain]) {
       entityDictionary = Object.keys(entityDictionary).reduce((acc2, entityId) => {
         let entity = entityDictionary[entityId]
 
@@ -28,10 +28,10 @@ function mergeSchemas(state, schemaDictionary) {
         }
 
         return Object.assign(acc2, { [entityId]: entity })
-      }, Object.assign({}, acc[schema]))
+      }, Object.assign({}, acc[domain]))
     }
 
-    return Object.assign(acc, { [schema]: entityDictionary })
+    return Object.assign(acc, { [domain]: entityDictionary })
   }, Object.assign({}, state))
 }
 
@@ -40,11 +40,11 @@ function reducer(state = initialState, action = {}) {
   switch (type) {
   case actions.MERGE:
     return mergeSchemas(state, payload)
-  case actions.REMOVE_SCHEMAS:
+  case actions.REMOVE_DOMAINS:
     return omit(state, payload)
   case actions.REMOVE_ENTITIES:
     return Object.assign({}, state, {
-      [payload.schema]: omit(state[payload.schema], payload.entities)
+      [payload.domain]: omit(state[payload.domain], payload.entities)
     })
   case actions.CLEAR:
     return initialState

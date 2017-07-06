@@ -1,4 +1,3 @@
-import { expect } from 'chai'
 import * as actions from '../action-types'
 import { merge, remove } from '../actions'
 
@@ -11,180 +10,159 @@ const state = {
   things: {
     1: { id: 1, name: 'Foo' },
     2: { id: 2, name: 'Bar' }
-  },
-  stuff: {
-    1: { id: 1, name: 'Baz' },
-    2: { id: 2, name: 'Qux' }
   }
 }
 
 describe('Action creators', function() {
+  describe('merge - Merge domain dictionaries, entity dictionaries or individual entities into the state', function() {
+    describe('merge([domainDictionary]) - Merge a domain dictionary', function() {
+      it(`If called with no arguments, returns an empty ${actions.MERGE} action`, function() {
+        const action = merge()
+        expect(action.type).toBe(actions.MERGE)
+        expect(action.payload).toBeEmptyObject()
+      })
 
-  describe('merge', function() {
+      it('If only passed one argument, it is expected to be a domain dictionary', function() {
+        expect(() => merge({ domain: {} })).not.toThrow()
+        expect(() => merge({})).not.toThrow() // NOTE: empty domain dictionary
+        expect(() => merge('string')).toThrow()
+        expect(() => merge(0)).toThrow()
+        expect(() => merge([])).toThrow()
+        expect(() => merge(void 0)).toThrow()
+        expect(() => merge(null)).toThrow()
+        expect(() => merge({ domain: 'string' })).toThrow()
+        expect(() => merge({ domain: 0 })).toThrow()
+        expect(() => merge({ domain: [] })).toThrow()
+        expect(() => merge({ domain: void 0 })).toThrow()
+        expect(() => merge({ domain: null })).toThrow()
+      })
 
-    it(`If called without arguments, an empty ${actions.MERGE} action is returned`, function() {
-      expect(merge()).to.deep.equal({ type: actions.MERGE, payload: {} })
+      it(`Returns a ${actions.MERGE} action containing the domain dictionary`, function() {
+        const action = merge(state)
+        expect(action.type).toBe(actions.MERGE)
+        expect(action.payload).toBe(state)
+      })
     })
 
-    describe('merge(schemaDictionary) - Merge a schema dictionary into the state', function() {
-
-      it('If only passed one argument, it is expected to be a dictionary of schemas', function() {
-        expect(() => merge({ schema: {} })).to.not.throw()
-        expect(() => merge({})).to.not.throw() // NOTE: empty schema dictionary
-        expect(() => merge('string')).to.throw()
-        expect(() => merge(0)).to.throw()
-        expect(() => merge([])).to.throw()
-        expect(() => merge(void 0)).to.throw()
-        expect(() => merge(null)).to.throw()
-        expect(() => merge({ schema: 'string' })).to.throw()
-        expect(() => merge({ schema: 0 })).to.throw()
-        expect(() => merge({ schema: [] })).to.throw()
-        expect(() => merge({ schema: void 0 })).to.throw()
-        expect(() => merge({ schema: null })).to.throw()
+    describe('merge(domain, entityDictionary) - Merge an entity dictionary', function() {
+      it('If passed more than one argument, first is expected to be a domain', function() {
+        expect(() => merge('string', 1, {})).not.toThrow()
+        expect(() => merge(0, {})).toThrow()
+        expect(() => merge([], 'string', {})).toThrow()
+        expect(() => merge({}, {})).toThrow()
+        expect(() => merge(void 0, 1, {})).toThrow()
+        expect(() => merge(null, {})).toThrow()
       })
 
-      it(`Returns a ${actions.MERGE} action containing the entire schema dictionary`, function() {
-        expect(merge(state)).to.deep.equal({
-          type: actions.MERGE,
-          payload: state
-        })
+      it('If passed two arguments, second is expected to be an entity dictionary', function() {
+        expect(() => merge('string', {})).not.toThrow()
+        expect(() => merge('string', 'string')).toThrow()
+        expect(() => merge('string', 0)).toThrow()
+        expect(() => merge('string', [])).toThrow()
+        expect(() => merge('string', void 0)).toThrow()
+        expect(() => merge('string', null)).toThrow()
       })
 
+      it(`Returns a ${actions.MERGE} action containing the entity dictionary`, function() {
+        const action = merge('todos', state.todos)
+        expect(action.type).toBe(actions.MERGE)
+        expect(action).toHaveProperty('payload.todos')
+        expect(action.payload.todos).toBe(state.todos)
+      })
     })
 
-    describe('merge(schema, entityDictionary) - Merge an entity dictionary into the state', function() {
-
-      it('If passed more than one argument, 1st is expected to be a string', function() {
-        expect(() => merge('string', 1, {})).to.not.throw()
-        expect(() => merge(0, {})).to.throw()
-        expect(() => merge([], 'string', {})).to.throw()
-        expect(() => merge({}, {})).to.throw()
-        expect(() => merge(void 0, 1, {})).to.throw()
-        expect(() => merge(null, {})).to.throw()
+    describe('merge(domain, entityId, entityBody) - Merge a single entity', function() {
+      it('If passed more than two arguments, second is expected to be an entity id', function() {
+        expect(() => merge('string', 'string', {})).not.toThrow()
+        expect(() => merge('string', 1, {})).not.toThrow()
+        expect(() => merge('string', {}, {})).toThrow()
+        expect(() => merge('string', [], {})).toThrow()
+        expect(() => merge('string', void 0, {})).toThrow()
+        expect(() => merge('string', null, {})).toThrow()
       })
 
-      it('If passed two arguments, 2nd is expected to be an object', function() {
-        expect(() => merge('string', {})).to.not.throw()
-        expect(() => merge('string', 'string')).to.throw()
-        expect(() => merge('string', 0)).to.throw()
-        expect(() => merge('string', [])).to.throw()
-        expect(() => merge('string', void 0)).to.throw()
-        expect(() => merge('string', null)).to.throw()
+      it('If passed three arguments, third is expected to be an entity', function() {
+        expect(() => merge('string', 1, {})).not.toThrow()
+        expect(() => merge('string', 1, 'string')).toThrow()
+        expect(() => merge('string', 1, 0)).toThrow()
+        expect(() => merge('string', 1, [])).toThrow()
+        expect(() => merge('string', 1, void 0)).toThrow()
+        expect(() => merge('string', 1, null)).toThrow()
       })
 
-      it(`Returns a ${actions.MERGE} action containing a single entity dictionary`, function() {
-        expect(merge('todos', state.todos)).to.deep.equal({
-          type: actions.MERGE,
-          payload: { todos: state.todos }
-        })
+      it(`Returns a ${actions.MERGE} action containing the entity`, function() {
+        const action = merge('todos', 1, state.todos[1])
+        expect(action.type).toBe(actions.MERGE)
+        expect(action).toHaveProperty('payload.todos.1')
+        expect(action.payload.todos[1]).toBe(state.todos[1])
       })
-
     })
-
-    describe('merge(schema, entityId, entityBody) - Merge an entity into the state', function() {
-
-      it('If passed more than two arguments, 2nd is expected to be a string or a number', function() {
-        expect(() => merge('string', 'string', {})).to.not.throw()
-        expect(() => merge('string', 1, {})).to.not.throw()
-        expect(() => merge('string', {}, {})).to.throw()
-        expect(() => merge('string', [], {})).to.throw()
-        expect(() => merge('string', void 0, {})).to.throw()
-        expect(() => merge('string', null, {})).to.throw()
-      })
-
-      it('If passed three arguments, 3rd is expected to be an object', function() {
-        expect(() => merge('string', 1, {})).to.not.throw()
-        expect(() => merge('string', 1, 'string')).to.throw()
-        expect(() => merge('string', 1, 0)).to.throw()
-        expect(() => merge('string', 1, [])).to.throw()
-        expect(() => merge('string', 1, void 0)).to.throw()
-        expect(() => merge('string', 1, null)).to.throw()
-      })
-
-      it(`Returns a ${actions.MERGE} action containing a single entity dictionary with a single entity in it`, function() {
-        expect(merge('todos', 1, state.todos[1])).to.deep.equal({
-          type: actions.MERGE,
-          payload: { todos: { 1: state.todos[1] } }
-        })
-      })
-
-    })
-
   })
 
-  describe('remove', function() {
-
-    describe('remove() - Clear all entities\' state', function() {
-
-      it(`If called without arguments, returns a ${actions.CLEAR} action`, function() {
-        expect(remove()).to.deep.equal({ type: actions.CLEAR })
+  describe('remove - Remove entire domains or entities from the state', function() {
+    describe('remove([...domains]) - Remove entire domains', function() {
+      it(`If called with no arguments, returns a ${actions.CLEAR} action`, function() {
+        const action = remove()
+        expect(action.type).toBe(actions.CLEAR)
+        expect(action.payload).not.toBeDefined()
       })
 
-    })
-
-    describe('remove(schemas) - Remove entire schemas from the state', function() {
-
-      it('If only passed one argument, it is expected to be a string or an array of strings', function() {
-        expect(() => remove('string')).to.not.throw()
-        expect(() => remove([])).to.not.throw()
-        expect(() => remove(0)).to.throw()
-        expect(() => remove({})).to.throw()
-        expect(() => remove(void 0)).to.throw()
-        expect(() => remove(null)).to.throw()
+      it('If only passed one argument, it is expected to be a domain or an array of them', function() {
+        expect(() => remove('string')).not.toThrow()
+        expect(() => remove([])).not.toThrow()
+        expect(() => remove(0)).toThrow()
+        expect(() => remove({})).toThrow()
+        expect(() => remove(void 0)).toThrow()
+        expect(() => remove(null)).toThrow()
       })
 
-      it(`Returns a ${actions.REMOVE_SCHEMAS} action for the given schemas`, function() {
+      it(`Returns a ${actions.REMOVE_DOMAINS} action for the given domains`, function() {
         let action = remove('todos')
-        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
-        expect(action.type).to.equal(actions.REMOVE_SCHEMAS)
-        expect(action.payload).to.deep.equal(['todos'])
+        expect(action.type).toBe(actions.REMOVE_DOMAINS)
+        expect(action.payload).toHaveLength(1)
+        expect(action.payload).toContain('todos')
 
         action = remove(['todos', 'things'])
-        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
-        expect(action.type).to.equal(actions.REMOVE_SCHEMAS)
-        expect(action.payload).to.deep.equal(['todos', 'things'])
+        expect(action.type).toBe(actions.REMOVE_DOMAINS)
+        expect(action.payload).toHaveLength(2)
+        expect(action.payload).toContain('todos')
+        expect(action.payload).toContain('things')
       })
-
     })
 
-    describe('remove(schema, ids) - Remove entities from the state', function() {
-
-      it('If passed two arguments, 1st is expected to be a string', function() {
-        expect(() => remove('string', 0)).to.not.throw()
-        expect(() => remove([], 0)).to.throw()
-        expect(() => remove(0, 0)).to.throw()
-        expect(() => remove({}, 0)).to.throw()
-        expect(() => remove(void 0, 0)).to.throw()
-        expect(() => remove(null, 0)).to.throw()
+    describe('remove(domain, ids) - Remove entities', function() {
+      it('If passed two arguments, first is expected to be a domain', function() {
+        expect(() => remove('string', 0)).not.toThrow()
+        expect(() => remove([], 0)).toThrow()
+        expect(() => remove(0, 0)).toThrow()
+        expect(() => remove({}, 0)).toThrow()
+        expect(() => remove(void 0, 0)).toThrow()
+        expect(() => remove(null, 0)).toThrow()
       })
 
-      it('If passed two arguments, 2nd is expected to be a string or a number, or an array of them', function() {
-        expect(() => remove('string', 1)).to.not.throw()
-        expect(() => remove('string', 'string')).to.not.throw()
-        expect(() => remove('string', [])).to.not.throw()
-        expect(() => remove('string', {})).to.throw()
-        expect(() => remove('string', void 0)).to.throw()
-        expect(() => remove('string', null)).to.throw()
+      it('If passed two arguments, second is expected to be an entity id or an array of them', function() {
+        expect(() => remove('string', 1)).not.toThrow()
+        expect(() => remove('string', 'string')).not.toThrow()
+        expect(() => remove('string', [])).not.toThrow()
+        expect(() => remove('string', {})).toThrow()
+        expect(() => remove('string', void 0)).toThrow()
+        expect(() => remove('string', null)).toThrow()
       })
 
       it(`Returns a ${actions.REMOVE_ENTITIES} action for the given entities`, function() {
         let action = remove('todos', 1)
-        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
-        expect(action.type).to.equal(actions.REMOVE_ENTITIES)
-        expect(action.payload).to.be.an('object').that.has.all.keys('schema', 'entities')
-        expect(action.payload.schema).to.equal('todos')
-        expect(action.payload.entities).to.deep.equal([1])
+        expect(action.type).toBe(actions.REMOVE_ENTITIES)
+        expect(action.payload).toHaveProperty('domain', 'todos')
+        expect(action.payload.entities).toHaveLength(1)
+        expect(action.payload.entities).toContain(1)
 
         action = remove('todos', [1, 2])
-        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
-        expect(action.type).to.equal(actions.REMOVE_ENTITIES)
-        expect(action.payload).to.be.an('object').that.has.all.keys('schema', 'entities')
-        expect(action.payload.schema).to.equal('todos')
-        expect(action.payload.entities).to.deep.equal([1, 2])
+        expect(action.type).toBe(actions.REMOVE_ENTITIES)
+        expect(action.payload).toHaveProperty('domain', 'todos')
+        expect(action.payload.entities).toHaveLength(2)
+        expect(action.payload.entities).toContain(1)
+        expect(action.payload.entities).toContain(2)
       })
-
     })
-
   })
-
 })
