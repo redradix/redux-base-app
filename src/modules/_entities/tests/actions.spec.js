@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import * as actions from '../action-types'
-import { merge } from '../actions'
+import { merge, remove } from '../actions'
 
 const state = {
   todos: {
@@ -106,6 +106,81 @@ describe('Action creators', function() {
           type: actions.MERGE,
           payload: { todos: { 1: state.todos[1] } }
         })
+      })
+
+    })
+
+  })
+
+  describe('remove', function() {
+
+    describe('remove() - Clear all entities\' state', function() {
+
+      it(`If called without arguments, returns a ${actions.CLEAR} action`, function() {
+        expect(remove()).to.deep.equal({ type: actions.CLEAR })
+      })
+
+    })
+
+    describe('remove(schemas) - Remove entire schemas from the state', function() {
+
+      it('If only passed one argument, it is expected to be a string or an array of strings', function() {
+        expect(() => remove('string')).to.not.throw()
+        expect(() => remove([])).to.not.throw()
+        expect(() => remove(0)).to.throw()
+        expect(() => remove({})).to.throw()
+        expect(() => remove(void 0)).to.throw()
+        expect(() => remove(null)).to.throw()
+      })
+
+      it(`Returns a ${actions.REMOVE_SCHEMAS} action for the given schemas`, function() {
+        let action = remove('todos')
+        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
+        expect(action.type).to.equal(actions.REMOVE_SCHEMAS)
+        expect(action.payload).to.deep.equal(['todos'])
+
+        action = remove(['todos', 'things'])
+        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
+        expect(action.type).to.equal(actions.REMOVE_SCHEMAS)
+        expect(action.payload).to.deep.equal(['todos', 'things'])
+      })
+
+    })
+
+    describe('remove(schema, ids) - Remove entities from the state', function() {
+
+      it('If passed two arguments, 1st is expected to be a string', function() {
+        expect(() => remove('string', 0)).to.not.throw()
+        expect(() => remove([], 0)).to.throw()
+        expect(() => remove(0, 0)).to.throw()
+        expect(() => remove({}, 0)).to.throw()
+        expect(() => remove(void 0, 0)).to.throw()
+        expect(() => remove(null, 0)).to.throw()
+      })
+
+      it('If passed two arguments, 2nd is expected to be a string or a number, or an array of them', function() {
+        expect(() => remove('string', 1)).to.not.throw()
+        expect(() => remove('string', 'string')).to.not.throw()
+        expect(() => remove('string', [])).to.not.throw()
+        expect(() => remove('string', {})).to.throw()
+        expect(() => remove('string', void 0)).to.throw()
+        expect(() => remove('string', null)).to.throw()
+      })
+
+      it(`Returns a ${actions.REMOVE_ENTITIES} action for the given entities`, function() {
+        let action = remove('todos', 1)
+        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
+        expect(action.type).to.equal(actions.REMOVE_ENTITIES)
+        expect(action.payload).to.be.an('object').that.has.all.keys('schema', 'entities')
+        expect(action.payload.schema).to.equal('todos')
+        expect(action.payload.entities).to.deep.equal([1])
+
+        action = remove('todos', [1, 2])
+        expect(action).to.be.an('object').that.has.all.keys('type', 'payload')
+        expect(action.type).to.equal(actions.REMOVE_ENTITIES)
+        expect(action.payload).to.be.an('object').that.has.all.keys('schema', 'entities')
+        expect(action.payload.schema).to.equal('todos')
+        expect(action.payload.entities).to.deep.equal([1, 2])
       })
 
     })

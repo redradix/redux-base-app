@@ -37,3 +37,35 @@ export function merge(schema, id, body) {
     payload: entities
   }
 }
+
+export function remove(schema, id) {
+  if (arguments.length === 0) return { type: actions.CLEAR }
+
+  if (arguments.length === 1) {
+    invariant(typeof schema === 'string' || Array.isArray(schema),
+      'Schema must be a string or an array of strings'
+    )
+
+    return {
+      type: actions.REMOVE_SCHEMAS,
+      payload: typeof schema === 'string' ? [schema] : schema
+    }
+  }
+
+  invariant(typeof schema === 'string',
+    'Schema must be a string when passing two arguments'
+  )
+
+  invariant(typeof id === 'string' || typeof id === 'number' ||
+            Array.isArray(id),
+    'Id must be a string or a number, or an array of them'
+  )
+
+  return {
+    type: actions.REMOVE_ENTITIES,
+    payload: {
+      schema,
+      entities: Array.isArray(id) ? id : [id]
+    }
+  }
+}
