@@ -33,8 +33,8 @@ export default function entitiesReducerWithReduxQuery(state, action) {
 }
 
 /* modules/entities-with-redux-query/selectors.js */
-import { getEntities } from 'modules/entities'
-export { getEntities } from 'modules/entities'
+import { get } from 'modules/entities'
+export const getEntities = get
 export const getQueries = (state) => getEntities(state, 'queries')
 ```
 

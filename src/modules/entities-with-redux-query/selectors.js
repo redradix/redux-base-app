@@ -1,6 +1,6 @@
-import { getEntities } from 'modules/entities'
+import { get } from 'modules/entities'
 
 // Expose getEntities to be used when setting up the middleware
-export { getEntities } from 'modules/entities'
+export const getEntities = get
 
-export const getQueries = (state) => getEntities(state, 'queries')
+export const getQueries = (state) => get(state, 'queries')
