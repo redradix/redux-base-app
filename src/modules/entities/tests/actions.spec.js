@@ -71,7 +71,7 @@ describe('Action creators', function() {
       })
     })
 
-    describe('merge(domain, entityId, entityBody) - Merge a single entity', function() {
+    describe('merge(domain, id, entity) - Merge a single entity', function() {
       it('If passed more than two arguments, second is expected to be an entity id', function() {
         expect(() => merge('string', 'string', {})).not.toThrow()
         expect(() => merge('string', 1, {})).not.toThrow()

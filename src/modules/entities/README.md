@@ -8,8 +8,8 @@
   * [x] `merge`
   * [ ] `replace`
   * [ ] `update`
-  * [x] `delete`
-    * [ ] `delete(domain, testFn)`
+  * [x] `remove`
+    * [ ] `remove(domain, predicate)`
 
 
 ## Terminology
@@ -61,7 +61,7 @@ Merge an entity dictionary.
 
 * Returns a `entities/MERGE` action containing the entity dictionary
 
-##### `merge(domain, entityId, entityBody)`
+##### `merge(domain, id, entity)`
 
 Merge a single entity.
 
@@ -165,6 +165,20 @@ get(state, 'todos', 1)                        // a single todo
 ## Future work
 
 * Use memoized selectors
+* Add factory selectors. Usage (draft):
+
+```js
+import { getDomain, getEntity } from 'modules/entities'
+
+const getTodos = getDomain('todos')
+const getTodo = getEntity('todos', 1)
+
+// ...
+
+getTodos(state)
+getTodo(state)
+```
+
 * Add `update` action creator. Usage:
 
 ```js
