@@ -126,7 +126,7 @@ Retrieve domain dictionaries.
 
 * If only passed the application state, returns the entire domain dictionary
 * If passed an array of domains, returns a dictionary mapping them to their entity dictionaries
-* Empty entity dictionaries are returned for domains not present in the state
+* Empty entity dictionaries are returned for domains not present in the state (this does not break strict equality)
 
 
 ##### `get(state, domain, [...ids|predicate])`

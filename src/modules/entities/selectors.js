@@ -3,20 +3,21 @@ import { moduleName } from './constants'
 
 /**
  * @overview Entities module - Selectors
- * @version 0.1.0
+ * @version 0.1.1
  * @author Aaron Contreras <aaron@redradix.com>
  */
 
+const emptyDomain = {}
 const getState = (state) => state[moduleName]
 
-const getDomain = (state, domain) => state[moduleName][domain] || {}
+const getDomain = (state, domain) => state[moduleName][domain] || emptyDomain
 
 function getDomains(state, domains) {
   const domainDictionary = getState(state)
   if (!domains) return domainDictionary
 
   return domains.reduce(
-    (acc, s) => Object.assign(acc, { [s]: domainDictionary[s] || {} })
+    (acc, s) => Object.assign(acc, { [s]: domainDictionary[s] || emptyDomain })
   , {})
 }
 

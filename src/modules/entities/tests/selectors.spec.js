@@ -38,6 +38,11 @@ describe('Selectors', function() {
         expect(result.todos).toBe(state[moduleName].todos)
         expect(result.missing).toBeEmptyObject()
       })
+
+      it('This does not break strict equality', function() {
+        const result = get(state, ['missing'])
+        expect(result.missing).toBe(get(state, 'missing'))
+      })
     })
 
     describe('get(state, domain, [...ids|predicate]) - Retrieve entity dictionaries', function() {
