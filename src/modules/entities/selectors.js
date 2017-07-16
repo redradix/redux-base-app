@@ -9,19 +9,19 @@ import { moduleName } from './constants'
 
 const getState = (state) => state[moduleName]
 
-const getSchema = (state, schema) => state[moduleName][schema] || {}
+const getDomain = (state, domain) => state[moduleName][domain] || {}
 
-function getSchemas(state, schemas) {
-  const schemaDictionary = getState(state)
-  if (!schemas) return schemaDictionary
+function getDomains(state, domains) {
+  const domainDictionary = getState(state)
+  if (!domains) return domainDictionary
 
-  return schemas.reduce(
-    (acc, s) => Object.assign(acc, { [s]: schemaDictionary[s] || {} })
+  return domains.reduce(
+    (acc, s) => Object.assign(acc, { [s]: domainDictionary[s] || {} })
   , {})
 }
 
-function getEntities(state, schema, ids) {
-  const entityDictionary = getSchema(state, schema)
+function getEntities(state, domain, ids) {
+  const entityDictionary = getDomain(state, domain)
   if (typeof ids === 'string' || typeof ids === 'number') return entityDictionary[ids]
 
   const arr = Array.isArray(ids) ? ids : Object.keys(entityDictionary)
@@ -33,19 +33,19 @@ function getEntities(state, schema, ids) {
   , {})
 }
 
-export function get(state, schema, id) {
+export function get(state, domain, id) {
   if (arguments.length < 3) {
 
-    invariant(!schema || typeof schema === 'string' || Array.isArray(schema),
-      'Schema must be a string or an array of strings'
+    invariant(!domain || typeof domain === 'string' || Array.isArray(domain),
+      'Domain must be a string or an array of strings'
     )
 
-    return typeof schema === 'string' ? getSchema(state, schema) :
-                                        getSchemas(state, schema)
+    return typeof domain === 'string' ? getDomain(state, domain) :
+                                        getDomains(state, domain)
   }
 
-  invariant(typeof schema === 'string',
-    'Schema must be a string when passing three arguments'
+  invariant(typeof domain === 'string',
+    'Domain must be a string when passing three arguments'
   )
 
   invariant(typeof id === 'string' || typeof id === 'number' ||
@@ -53,5 +53,5 @@ export function get(state, schema, id) {
     'Id must be a string or a number, or array of them, or a function'
   )
 
-  return getEntities(state, schema, id)
+  return getEntities(state, domain, id)
 }
